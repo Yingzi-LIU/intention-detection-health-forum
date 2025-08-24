@@ -1,0 +1,21 @@
+ID,Sentences,niveau1,niveau2,niveau3_1,niveau3_2
+156,Comment savoir ?,recherche_information,symptome,non,NA_CATEGORY
+55,Merci.,fonction_phatique,NA_CATEGORY,non,NA_CATEGORY
+908,Se pourrait-il que le coronavirus n'ait qu'un impact faible sur lui même avec un système immunitaire diminué ?,recherche_information,symptome,non,NA_CATEGORY
+861,Suis je une personne à haut risque comme les personnes en traitement ?,recherche_information,traitement,non,NA_CATEGORY
+124,Mon époux est appareillé d'un masque depuis 7 mois.,partage_experience,traitement,non,NA_CATEGORY
+720,Bonjour et bonne année.,fonction_phatique,NA_CATEGORY,non,NA_CATEGORY
+677,"Merci de me faire part de votre experience et de me dire si vous aussi vous ressentez une gêne plus ou moins forte, durant la journée, au niveau des poumons.",recherche_information,symptome,non,NA_CATEGORY
+406,"Bonjour à tous,",fonction_phatique,NA_CATEGORY,non,NA_CATEGORY
+526,Est ce que ça va remonté?,recherche_information,diagnostique,non,NA_CATEGORY
+827,"Cordialement, Nadine",fonction_phatique,NA_CATEGORY,non,NA_CATEGORY
+993,J'aimerais connaître votre avis.,fonction_phatique,NA_CATEGORY,non,NA_CATEGORY
+153,C'est horrible de penser à quel moment je retire le masque.,partage_experience,symptome,oui,negatif
+3,"Bonjour,",fonction_phatique,NA_CATEGORY,non,NA_CATEGORY
+295,C’est un phénomène fréquent l’apnée du sommeil ?,recherche_information,diagnostique,non,NA_CATEGORY
+824,"Je m'inquiète aussi des contacts très rapprochés que nous avons avec le personnel de l'hôpital (lors des auscultations par exemple) et des laboratoires d’analyses sans aucun masque ni sur nous ni sur eux, alors que nous sommes fragiles.",partage_experience,traitement,non,NA_CATEGORY
+276,Est-ce normal ?,recherche_information,diagnostique,non,NA_CATEGORY
+264,"Grosse dépression et se qui s'en suit, le preuve je le vie.",partage_experience,symptome,oui,negatif
+931,merci,fonction_phatique,NA_CATEGORY,non,NA_CATEGORY
+617,Il faudra que je demande à mon médecin du sommeil...,partage_experience,traitement,non,NA_CATEGORY
+177,"Aussi, j'ai décidé de le scotcher également.",partage_experience,traitement,non,NA_CATEGORY

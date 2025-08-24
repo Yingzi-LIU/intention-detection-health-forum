@@ -15,7 +15,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
-from preprocessing import load_data, preprocess_dataset, encode_labels, add_keyword_features
+from preprocessing import load_data, preprocess_dataset, encode_labels, add_keyword_features, save_cleaned_data
 from vectorizers import Word2VecVectorizer, FastTextVectorizer, BertVectorizer
 from models import save_experiment_results, CLASSIFIERS
 
@@ -58,7 +58,7 @@ def run_experiment(X_train, y_train, X_val, y_val, label_names, vectorizers, vec
                     try:
                         grid_search.fit(X_train_vec, y_train)
                         y_pred = grid_search.predict(X_val_vec)
-                        report = classification_report(y_val, y_pred, labels=np.unique(y_pred), output_dict=True)
+                        report = classification_report(y_val, y_pred, labels=np.unique(y_pred), target_names=label_names, output_dict=True)
                         cm = confusion_matrix(y_val, y_pred)
                         f1_weighted = f1_score(y_val, y_pred, average='weighted')
                         accuracy = accuracy_score(y_val, y_pred)
@@ -91,7 +91,7 @@ def run_experiment(X_train, y_train, X_val, y_val, label_names, vectorizers, vec
                         grid_search = GridSearchCV(clf_model, param_grid, cv=3, scoring='f1_weighted', n_jobs=-1, verbose=0)
                         grid_search.fit(X_train_vec, y_train)
                         y_pred = grid_search.predict(X_val_vec)
-                        report = classification_report(y_val, y_pred, labels=np.unique(y_pred), output_dict=True)
+                        report = classification_report(y_val, y_pred, labels=np.unique(y_pred), target_names=label_names, output_dict=True)
                         cm = confusion_matrix(y_val, y_pred)
                         f1_weighted = f1_score(y_val, y_pred, average='weighted')
                         accuracy = accuracy_score(y_val, y_pred)
@@ -125,7 +125,7 @@ def run_experiment(X_train, y_train, X_val, y_val, label_names, vectorizers, vec
                             grid_search = GridSearchCV(clf_model, param_grid, cv=3, scoring='f1_weighted', n_jobs=-1, verbose=0)
                             grid_search.fit(X_train_vec, y_train)
                             y_pred = grid_search.predict(X_val_vec)
-                            report = classification_report(y_val, y_pred, labels=np.unique(y_pred), output_dict=True)
+                            report = classification_report(y_val, y_pred, labels=np.unique(y_pred), target_names=label_names, output_dict=True)
                             cm = confusion_matrix(y_val, y_pred)
                             f1_weighted = f1_score(y_val, y_pred, average='weighted')
                             accuracy = accuracy_score(y_val, y_pred)
@@ -186,7 +186,7 @@ def run_enhanced_traditional_experiments(X_train, y_train, X_val, y_val, label_n
                 f1_macro = f1_score(y_val, y_pred, average='macro')
                 f1_micro = f1_score(y_val, y_pred, average='micro')
                 accuracy = accuracy_score(y_val, y_pred)
-                report = classification_report(y_val, y_pred, output_dict=True)
+                report = classification_report(y_val, y_pred, target_names=label_names, output_dict=True)
                 cm = confusion_matrix(y_val, y_pred)
                 
                 results[model_name] = {
@@ -200,7 +200,13 @@ def run_enhanced_traditional_experiments(X_train, y_train, X_val, y_val, label_n
                 print(f"     ❌ Erreur lors de l'entraînement/évaluation : {e}")
     return results
 
-def run_enhanced_embedding_experiments(X_train, y_train, X_val, y_val, label_name, vectorizers, keyword_dict):
+def sort_results_by_f1(results):
+    """
+    Sorts the results dictionary by f1_weighted score in descending order.
+    """
+    return dict(sorted(results.items(), key=lambda item: item[1]['f1_weighted'], reverse=True))
+
+def run_enhanced_embedding_experiments(X_train, y_train, X_val, y_val, label_name, label_names, label_encoders, vectorizers, keyword_dict):
     """
     Runs enhanced experiments with static word embeddings and keywords.
     """
@@ -238,7 +244,7 @@ def run_enhanced_embedding_experiments(X_train, y_train, X_val, y_val, label_nam
                     f1_macro = f1_score(y_val, y_pred, average='macro')
                     f1_micro = f1_score(y_val, y_pred, average='micro')
                     accuracy = accuracy_score(y_val, y_pred)
-                    report = classification_report(y_val, y_pred, output_dict=True)
+                    report = classification_report(y_val, y_pred, labels=label_encoders[label_name].transform(label_names), target_names=label_names, output_dict=True)
                     cm = confusion_matrix(y_val, y_pred)
                     
                     results[model_name] = {
@@ -296,6 +302,9 @@ def main(vectorization_method=None):
     val_df = preprocess_dataset(val_df, remove_stopwords=True)
     test_df = preprocess_dataset(test_df, remove_stopwords=True)
     
+    # 保存清洗后的数据
+    save_cleaned_data(train_df, val_df, test_df, 'data/dataset_clean/')
+    
     print("\n\n=============== DÉBUT DES EXPÉRIENCES DE BASE (SANS MOTS-CLÉS) ===============")
     for label_name, label_col in label_col_map.items():
         print(f"\n--- Tâche : {label_name} ---")
@@ -317,7 +326,8 @@ def main(vectorization_method=None):
         
         results = run_experiment(X_train, y_train, X_val, y_val, label_names_list, vectorizers, vectorization_method)
         if results:
-            save_experiment_results(results, label_names_list, f'results_baseline/{label_name}/')
+            sorted_results = sort_results_by_f1(results)
+            save_experiment_results(sorted_results, label_names_list, f'results_baseline/{label_name}/')
 
     print("\n\n=============== DÉBUT DES EXPÉRIENCES AMÉLIORÉES (AVEC MOTS-CLÉS) ===============")
     train_df_enhanced = add_keyword_features(train_df.copy(), keyword_dict)
@@ -344,7 +354,8 @@ def main(vectorization_method=None):
 
         results_trad = run_enhanced_traditional_experiments(X_train_traditional, y_train, X_val_traditional, y_val, label_names_list, vectorizers_traditional)
         if results_trad:
-            save_experiment_results(results_trad, label_names_list, f'results_enhanced/{label_name}/')
+            sorted_results_trad = sort_results_by_f1(results_trad)
+            save_experiment_results(sorted_results_trad, label_names_list, f'results_enhanced/{label_name}/')
 
         X_train_embedding = temp_train_df['Sentences_clean']
         X_val_embedding = temp_val_df['Sentences_clean']
@@ -353,9 +364,10 @@ def main(vectorization_method=None):
             'embedding': {'Word2Vec': Word2VecVectorizer(), 'FastText': FastTextVectorizer()}
         }
         
-        results_emb = run_enhanced_embedding_experiments(X_train_embedding, y_train, X_val_embedding, y_val, label_name, vectorizers_embedding, keyword_dict)
+        results_emb = run_enhanced_embedding_experiments(X_train_embedding, y_train, X_val_embedding, y_val, label_name, label_names_list, label_encoders, vectorizers_embedding, keyword_dict)
         if results_emb:
-            save_experiment_results(results_emb, label_names_list, f'results_enhanced/{label_name}/', mode='a')
+            sorted_results_emb = sort_results_by_f1(results_emb)
+            save_experiment_results(sorted_results_emb, label_names_list, f'results_enhanced/{label_name}/', mode='a')
     
     print("\n\n✅ Les expériences sont terminées. Veuillez consulter les dossiers 'results_baseline' et 'results_enhanced' pour l'analyse.")
 

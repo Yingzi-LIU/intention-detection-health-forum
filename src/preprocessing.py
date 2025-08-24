@@ -62,7 +62,8 @@ def clean_text(text, remove_stopwords=False):
     text = re.sub(r"<.*?>", " ", text)
     text = re.sub(r"http\S+|www\S+", " URL ", text)
     text = re.sub(r"#\w+", " ", text)
-    text = re.sub(r"@\w+", " ", text) 
+    text = re.sub(r"@\w+", " ", text)
+    # 移除所有标点符号和特殊字符
     text = re.sub(r"[^a-zA-ZÀ-ÿ\s\d]", " ", text)
     text = re.sub(r"\d+", " NUM ", text)
     text = re.sub(r"\s+", " ", text).strip()
