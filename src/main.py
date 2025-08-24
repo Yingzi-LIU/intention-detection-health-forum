@@ -277,15 +277,17 @@ def main(vectorization_method=None):
         'medical_object': {
             'symptome': ['douleur', 'fièvre', 'toux', 'fatigue', 'nausée', 'vomissement', 'mal de tête', 'vertige', 'saignement', 'diarrhée', 'essoufflement', 'crampe', 'frisson', 'démangeaison', 'inflammation'],
             'traitement': ['médicament', 'antibiotique', 'comprimé', 'injection', 'ordonnance', 'opération', 'chirurgie', 'perfusion', 'thérapie', 'séance', 'pommade', 'crème', 'gélule', 'traitement', 'protocole'],
-            'diagnostique': ['médecin', 'rendez-vous', 'examen', 'analyse', 'prise de sang', 'radio', 'IRM', 'scanner', 'consultation', 'diagnostic', 'spécialiste', 'test', 'résultat', 'donnée', 'explication', 'bilan', 'contrôle']
+            'diagnostique': ['médecin', 'rendez-vous', 'examen', 'analyse', 'prise de sang', 'radio', 'IRM', 'scanner', 'consultation', 'diagnostic', 'spécialiste', 'test', 'résultat', 'donnée', 'explication', 'bilan', 'contrôle'],
+            'NA_CATEGORY': ['bonjour', 'salut', 'merci', 'courage', 'bisous', 'bonne journée', 'à bientôt', 'tiens', 'coucou', 'au revoir', 'bonne chance', 'prends soin', 'je pense à toi', 'bravo', 'félicitations']
         },
         'emotion_existence': {
             'oui': ['peur', 'angoisse', 'stress', 'inquiétude', 'espoir', 'joie', 'soulagement', 'tristesse', 'douleur', 'confiance', 'honte', 'colère', 'déception', 'gratitude', 'culpabilité'],
-            'non': ['neutre', 'fait', 'simple', 'information', 'constat', 'objectif', 'rapport', 'statistique', 'description', 'résultat', 'donnée', 'explication', 'détail', 'procédure', 'observation']
+            'non': ['neutre', 'bonsoir', 'bonjour', 'merci', 'cordialement', 'accord', 'rapport', 'statistique', 'description', 'message', 'donnée', 'explication', 'résultat', 'réponse', 'conseils']
         },
         'emotion_polarity': {
             'positif': ['amélioration', 'guérison', 'efficace', 'solution', 'soulagement', 'espoir', 'bon', 'normal', 'rassuré', 'progrès', 'confiance', 'réussite', 'stable', 'bien', 'positif'],
-            'négatif': ['douleur', 'pire', 'rechute', 'inefficace', 'aggravation', 'souffrance', 'inquiétant', 'mauvais', 'problème', 'compliqué', 'peur', 'triste', 'inquiétude', 'négatif', 'désespoir']
+            'négatif': ['douleur', 'pire', 'rechute', 'inefficace', 'aggravation', 'souffrance', 'inquiétant', 'mauvais', 'problème', 'compliqué', 'peur', 'triste', 'inquiétude', 'négatif', 'désespoir'],
+            'NA_CATEGORY': ['neutre', 'bonsoir', 'bonjour', 'merci', 'cordialement', 'accord', 'rapport', 'statistique', 'description', 'message', 'donnée', 'explication', 'résultat', 'réponse', 'conseils']
         }
     }
     label_col_map = {
