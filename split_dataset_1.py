@@ -5,7 +5,7 @@ import numpy as np
 
 # --- 配置 ---
 FULL_DATA_PATH = 'data/projet_annotation_sante_final_M1.csv'
-SPECIFIC_30_IDS = [
+SPECIFIC_20_IDS = [
     3, 24, 18, 17, 238, 242, 307, 324, 326, 656,
     4, 23, 32, 75, 201, 21, 8, 38, 98, 91,
     568, 505, 526, 41, 481, 154, 475, 6, 784, 15
@@ -54,8 +54,8 @@ if len(rare_classes) > 0:
     )
 
 # --- 4. 拆出固定训练集 ---
-df_train_fixed = df[df['ID'].isin(SPECIFIC_30_IDS)].copy()
-df_remaining = df[~df['ID'].isin(SPECIFIC_30_IDS)].copy()
+df_train_fixed = df[df['ID'].isin(SPECIFIC_20_IDS)].copy()
+df_remaining = df[~df['ID'].isin(SPECIFIC_20_IDS)].copy()
 
 # --- 4.1 df_remaining 再次合并单样本类别 ---
 df_remaining['combined_labels'] = df_remaining[LABEL_COLS].astype(str).agg('_'.join, axis=1)

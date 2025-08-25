@@ -10,3 +10,5 @@ schema/
 intention_env_setup/
 new_intention_env/
 intention-env/
+
+.env
