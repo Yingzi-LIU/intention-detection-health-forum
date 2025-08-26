@@ -1,0 +1,572 @@
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Je suis un homme de 55 ans et appareillé depuis 3 ans d'un PPC.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Peut-on imaginer que l'action de l'appareil PPC puisse avoir des effet secondaires du à la pression insuflée dans le corps?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Ci-dessous, les actions déjà entreprises pour identifier les causes de ce constat :", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Question général : Peut-on affirmer, sans détour, que l'appareil PPC ne peut en aucun cas générer de douleurs telles que je les ai décrites ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "En vous remerciant par avance, pour votre réponse,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Cordialement,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "L'apparition de vos douleurs depuis l'appareillage sont certainement dues à un changement de position pour dormir en raison du masque.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Je pense que je ne dors plus comme avant et peut être moins décontractée.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Bon courage à vous", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "Votre post m’a rassuré car visiblement je ne suis pas le seul dans ce cas.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "positif"}
+{"texte": "A suivre donc (six mois d’attente pour un rendez-vous alors même que j’habite une grande métropole)...", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "D'abord je tiens à m'excuser si ce sujet a déjà été abordé ou s'il s'avère être hors-sujet, mais je ne savais pas trop où poster.", "intention": "recherche_information", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Mais c moins grav que ça n'y parait.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "positif"}
+{"texte": "Je me permets de citer une personne sur doctissimo il y a 5 ans :", "intention": "partage_experience", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Respiration lente et contrôlée au maximum pendant deux-trois jours et mon cauchemar s'est arrêté.\"", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "positif"}
+{"texte": "Une heure après l'endormissent ?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Je m'étonne d'ailleurs que ce soit toi qui aies dû t'en apercevoir...", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "negatif"}
+{"texte": ":-(", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "negatif"}
+{"texte": "Dsl...", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "negatif"}
+{"texte": "Merci pour vos réponse et bon dimanche", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "bon courage.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": ";) merci à vous.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "elle va surement devoir passer d'autres examens pour confirmer le diagnostique ???", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "Je sais pas quoi faire d'autre, es ce que je fait bien, ou pas ....", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Verdict : il ne sait pas de quoi souffre ma fille, d'apnée du sommeil sévère oui, mais a cause de quoi ?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "negatif"}
+{"texte": "Est ce que ça va remonté?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bon je ne veux pas faire peur, je sais que le titre doit faire paniquer", "intention": "partage_experience", "objet_medical": "NA_CATEGORY", "sentiment": "negatif"}
+{"texte": "AIDEZ MOI VITE", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "negatif"}
+{"texte": "Deux questions me turlupinent, arrivez vous a dormir avec cette fameuse machine ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Effectivement, je comprends tes craintes.", "intention": "fonction_phatique", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Auquel cas, cela fait d'elle une personne à risque dans la mesure où si elle devait être infectée par le coronavirus, elle serait plus vulnérable.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Et le plus souvent, je prends l 'exemple de pbm d apnees du sommeil graves et non traitées, on trouve aussi chez les patients des pbm cardiovasculaires, notemment de tension...", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Cela m´arrive depuis une semaine.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "On m'a donc fourni un appareil nasal avec lequel ça se passe un peu mieux : j'arrive à m'endormir avec!", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "positif"}
+{"texte": "à chaque réveille (fin de rêve profond), je m'apperçois que je suis en sueur (peau mouillée), corp très chaud.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Ca peut arrivé à n'importe qui, qui apparemment la gorge ou trachée est compressée en sommeil, et l'air (oxygène) remonte mal depuis les poumons vers le nez...", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Est-il possible d'avoir une routine précise et officielle à suivre, car établie par un professionnel de santé, que je puisse lui mettre sous les yeux ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonjour, et merci pour votre réponse.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Mais franchement c'est tres compliqué, et ça ne relève pas forcément d'un pbm physiologique.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "negatif"}
+{"texte": "Sachant que je dors entre 8 à 10h par nuit (et me couche en général vers 22-23h).", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Car si c'est le cas et qu'elle a de la fièvre, il faudrait suspecter une infection à coronavirus et appeler le 15.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonjour à vous, j'espère que vous allez bien.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "car encore une fois trop concentré ...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "C'est peut-être votre cas.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonsoir,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "ta la même chose que moi il faut que tu dort avec une machine(une sipape) c'est la seul solution je pense .", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Je vous envoie le site avec l'oreiller en question par message privé, si ça vous intéresse.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "En effet, cela ne semble pas bien grave.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Car plus d'une fois je me suis réveillé comme si le caoutchou avait brulé mon nez avec le tout premier masque.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Il voit la pneumo demain.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Alors je sais que sur internet on peut lire tout et n'importe quoi toutefois la coincidence est plus que troublante...", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "negatif"}
+{"texte": "J'ai peur, je suis très inquiète, j'essaie de gerer au mieux le comportement de ma fille, quand elle s'enerve beaucoup je la prend calmement et essaie de la calmer et de la poser un peu qu'elle se repose ...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Il s'endormait partout, au travail, et aussi une fois au volant de sa voiture.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Essaye de dormir sur le côté ça marchera si ça ne marche pas alors je ne sais pas ce que c'est.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Allez voir un neurologue, c'est sûr, et puis si j etais vous je ferais un ptit bilan cardiovasculaire, des pbm de tensions, ça peut etre la cause d'evanouissements....", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonjour Cindy,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "j'étais au même taux d'apnée que toi.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Et pour te répondre sur le physique : oui il y a aussi des gens hyper minces qui sont concernés, donc rien à voir avec le surpoids.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "- 75 apnées à l’heure d’une durée moyenne de 35 secondes", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "J'espère que tu auras un rdv très rapidement.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "il posera des questions pour faire un diagnostique et après effectuera une polygraphie ou polysomnographie si besoin.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Je souffre d’une fatigue atroce certains jours, couplé à un état quasi dépressif ( je ne le suis pas).", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "depuis 1 mois maintenant, je me réveille entre 2h et 4h du mat après m'être couchée entre 22h et 23h.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Du coups vois si tu ne peux pas te procurer une autre attache de masque ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je l'ignore, renseignez-vous.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bien cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "j'ai essayé 2 sortes de masques FACIAl mais même avec ceux là j'ai la bouche déssèchée, et c'est pas facile de boire ainsi arnachée, alors en désespoir j'ai repris le masque nasal.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je ne voudrais pas vous décevoir mais lorsque j'avais posé la question: Combien de temps vais-je garder cette machine?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Avant hier, nouveau RDV chez le cardio qui me dit qu’il me faut d’urgence porter un masque pour lutter contre les apnées du sommeil :", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "sachant qu'elle ne s'en rend pas compte.", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "ce qui n'était pas le cas.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Pour la mise en place de la PPC (si ton enregistrement démontre que tu fais des apnées) c'est un prestataire de santé qui fera l'installation.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Comme ça ça fait penser à un syndrome d'ondine, mais c'est une maladie genetique tres rare, sinon apres ça peut aussi venir d'un terrain specifique, un petit pbm lié au nerf phrénique, au systeme nerveux autonome...", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "La plupart y arrivent cependant, après quelques essais, en changeant parfois le type de masque.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "☹️ qui a déjà été dans ce cas?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Elle vit seule et a besoin d'aide (repas, ménage, courses ..).", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Courage et tenez moi au courant si vous le voulez bien …", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "bonjour", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Mon mari viends d'avoir sa machine (il faisait 90 fois de l'heure entre 20 et 40 secondes) et il a eu un masque Nasale, il a detester sa premiere nuit...", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "Le gars qui s'occupe de mon matériel a spontanément remarqué que j'avais un tout petit \"museau\" pour un grand masque.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "est ce du au stress?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Si je ne me soigne pas, quel est le risque?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "au début, je ne supportais pas du tout.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Je n'ai pas l'énergie ni de légitimité professionnelle dans la santé pour le convaincre d'adopter des mesures qui me semblent de bon sens.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Bonsoir Marie,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "De rien.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Le soir j'essaie de bien la calmer pour qu'elle s'endorme sereinement ....", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "positif"}
+{"texte": "Ma mère a un symptôme depuis très longtemps et son état se dégrade.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "De plus, je ressent comme une sensation d'angoisse, je n'ai mal nul part, mais c'est juste un sensation désagréable.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Merci d'avance", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "je 45 apnées par heure, je n'en fait plus que 4!", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "positif"}
+{"texte": "tout cela ne me rassure guère ^^, je vais aller voir un neuro ..par contre pour ce qui est de la narcoleptie, je ne pense pas, car je suis complètement réveillé, je suis juste \"trop\" concentré , en aucun cas je dors ou autre , et je me souviens à chaque fois de ce qui se passe ,merci pour vos réponses si rapides", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Ben là comme ça je pense que tu devrais aller voir un neurologue.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Merci Fabrice, pour vos encouragements.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "Cependant il s’agit de résultat préliminaire.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Résultat: Les douleurs du réveil semblent s'estomper …", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Mais j'ai préféré l'attache d'un ancien 100% nasale que j'avais mis sa sangle sur un autre, d'ailleurs le technicien n'avait pas compris pourquoi la sangle ne correspondait pas à celle d'origine.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Si j'ai bien compris : selon les fabricants, la machine ne causerait pas de pneumothorax mais pourrait provoquer une recidive pour une personne qui en a deja fait un?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bon courage et surtout beaucoup de patience.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "N'avez-vous pas revu le pneumologue depuis depuis octobre, il y a peut-être des réglages à faire sur la machine.", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Mais d’après lui, il gagne beaucoup en qualité de sommeil.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Impossible de connaitre la cause si ce n'est que j'etais fumeur.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "voila, si quelqu'un se reconnait ou sait quelque chose à ce sujet, je suis preneur et je vous en remercie d'avance", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Résultat: Aucun changement", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je dors très bien.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "en demi sommeil je n'arrive po a reguler ceci...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Tout simplement avec un test de sommeil ?Ça a été mon cas aussi.", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "En parallèle, je vois une physiothérapeute et fais des exercices de renforcement des muscles de la langue afin d'éviter qu'elle recule, ce qui a donné des bons résultats jusqu'à présent.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Lors d'une période de stress ou de tension, cette phase est parfois trop brutale du coup sa provoque se réveil en sursaut, comme si une alarme dans le cerveau nous disait de se reveiller avant de crever.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Est ce normal?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bien cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Prenez un RV en emportant votre appareil.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Au moins maintenant j'arrive à mieux supporter la machine, car je pense que comme vous quand je bougeais ça occasionnait des fuites.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Il avait l'air très inquiet , il me rappell demain pour me donner le rdv au CHU car c'est lui même qui le prend pour que ca soit le plus rapide possible, la je me dit , c'est que ca craint vraiment .....", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "Et votre mari depuis l'utilisation de la machine n'est plus du tout fatigué ?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Pour les exercices qui permettent de tonifier la langue et diminuer son recul lors du sommeil...", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "ce que je peux te dire c que j'ai une rampe de 30mn pr m'endormir pdt laquelle la pression est geree en fonction de mes inspirations.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "On sait juste que les personnes ayant une comorbidité telle que maladie cardiaque, maladie pulmonaire, diabète, obésité, cancer en évolution, ont plus de risque de développer une complication.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Ce n'est pas une position naturelle pour moi.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "alors je prend une grande aspiration et là au bout de quelques secondes, tout redevient ( enfin \" je \" ) redeviens normal ...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Tout dépend de vos défenses immunitaires, lesquelles peuvent être fragilisées durant une chimiothérapie.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Ayant eu une maladie de Hodgkin stade IV soignée par chimiothérapie renforcée il y a 10 ans, est-on plus vulnérable au coronavirus ?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "rien ...", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Si vous vous sentez concerné(e)s par ce problème, n'hésitez pas à réagir.", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "J’ai eu l’impression de lâcher quelque chose et je me suis endormie rapidement, sans réveils dans la nuit ou presque.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "- Changements (très) fréquents de position", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Sauf que depuis 4/5 jours, je recommence à me réveiller la nuit avec du mal à me rendormir et je recommence à ronfler..", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Je ferme les yeux, commence à m'endormir, et je me réveille 5 ou 10 secondes après avec l'impression d'avoir arrêté de respirer, et le coeur qui bat, avec parfois au fur et à mesure une petite douleur qui s'installe dans la poitrine.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Il faisait des apnées très longues, son sommeil était très perturbé.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Je comprends à quel point il a été difficile pour vous de garder le masque.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Les personnes qui font les relevés ne sont pas spécialistes du sommeil, elles reçoivent les instructions du spécialiste pour les réglages.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Au bout de combien de temps?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "En revanche, dans le cadre de protocoles de soins pour un cancer, il faut respecter les prescriptions de l'oncologue.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Donc voilà je balise un peu car des douleurs qui persiste après une semaine c'est un peu bizarre et j'ai vraiment peur du pire.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Je suis très souvent fatiguée, avec de gros coup de mou dans la journée et des douleurs diffuses.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "La première semaine, j’ai bien cru que je n’y arriverai jamais, d’autant que je dormais encore moins bien qu’avant et que j’étais très fatiguée.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J'ai pris rendez vous à la clinique du sommeil, deux mois d'attente ...", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J'ai 32 ans et n'ai pas encore fait mon irm et tep scan de contrôle.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Pour information je suis plus appareillé pour insuffisance respiratoire chronique (les échanges au niveau respiratoire ne se font pas très bien pendant la nuit et mon taux de CO2 augmente).", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Pas de traitement pour l'instant, elle revoit son chirurgien dans 3 semaines pour connaître la suite du traitement.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Merci pour vos réponses.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Et aussi, je ronfle.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "à moins qu'à 60ans je sois trop vieux et qu'avec ou sans appareil, je suis bon à jeter à la poubelle.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Les médecins ne s'entendent pas sur le sujet..", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Consommez-vous beaucoup de produits avec de la caféine?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "J'ai eu exactement le même problème, ça fait deux ans qu'on a diagnostiqué mon problème d'apnées du sommeil, mais ça ne s'améliorait pas vraiment, j'était toujours autant fatigué, je ne comprenais pas vraiment pourquoi.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Salut à tous!", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "La rate intervient dans le système immunitaire, vous avez donc un terrain plus fragile vis-à-vis du coronavirus qu'une personne ayant encore sa rate.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Mais depuis La Fatigue Est revenu avec les problèmes de concentration et l'impression que ça tourne...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Parce que, tout bêtement, j'ai trop bougé ce qui a eu pour effet de détacher mon masque (qui couvre mon nez et ma bouche).", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "voila,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Elle a du mal à respirer.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "- Fatigue et maux de tête au réveil (tête \"lourde\" )", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Pour ma part je vais voir mon doc au milieu avril, je vais lui en parler.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J'ai de véritables insomnies à cause de ça, et ce malgré les huiles essentielles que je peux utiliser pour me détendre.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "C’est le Philips dream wear.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je verrai bien dans ce cas.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "J'ai chercher sur le net et j'ai vue un rapport de chirurgiens américains qui faisais des tests sur un patient faisans de l'épilepsie réfractaire à toute médicaments, et en gros ils se sont rendu compte que lorsqu'ils envoyais de petites décharges au niveau de l’amygdale, sa provoquait de façon inconsciente des arrêts respiratoires éveillé alors que le patient était dans une salle d'analyse à regarder autour de lui.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je dors en moyenne cinq heures par nuit avec l'appareil.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Bref je suis assez désemparer, tout me saute au visage", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "En ce moment j'aime bien mon masque actuel et j'en ai essayé pleins, il a des aimants en attache et c'est un \"bucco-nasale\" .", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Est-ce que quelqu'un pourrait m'éclairer sur ce sujet?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bon courage à vous tous et encore merci!", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "peut-être est-ce lié ?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Quelqu'un a t-il vécu quelque chose de similaire ?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Demandez à votre prestataire.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "J’essaie donc la nuit dernière l’appareil mais c’est l’horreur : j’ai l’impression d’avoir un ventilateur dans la bouche (même quand ça ne fuit pas) et ça m’empêche complètement de dormir, d’autant plus que je bouge beaucoup.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "(J’avais de petits ganglions dans l’abdomen infracentrimetrique lors du scanner abdomino pelvien et rien au scanner thoracique ( je les avais fais la semaine avant l’opération).", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": ":) et il ne fais pas du tout mal et ne marque pas.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Si la fatigue persiste, refaites le point avec votre médecin.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Voilà je vous explique ma situation, j'ai 24 ans et je fume (6 cigarettes par jours) depuis 6 ans environs, depuis 1 semaine j'ai des douleurs intercostale et au niveau du bas du dos qui s'atténue avec le temps.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Merci,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Au plaisir de vous lire.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "Assurez-vous d'avoir un test de qualité \"hôpital\" et non pas un test à la maison.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Je continue de travailler ne pouvant faire du télétravail.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Merci pour votre réponse.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "La semaine dernière j'ai forcé en faisant une série de pompes, une douleur est apparue entre mes côtes lorsque je respiré où selon ma position.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Et le problème c'est que je suis tellement fatiguée que je mets parfois un moment avant d'avoir le reflex de \"reprendre\" ma respiration (il me faut une tres tres grande inspiration) comme si je restais sous l'eau pendant très longtemps.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Si ce n'est pas le cas pour toi, un avis médical s'impose.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Je dois le rappeler cette semaine ...", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J’ai l’ impression de dormir profondément....", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Je le fais déjà le week-end.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Je ne pense pas qu'à ce stade vous soyez considéré comme une personne à risque puisque jusqu'à preuve du contraire, il s'agissait d'une tumeur bénigne.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "et c’est très facile d’écouter même pendant la nuit, en cas de réveil.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Avez vous des nouvelles informations sur ce type d´apnée du sommeil?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "courage", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Pourtant, il m'est arrivé de dormir 4 heures d'affilée avec le masque et de me réveiller en pleine forme !", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "positif"}
+{"texte": "Les résultats anapath vous parviendront sans aucun doute mais peut-être avec un peu de retard.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "L'arrête de mon nez est rouge, gonflée et me fait mal.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Que j'aurais tendance à dormir toute la journée.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "C'était avant, presque 20 ans et depuis, je dors régulièrement avec la machine, je suis tout neuf.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "positif"}
+{"texte": "Cela est mon cas, j'espère tout de même lorsque j'aurai atteint mon objectif de santé pouvoir m'en séparer mais pour le moment cela n'est pas possible de fermer l'oeil sans la machine...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Lors de mon test de sommeil l'an passé, je faisais des apnées si sévères que mon pneumologue a arrêté de les compter.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "La première nuit où je me suis endormie a été celle où je me suis dit en me couchant, « si je ne dors pas dans deux heures, j’enlève le masque, il faut que je dorme sinon je ne tiendrai pas le coup »", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "JE ne pense pas que ce soit de l'apnée du sommeil.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonjour, nouvelle sur ce forum j'espère pouvoir vous apporter quelques réponses.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "positif"}
+{"texte": "Le fait que votre tension artérielle ait baissé est plutôt une bonne nouvelle, cela montre que vous mettez le masque correctement et que la thérapie commence à faire effet.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "positif"}
+{"texte": "Résultat rien n'as changer !", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "j'ai vu mon médecin traitant qui m'a dit que si je voulais faire un affartus je n'avais que ca à faire.(ne pas mettre le masque)", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Si elle décide d’effectuer le test d’apnée du sommeil, l’appareil est à se procurer en pharmacie ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J'aimerais connaître votre avis.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "je revais carrément que je m'étouffais donc je suppose qu'à ce moment bah je ne respirais plus!", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Dois-je me lancer ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Aussi, j'ai décidé de le scotcher également.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Moi je ne dormais plus et je comptait les secondes ou il ne respirait plus.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Bonjour Docteur, J'ai terminé, mi janvier dernier, mon traitement chimio (3 séances de EC100 et 3 séances de Taxotère) contre un cancer du sein.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Je vais apporter mon témoignage.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Bonjour à tous,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "On sait tout de même qu’elle se fait majoritairement par voie aérienne, via les postillons émis par la personne infectée.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "A priori, il devrait être suffisant ; vérifiez sur votre dernier bilan sanguin que vos leucocytes (globules blancs) étaient en nombre suffisant (plus de 3500 ou 4000), de même que les lymphocytes (plus de 1000), ces derniers étant les globules blancs les plus actifs contre les virus.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonjour Christiane,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Mon pneumologue ne trouve pas de solution et mon médecin traitant me dit que ce n’est pas grave.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "bref il a bien voulu me faire une ordonnance pour aller voir un pneumologue .", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Ma morphologie est l'inverse des cas habituels puisque je pese 85kg pr 1,65m et que le pneumothorax touche plutot des personnes grandes et longilignes.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Ou encore si un medecin qui a deja vu ce cas?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J'ai un peu évolué depuis mon dernier message : toujurs impossible de m'endormir avec le masque facial (j'avais l'impression d'étouffer...)", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "Pas tout à fait mon commandant !!", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "Cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "appareil goodnight 425 ST CPAP", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bref si quelqu'un peut me conseiller, me dire ce qu'il va se passer maintenant ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Merci de votre aide.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "A moyen terme risque d'AVC, d'infarctus du myocarde, d'hypertension, de diabète, d'accident de la circulation (somnolence au volant)..", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Et si la douleur intercostale persiste, consultez votre médecin traitant, il vous prescrira un traitement antalgique.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonjour", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Je laisse mon portable allumé mais je coupe la sonnerie.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J'ai peur de lui transmettre le virus, sachant que je dois aller travailler.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Désormais j'ai mal aux côtes et un peu au dos, quelques fois j'ai une sensation de \"boule\" dans la gorge et une envie de tousser à mon avis c'est juste le stress car je panique facilement.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Bien cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Je prend du café, mais raisonnablement.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "je porte le masque 5 heures durant, d' une seule traite.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "En ce moment, elle ne peut pas se déplacer pour faire ses courses suite a un lymphome et je dois lui venir en aide.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Bonsoir, moi la nuit de l'enregistrement j'ai eu l'impression d'avoir fait une nuit blanche, pourtant aux vu de l'enregistrement j'ai dormi..", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Non je ne pense pas, une personne est venu faire un rélevé il y a 3 semaines.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Car je n'entendais pas parler autant de ce problème qui concernait tant de gens...", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "negatif"}
+{"texte": "On ne sait pas tout de ce nouveau virus, y compris à propos de sa transmission.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "On nous prescrit en effet de la cortisone en cas de nausées et aussi avant certaine chimiothérapie.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Les deux premiers médecins m'ont dit que c'était de l'anxiété..", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Dans votre cas, il se peut que ce soit autre chose, mais un test de sommeil aidera à confirmer ou éliminer la possibilité d'un trouble de sommeil.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "il suffit qu'une personne me fasse une présentation d'un véhicule ou , je peux être chez mon conseiller financier, ( expériences vécues ) je suis tellement concentré qu'en fait, quand je me rend compte que je ne respire plus, je me rend aussi compte que je suis dans une sorte de \" trance \", remarque normal, sachant que quand j'analyse la situation, je m'aperçois que quelques fois je m'arrête de respirer pendant 1 mi et quelques ...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Je suis traitée en chimiothérapie (la 6e a eu lieu fin février, donc il y a 3 semaines) pour un sarcome.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "sommeil non réparateur...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Être appareillé à 14 ans, c'est dur quand même.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je suis en train de dormir mais à un moment je commence à me réveiller et je me rends compte qu'il y a un truc qui va pas...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "- Sueurs nocturnes", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Si je ne vais plus la voir je ne sais pas comment elle pourra faire.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Maintenant les enfants hyper actifs peuvent avoir des troubles de sommeil, là dans ce cas voir un pédo psychologue pour un bilan et orthophoniste", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Merci pour votre réponse.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "- Réveils nocturnes fréquents", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "propose t'il dans relaxant pour faciliter l'endormissement ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je précise que cette personne avait accepté d'avoir durant 10 jours des électrodes partout sur la tête et tout était enregistrer jour et nuit.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Merci pour vos conseils.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Changement de matelas, six mois de kinésithérapie pour un résultat nul.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Comment savoir ?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "- Très grande difficulté à me réveiller le matin (environ une heure/une heure trente avant d' \"émerger\" ).", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Là aussi, c'et du système D.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonjour Jenny Parker :)", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "J'ai la même chose et c'est paniquant totalement quand ça se produit.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Bien cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Hier, quelle ne fut pas ma surprise lorsque j'ai vu sur wikipedia que l'un des effets secondaires de la VPPC est le pneumothorax!!!", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "positif"}
+{"texte": "Le technicien est passé et m'a réajusté le masque ce qui peut expliquer ma bonne nuit.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Pourriez vous m'expliquer les exercices pour muscler la langue ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Dommage collatéral, je me lève de nouveau épuisé depuis l’arret.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "pour info, et avant que cela soit proposer ;-) j'ai vu 3 médecins généralistes différents, ils m'ont tous renvoyer avec...", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "Le mien, qui est modéré-léger, n'est pas apparu sur le test maison, mais sur le test à l'hôpital oui.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Hier, les prestataires qui m’ont fait les tests de nuit m’apportent l’appareil avec le masque et l’humidificateur et m’explique le fonctionnement…", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J’ai fait des tests à la maison qui n’avaient rien donné mais le Neurologue a voulu pousser quand même par acquis de conscience.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Fabrice", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Il m a fait faire un test a l'effort, il en ai ressorti qu il ne s'agissait pas d'apnee du sommeil mais certainement d'un probleme d'hygiène de vie et de stress: tabac, café, alimentation grasse, manque de sport, etc....", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "si oui, je voudrais savoir si elle peut conduire à une sciatique car peu de temps après chaque réveil, j'ai une jambe qui est très très douloureuse de la fesse, en passant par la cuisse, le derriere du mollet et s'arrête juste avant le pied.", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bien cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Bien cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "\"Mon cas : apnées centrales à l'endormissement.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Dès ma 3ème nuit avec l'appareil je me suis réellement sentie revivre, j'étais si fatiguée depuis tant d'année que je ne me souvenais pas m'être déjà sentie aussi bien, seulement....", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "positif"}
+{"texte": "Voilà j'ai une amie qui respire en apnée sans cesse DURANT LA JOURNEE.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Aussi, si je ne mettais pas de réveil, je pourrais dormir jusqu'à 14-15h avant de me réveiller \"naturellement\".", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Maintenant je ne nie pas qu'il y a peut-être plusieurs apnées.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "je le sortais au bout d’une ou deux heures..", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Pour faire simple, en trois jours, c'était terminé.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Merci Jean,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "J’ai envie de vous dire qu’il ne faut jamais perdre espoir.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "positif"}
+{"texte": "je vais voir comment se passe ma nuit à venir...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "J'ai changé le filtre de la machine (il était noir, c'est dingue !) et même tout changé avec un masque neuf parce que le petit filtre sous le masque était noir aussi.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "mais j'ai voulut lui faire confiance", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Moi je le trouve mieux que les autres même si pour l’instant je ne m’habitue pas non plus..", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "positif"}
+{"texte": "Mon pneumologue m’oriente aujourd’hui vers une solution d’orthèse mandibulaire.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Comment vous a-t-on diagnostiqué cela ?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonjour, même problème avec une petite cerise sur le gâteau : les sédatifs légers aggravent le problème.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "Suite a cette découverte l'orl avait souhaiter opérer ma fille le plus vite possible des amygdales et m'avait dit que souvent le problème était régler par cette intervention et que je devrait voir le comportement de ma fille changer ..", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Le danger de mort n'est pas seulement pour l'apnéique puisqu'il commence à se dire qu'un tué sur trois sur la route serait du à un endormissement au volant et sans parler des blessés.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Mon beau-frére qui est appareillé aussi a encore plus de problème que moi", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "Après un article en anglais sur un site américain, je m'intéresse aux échange gazeux et à leur rôle sur le cerveau pour contrôler la respiration pendant qu'on dort.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "mais elle m’a conseillé d’en parler avec mon médecin traitant.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je ne pense pas qu'un relaxant soit donné puisqu'il pourrait fausser les résultats en causant un relâchement des muscles impliqués dans le troubles de sommeil, mais je peux me tromper.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "J’ai consulté un spécialiste qui m’oriente, d’apres Mes symptômes vers des apnées du sommeil.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Il a donc été en contact :", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Je me permets deux petites questions (peut-etre naïves, je m'en excuse d'avance).", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Consulte quand même si cela te pose un problème car ce n'est pas normal d'avoir du mal à trouver le sommeil à 17 ans", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Aussi surtout ne pa prendre les apnée a la légère deja elle commence a nous pourrir physiquement, et ensuite mentalement....", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "negatif"}
+{"texte": "Bien cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Je n'ai pas vraiment envie d'appelé et \"déranger\"mon médecin alors que d'autre personnes en ont s'en doute plus besoins au vu de la situation.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Depuis que je l’ai je l’ai gardé environ 3h sans dormir et je la vire car sinon j’ai l’impression que je vais peter un câble..", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "alors déja ,personne ne respire en apnée puisque des apnées c des arrêts respiratoires &amp; pour le problèmes d'arrêt respiratoire ,il faut aller voir un médecin &amp; lui en parler", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "La premiere question que je me suis pose et que j'ai donc pose aux medecins est \"la VPPC qui m'envoie de l'air en continu ne serait-elle pas une cause possible de ce pneumothorax?\"", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Le médecin spécialiste pneumologue serait amené à vous répondre avec un complément de diagnostic avec l'orl .", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je m'inquiète aussi des contacts très rapprochés que nous avons avec le personnel de l'hôpital (lors des auscultations par exemple) et des laboratoires d’analyses sans aucun masque ni sur nous ni sur eux, alors que nous sommes fragiles.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonne année à tous", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Je ressent depuis une dizaine de jours, une gêne sur la poitrine, comme si mes poumons étaient fatigué de ce traitement de forcing...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Il m'envoit dans un CHU chez l'un de ses confrères qui lui nous dirigeras vers les bon services", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je ne peux plus expirer, j'ai trop d'air.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Ce cardiologue m’a prescrit un test d’effort et j’ai eu droit à plusieurs « tests » nocturnes à domicile avec un appareillage.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je ne me séparerai jamais de ma petite chérie.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "positif"}
+{"texte": "est-ce une apnée du sommeil ?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "le personnel de l'hôpital m'a clairement répondu que ce serait à vie.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Avec l’appareil, il dort mieux, ne ronfle plus et son sommeil est réparateur.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Merci à vous!", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Si tu dort sur le dos ça peut être ta langue qui obstrue les voies aériennes internes car quand tu es sur le dos et que tu es détendu complétement alors ta langue tombe au début de ta gorge.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "A votre disposition si vous le désirez petit oiseau qui se lève tard: [:juljia:1] j'espère pour vous que vous serez", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "Il dispose des résultats qu’il me commente de manière assez pessimiste :", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je m'explique : lorsqu'elle est concentrée, devant la tv, en cours ou autre, elle cesse de respirer pour reprendre et cela par intermitence.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Cela pouvait m'arriver 15-20 fois jusqu'à ce que je m'endormes finalement.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Aussi, je débranchais surtout le tuyau à la machine.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Et des aliments gras?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Voilà je vous remercie de m’avoir lu et d’avance pour vos réponses !!", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "Mon Orl m'a dit que toutes les apnées ne se traitent pas forcément avec l'ablation de amygdales, inuquement efficace pour les apnées obstructives (c'est a dire avec des éléments qui bouchent les voies aériennes : amygdales, végétations, cornets...)", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Ca me rassure un peu..", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "positif"}
+{"texte": "Mon réveil sonne, mais je suis tellement \"exténuée\" qu'il me semble impossible de me réveiller complètement.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "je suis un homme ordinaire de 30 ans, je suis heureux, pas dépressif, je prend aucun traitement, mais je vous explique mon souci...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Peut être faudrait il contacter le dentiste spécialiste de l'orthèse afin de voir avec lui ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Il faut un peu de persévérance, courage.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "positif"}
+{"texte": "Bien que tout les examens n’aient pas été faits.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "la prise d'un anti-inflammatoire dans le cadre de son protocole de soins n'est pas à remettre en cause, ce qui est actuellement déconseillé, c'est la prise de ce type de médicament en dehors d'un contexte médical le justifiant.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Non, je ne pense pas que l'on puisse mourir de l'apnée du sommeil car une apnée trop importante (longue) déclenche des alarmes dnas le cerveau et lui commande de te réveiller pour que tu puisses penser à respirer au moins par la bouche.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Il m'avait fait faire une batterie d'examens et, finalement, c'est à l'hôpital cardiologique que la cardiologue m'a aiguillé sur un autre hôpital pour faire l'analyse du sommeil.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Si vous n'avez fait aucune rechute en 10 ans, vous êtes considéré comme guéri et en l'absence de comorbidité, vous n'êtes pas plus à risque d'être infecté par le coronavirus.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Je scotche mon masque.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonsoir,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Depuis que je suis petit je fais des apnées du sommeil.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "ok, mais mais cette oppression que je ressens , peut elle venir de cet appareil?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je pense que c'est CPAP mais je m'y connais pas trop.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "j'ai cherché sur internet et j'ai trouvé un médicament que le médecin m'a prescrit cela fait 2 mois que je prends 50 mg de surmontil 2 heures avant de me coucher et ça va beaucoup mieux cela a régulé mon horloge biologique et supprimé ma phobie d'aller me coucher", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Tout est très bien, les apnées ont même diminué, je suis à 0.3 par heure.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Si fatigue dans la journée, il faut éviter les boissons excitantes dans la journée pour être éveillée, un repas plus léger le soir et une vie privée et professionnelle moins stressantes.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Merci de votre réponse", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "J'ai 24 ans.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Il n'y a pas de paramètres de fréquence sur les CPAP.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Par là même, consulter un psychothérapeute pourrait te faire du bien car tu sembles vraiment trop stressé pour continuer à rester dans cette situation.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "J'ai le même soucis depuis un moment.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Aussi, si les exercices aident un peu, mais qu'ils ne sont pas bien maîtrisés, ils vont peut-être mener à un résultat négatif au test de sommeil sans que votre problème soit réglé de façon permanente et adéquate pour autant.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "C'est fou...", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Pourtant j'utilise la machine en moyenne sept heures par nuit.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Et j’ai quelque douleurs intercostales parfois avec toute cette histoire je psychoter un peu Je me demande si finalement c’est une tumeur maligne et que ça se développe.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "negatif"}
+{"texte": "c'est déjà fait, j'ai revu mon pneumologue et il ne comprends, il m'a fait des examens et ne trouve rien d’anormal, nous avons changé la pression avec le technicien et toujours le même problème.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Bien cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Tant mieux dans un sens...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "positif"}
+{"texte": "C'est sans doute pour cela que tu as été orienté vers un spécialiste en vue d'un enregistrement du sommeil.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Cela ne m'arrive que très rarement.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "et je mets du temps à réaliser que c'est mon coeur ou ma respiration qui est arrêté.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "J'ai la même sensation.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Avant tout se mettre à un régime alimentaire plus sain et voir votre médecin traitant pour en parler.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Le problème de mes apnées: j' avais le nez bouché, alors je le débouche tous les soirs et maintenant tout va bien.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "positif"}
+{"texte": "J'ai pris quelques séances pour les maîtriser bien, avec les instructions du physio, car il y a plusieurs détails qui font toute la différence (que seuls un physio peut corriger correctement).", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Du coup, aujourd'hui, je me suis forcée à régler correctement le masque avec la bande velcro au dessus de la tête.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je suis une jeune maman de 22 ans, étudiante.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Mon nez, lui, n’apprécie pas vraiment le contact du masque et était très douloureux les premiers jours, un peu moins maintenant mais quand même encore.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Résultat, il faut forcer avec un appareil qui en quelque sorte aidera le nez et la bouche a mieux inspirer, ou qui forcera la respiration quand ton corps n'insiste pas pour mieux respirer au niveau de ta gorge ( du moins c'est ce que j'ai compris du pneumologue ), est-ce une maladie moderne ?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Y en a t-il aussi pour nous?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Problème tres compliqué d'un point de vue médical.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "negatif"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "bonjour à toutes/s, voila je me présente dans les grandes lignes..", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "J'ai un humidificateur il va falloir que je m'en serve.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Et la deuxième est : suis-je une personne à risque du fait de mon opération il y a trois semaines?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonjour j'ai revu depuis mon pneumologue il m'a mis ma machine en pression fixe à 10 mais je ne vois toujours pas d'amélioration...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "La PPC reste le meilleur outil pour lever les apnées du sommeil, surtout dans les cas sévère.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "C'est moi qui a parlé à mon médecin des apnées mais il pensait le contraire car je ne ronfle pas..", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Bon, pour ma part, j'ai trouvé une solution.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "2 mm de propulsion ne me semble pas énorme.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Pour ma part je prends du prednisone avant chaque chimiothérapie hebdomadaire de Taxol.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "C'est horrible de penser à quel moment je retire le masque.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Au moment de m'endormir, j'avais la sensation d'une porte qui se ferme dans ma gorge et je me réveillais à chercher de l'air en urgence.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Avez-vous trouvé la cause du retrait du masque dans la nuit ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Moi en plus de 4 ans je n'ai jamais eu de soucis et je n'en avais jamais entendu parler...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "cependant, mon compagnon avec qui je dors chaque nuit me dit que je parle la nuit, (depuis mon enfance).", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Respectez scrupuleusement les mesures barrières, comme chacun doit le faire !", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Il s'agit de micro-eveils qui ne reveillent pas et qui sont inconsients.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Votre mère semble avoir une fragilité pulmonaire, peut-être en raison d'une pathologie pulmonaire chronique sous-jacente.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Sans le besoin de faire de sieste pendant la journée.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Apparemment cela pourrait être un symptôme d’apnée du sommeil...", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Ou alors faut-il simplement s'habituer à la machine ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Merci pour votre réponse,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "Si vous voulez quand même que je vous explique les exercices, écrivez-moi en privé et je vous les décrirai.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonsoir,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "En effet, je n'arrive pas a savoir pourquoi je me lève tous les matin avec des douleurs dans le corps, mais sur tout dans le dos ?", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Et quelle sont les traitements ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Moi aussi j'ai de très grande fatigue toute la journée , je peine à dormir et jentend jamais mes réveilles.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "J'ai 32 ans et voilà que depuis 3 jours je bloque systématiquement ma respiration à l'endormissement, du coup je me reveille en sursaut et je me retrouve ainsi dans l'impossibilité totale de trouver le sommeil !", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Suis je une personne à haut risque comme les personnes en traitement ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonsoir", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Bien évidemment, ma mère depuis à souvent des glaires, du mucus qu'elle doit cracher pour bien \"libérer\" ses poumons, cela fait elle une personne à risque ?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "C'est une raison semblable qui m'a amenée à consulter une clinique du sommeil.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bonjour à tous,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "J'espere que j'ai bien repondu!!", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "Par contre je ne le tiens pas plus de 3 ou 4 heures : je me réveille et n'arrive plus à m'endormir si je le garde ou en bougeant et le déplaçant je fais augmenter la pression et me retrouve avec \"un ventilateur\" sur le visage...", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Et merci pour vos remarques et témoignages!", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "ce qui devait arriver ...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Ils se sont rendus compte lors d'une polysomnographie et autres examens (je ne me rappelle pas des autres types désolé) que j'avais des apnées du sommeil moyennes (au dessus de la moyenne sans que ça soit sévère) et j'ai été appareillé vers mes 14-15 ans mais je retirais sans arrêt le masque, et je n'ai pas réussi à garder la machine.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Merci d'avance", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Bonjour à tous.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Alors à moins de tomber sur 2 menteurs, j'aurai tendance à les croire.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "positif"}
+{"texte": "Je retire mon masque pendant la nuit je le fais inconsciemment et le souci c'est que je me réveille sans masque sur le nez.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "La chimiothérapie peut effectivement créer une immunodépression, ce que ne provoque pas le cancer lui-même, du moins vis à vis des microbes.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "j'ai une sep de chez aliseo qui etait fourni avec un masque nasal, que je n'ai po supoporter , probleme d'etouffement en cas de bouche ouverte.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "Voilà en gros mon problème : depuis 20 joursje suis appareillée pour apnées du sommeil, donc je dors avec PPC et masque nasal.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bien cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Le problème est apparu assez rapidement mais c'est depuis la même chose toutes les nuits et tous les matins.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "J'avoue que ce masque est une muselière pour animal bien dressé.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Merci de vos conseils si vous en avez", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "apparemment c’est peu probable que je souffre d’apnée du sommeil.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "negatif"}
+{"texte": "Merci d'avance pour vos réponses et bravo pour cette belle idée de forum.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "Ce qui ne fut pas le cas, nous venons de refaire un test dans la nuit de jeudi a vendredi ...", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "mais il est vrai que je \"trace\" d'ailleurs en passant, je vous informe que j'ai souvent des palpitations au niveau du coeur ...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "J'ai effectivement quelques kilo à perdre, mais je pense que si c'était lié à l’hygiène de vie, ça serait toutes les nuits!", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Mon système immunitaire est-il encore faible, 2 mois après la fin de cette chimio ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "N’y aurait il pas d’erreur dans les chiffres ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Comme je l'ai écrit précédemment, je suis incapable de dormir sur le dos.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "vous vous endormirez forcément, ne vous inquiétez pas.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "positif"}
+{"texte": "Pour l'hyperactivité ma fille ne l'est pas, juste depuis quelques temps elle se déconcentre, par moment n'arrive plus a tenir en place n'arrive pas a se calmer, et ceci petit à petit , apparement cela viendrais de son apnée du sommeil,", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "C'est un véritable problème de santé publique qui n'est encore pas suffisament pris en compte.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Je m'endors sur le côté.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Il me semble avoir déja entendu parler ou lu sur internet d'appareillage pour enfant comme celui des adultes.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Liline, oui je connait la différence entre apnnées obstructives (le systeme respiratoire fonctionne mais l'air ne passe pas = obstruction) et l'apnée cenrtal (le système respiratoire s'arrêtte totalement= pas d'effort respiratoire)", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonjour, Fabrice.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "J'ai donc fait 3 nuits blanches puis j'ai craqué, je suis allé voir le médecin qui m'a prescrit du Zolpidem (stilnox) et cette nuit enfin j'ai réussi à dormir 5 heures, quel soulagement ...", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "positif"}
+{"texte": "J'ai également essayé un masque narinaire, mais là, c'est le dessous de mon nez qui devient très douloureux et comme je me mouche souvent, pas question d'abimer cette partie là.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "S'habituer à l'appareillage est souvent une phase délicate pour les patients dans votre situation.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "bonjour", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Pour protéger votre mère, il faut bien sûr respecter strictement les mesures barrières et lui conseiller de bien se laver les mains après avoir rangé les courses, de ne pas se toucher le visage pendant qu'elle range ses courses et tant qu'elle ne sera pas bien lavée les mains.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Contexte : mon mari sort d'un \"épisode grippal\" : il n'a pas fait de test et son médecin lui a expliqué qu'il avait eu, peut-être, une forme atténuée de coronavirus ou d'une grippe classique.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Je suis appareillée depuis maintenant 5 mois et j'ai une recrudescence de mes douleurs au niveau des cervicales et haut du dos.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Wow j'avais jamais entendu parlé de truc comme ça.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Est ce que si je maigris vous pensez que ça peut s’arranger ?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Cordialement,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Et enfin dernière chose, j'ai le sommeil très léger, j'ai peur de ne pas pouvoir trouver le sommeil lors du test à la clinique, je suis capable de faire une nuit blanche, ce qui ne permettra pas d'objectivé le phénomène :( Etes vous arrivez à dormir ?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Cela vous est-il arrivé de rechuté?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "bonsoir, j'ai 59 ans , je ne dors plus ou très peu fatiguée mais jamais sommeil jusqu'à avoir des malaises je suis sous PPC (traitement apnées), depuis l'âge de 20 ans je prends des psychotropes, je redoute l'heure du couché, je suis désespérée mon médecin ne sait pas quoi faire et je ne vis plus, je reste à la maison j'ai mal partout, je ne peux rien faire, j'attends vos conseils merci", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Pour ce qui est des micro-réveils, pour moi ils sont réels, je suis tout à fait conscient mais je me rendors sans problèmes.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "mon pneumpologue m'a dit de m'accrocher qu'en principe il fallait compter 1 mois pour s'accoutumer.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "bon courage", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Aussi il me propose de mettre un masque pour m'oxygéner la nuit seulement un de mes cousins, lui-même médecin à l'étranger nous avait fait savoir que cela est de l'arnaque aussi je suis assez embêté pour savoir que choisir en terme de traitement sachant que je suis très fatigué le matin et que cela a une influence sur mon diabète.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Maintenant j'ai la bouche sèche, ce qui me réveille aussi.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "bonjour", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "J'ai essayé les compresses, ça protège plus ou moins de la douleur mais c'est tout.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Suivi en neurophysiologie, actuellement il ne fait plus d'apnée.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J'arrive à m'endormir dans cette position mais je finis toujours par me remettre sur le côté après.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Un réglage de l'appareil est peut-être nécessaire.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Mais maintenant quand je mets mon masque j’appréhende.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "chocolat, café, etc.?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Grosse dépression et se qui s'en suit, le preuve je le vie.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Quand on parle de la mort, le sujet sous-entend bien que c'est de celle de l'apnéiste dont on parle, pas celle d'éventuels dommages collatéraux dus à ce même apnéiste.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Voilà, je pense donc sincèrement que je vais laisser cet appareil dans sa boîte d’autant plus que je ne me vois pas dormir avec ça lorsque ma femme sera là.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "j'ai encore plus de problème de santé depuis et je suis toujours aussi fatigué..je faisais 44 apnées par heure..Et Maintenant,soit disant 0,2 a 0,9..Mais toujours aussi fatigué..pour moi,c'est du pipeau leur truc..", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "et j’ai également parfois (mais pas toutes les nuits non plus) des réveils en sursaut lors de l’endormissement car je me sens tellement fatiguée que j’oublie de respirer et je m’étouffe.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Le fait de rester confiné en étant malade chez soi m inquiète , nous sommes loin du système chinois qui a construit rapidement des hôpitaux .", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "Sans même parler de ceci, dans le cas de personnes vulnérables en cours de traitement, ne serait il pas judicieux de faire un test ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Fabrice", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Si votre mari est sorti de cet épisode \"grippal\", il n'est plus contagieux.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "J’ai 29 ans, en surpoids de 20 kg, fumeur (20 cig/jour) et assez sédentaire , mon médecin traitant, vu que j’ai de nombreux cas de problèmes cardiaques dans ma famille a un jour décider de m’envoyer chez un cardiologue.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Du coup j'ai lancé une petite recherche sur google et là, stupefaction, cet effet secondaire est mentionné sur plusieurs sites parlant de PPC dont le site d'un orl!!!!", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "positif"}
+{"texte": "L'ennui c'est que c'est de l'apnée du sommeil quand même, il y en a 3 sortes renseigne toi c'est assez simple et claire.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Courage!", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "A-t-on plus de risques de complications si on l'attrape?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Vous utilisez quel type de masque ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Tu demandes a ton medecin generaliste une aide pour voir un pneumologue et ensuite t'auras des aides pour avoir des testes de sommeil.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Bonsoir :)", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Ou qui s'y connait bien en la matière...", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Comme dit Marie, il ne faut pas s'inquiéter pour le test de sommeil.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Aussi, fréquentant beaucoup les sites de PPC aux USA, c'est un sujet très peu rapporté.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Salut, j' ai le meme probleme depuis des années, j'ai consulte mon medecin qui m'a envoyé vers un spécialiste du sommeil.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "j'ai du m'arrèter de travailler (retraitée en activité 2 jours/semaine) je n'en peux plus", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "As tu essayé avec l'ajout d'un humidificateur sur la PPC?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Ma maman a été opérée mardi dernier d'un cancer du sein.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Il a fini par me faire une lettre à donner au pneumologue car j'ai un peu les nerfs qui ont lâché devant lui (la honte...), car je suis vraiment très fatiguée, je dors très mal (je suis insomniaque), n'arrive pas à dormir plus de 3h d'affilées mais pour lui c'est du à mon stress...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "par contre, je ne fume pas, ne boit pas d'alcool.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Une nuit en clinique, branchée.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Pourrais-ce être de l'apnée du sommeil?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "mon prestataire m'a lors donné un masque faciale , c'est nettement mieux.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "positif"}
+{"texte": "Mais celle-ci étant terminée depuis près de 2 mois, ces défenses sont certainement revenues à la normale, ce d'autant que la curiethérapie ne les perturbe pas et qu'à 32 ans, vos capacités de récupération sont optimales.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "je n'ai pas pris ma température car j'ai aps de thermo, mais je pense que j'ai de la fièvre à ce moment là.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Je voulais savoir si vous aviez trouvé une solution et si vous aviez recueilli des témoignages?", "intention": "recherche_information", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Ils pensent peut-être que c'est dû à mes soucis de santé que j'ai eu à la naissance (je suis né par le siège, j'ai eu une hypoxie du cerveau à la naissance, et je prends un traitement hormonal substitutif pour vivre normalement).", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Vous arrivez à vous endormir avec le masque ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Avez-vous essayé le lit incliné (ou lit égyptien) ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Même si sa date un peu, je voulais juste vous dire que moi même faisant de l'apnée du sommeil, mon médecin m'avais dit que si j'en faisais de jour (éveillé) c'est que la cause était cérébral ;)", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Merci !", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "je suis moi même appareillée depuis 3 ans.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Moi ça va m'arrive beaucoup moins souvent, et qd ça m'arrive, c a chaque fois pendant une période ou je vai justement etre en manque de sommeil, de stress, ou je fume trop sans faire de sport.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Merci.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Quant aux contacts avec les soignants, ceux-ci font de leur mieux pour ne pas être eux-mêmes vecteurs du virus.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Il m'a conseillée de dormir sur le côté et non sur le dos parce que je fais encore des apnées importantes.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J'espère que ce n'est pas le cas.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "je rejoind l'avis d'aller consulter un neurologue, ça me fait un peu penser à une forme \"light\" de la narco", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Et comme je retire mon masque pendant que je dors, le lendemain, je suis crevée mais à un point !", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Dès lors que votre père n'a pas été en contact direct avec une personne diagnostiquée positive pour le coronavirus, il n'y a pas lieu de lui faire le test.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Rester dans l'incertitude est très difficile pour les parents...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Qu'en pensez-vous ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Au début cela allait très bien, mais cette sensation d’étouffement à l’endormissement est réapparue, c’est très désagréable car on a l’impression que l’on va mourir.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "croyez moi c'est ennuyeux ...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "J’ai enregistré des balados que j'ai trouvé sur passeport santé.net", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bien cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Une précision cependant : les défenses immunitaires de votre fils peuvent n'être que faiblement diminuées malgré la chimio auquel cas, son risque serait faible.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "comme toi , j'ai un nombre elevé d'apnées et hypopnées 83/heures.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Ce sont également les symptômes suivant qui m'ont fait penser à un potentiel problème d'ADS:", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Merci de me faire part de votre experience et de me dire si vous aussi vous ressentez une gêne plus ou moins forte, durant la journée, au niveau des poumons.", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Les résultats ont révélé 17 apnée par heure.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Pour ce qui est de votre arrêt de travail, ne vous est-il pas possible de le faire prolonger un peu ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Merci, bien à vous.", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "à partir de quels moments dois je contacter mon médecin dès que j'ai plus de 38 de fièvre ?", "intention": "recherche_information", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "(mâchoire inversée : cause de l'apnée de sommeil).", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Cela vient peut-être d'autre chose.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Aujourd'hui j'ai vu l'orl pour parler des résultats du test ...", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bien sûr qu'il faut utiliser l'humidificateur....", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J'en suis à 2mm de propulsion depuis le début.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "J'ai effectuée les tests d'apnée du sommeil suite à un épuisement persistant.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "J'ai simplement contrôlé ma respiration, en la ralentissant et en évitant d'expirer sans arrêt (ce que le stress me faisait faire inconsciemment auparavant).", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Connais tu la différence entre apnée obstructive et apnée centrale?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Et je ne me sens pas plus reposée.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Je me demande s’il fallait creuser sur cette piste ou si ça n’a rien à voir...", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "c'est vraiment dur ca me fait peur alors quand je me reveille pour respirer je n'arrive plus à dormir parce que j'ai peur d'étouffer encore ..", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "..J'en doute, ou on vous à mal documenté!!!!!", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "negatif"}
+{"texte": "J’ai été opéré le 21 février d’une tumeur du testicule par orchidectomie.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Bref je sais plus quoi penser...", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "negatif"}
+{"texte": "Il faut juste adopter une hygiène de vie un peu plus saine.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Résultat : Aucun changement", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Enfin bon, je fais des efforts et espère bien que tout ça va s'arranger!", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "positif"}
+{"texte": "Bonjour,", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Pour lui, ses collègues \"psychotent\" et ont peur inutilement.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Je dirais que c un pbm de conscience du corps et de transmission de l'information mais je sais absolument pas ce que ça pourrai etre exactement, les solutions...", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Changement du matelas (en pensant que l'appareil PPC n'avait rien à voir).", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Honnêtement, je ne pense pas.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Merci pour votre réponse", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Bonjour et bienvenue au club", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "positif"}
+{"texte": "Comme le dit catherine, ils faut aussi voir un orthodentiste pour le probleme du palet souvent trop étroit.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Pendant l'apnée la respiration est bloquée aussi bien au niveau de la bouche que du nez puisque l'obstruction se situe au niveau du larynx en arrière de la langue.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "je l'avais remis dans son emballage.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Donc je n’ai pas eu de réelle réponse.", "intention": "partage_experience", "objet_medical": "traitement", "sentiment": "non"}
+{"texte": "Je note que malgré le fait que je dors vraiment beaucoup mieux je suis nettement plus fatiguée depuis que j'utilise cet appareil et ça devient difficile à vivre.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Bien cordialement", "intention": "fonction_phatique", "objet_medical": "NA_CATEGORY", "sentiment": "non"}
+{"texte": "Tout dépend bien sûr de l'état de votre système immunitaire.", "intention": "partage_experience", "objet_medical": "diagnostique", "sentiment": "non"}
+{"texte": "Sauf que je n’ai pas confiance en mon médecin, j’ai des problèmes au niveau de mes amygdales, angines régulières, gonflement en permanence de ces dernières, problème qui empire depuis plusieurs années et il m’a juste dit de mettre un peu d’antiseptique dans ma gorge...", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Les résultats ne sont vraiment pas bon , 45 apnées par heures en moyenne !!!!!!", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "negatif"}
+{"texte": "Mon mari au début de l'utilisation avait atteint des sommets en apnées.", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Une petite question, sait on vraiment comment se transmet ce virus et ne limitons pas son impact , y aura il un effet boomerang dans plusieurs mois?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "Cet état terrible vous parle t il?", "intention": "recherche_information", "objet_medical": "symptome", "sentiment": "non"}
+{"texte": "hier soir j'ai mis mon masque a 23h me suis levée a 4h (wc) je ne l'avais plus et ma machine etait eteinte.....entre deux sommeil j'dois l'enlever j'pense ...j'l'ai remis jusqu'a 6h45(heure du levé) et j'ai super bien dormi.....", "intention": "partage_experience", "objet_medical": "symptome", "sentiment": "positif"}
