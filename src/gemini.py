@@ -70,8 +70,8 @@ def create_few_shot_prompt(text_to_classify, few_shot_examples):
     """
     few_shot_section = ""
     for ex in few_shot_examples:
-        sentiment_present = ex['niveau3_1']
-        polarity = ex['niveau3_2'] if sentiment_present == 'oui' else 'neutre' # 确保非情感文本的极性是 'neutre'
+        # 现在 few_shot_examples 中的 'niveau3' 直接包含情感标签
+        emotion_label = ex['niveau3']
 
         few_shot_section += f"""
     **示例输入 (Exemple d'entrée):**
@@ -82,10 +82,7 @@ def create_few_shot_prompt(text_to_classify, few_shot_examples):
     {{
         "intention_generale": "{ex['niveau1']}",
         "objet_medical": "{ex['niveau2']}",
-        "sentiment_analysis": {{
-            "sentiment_present": "{sentiment_present}",
-            "polarity": "{polarity}"
-        }}
+        "emotion": "{emotion_label}"
     }}
     ```
     """
@@ -105,11 +102,13 @@ def create_few_shot_prompt(text_to_classify, few_shot_examples):
         * "diagnostique" (诊断)
         * "NA_CATEGORY" (不相关) (如果文本内容不涉及具体的医疗对象)
 
-    3.  **情感分析级别 (Niveau sentiment analysis)**：
-        * `sentiment_present`: "oui" (是) 或 "non" (否)
-        * `polarity`: "positif" (积极), "négatif" (消极) 或 "NA_CATEGORY" (不相关) (仅当 `sentiment_present` 为 "oui" 时需要填写 `polarity`)
+    3.  **情感级别 (Niveau emotion)**：
+        * "positif" (积极)
+        * "negatif" (消极)
+        * "non" (无情感)
+        * "NA_CATEGORY" (不相关)
 
-    请确保输出严格为JSON格式，包含 `intention_generale`, `objet_medical`, `sentiment_analysis` (包含 `sentiment_present` 和 `polarity`) 这三个顶层键。
+    请确保输出严格为JSON格式，包含 `intention_generale`, `objet_medical`, `emotion` 这三个顶层键。
     如果某个类别不适用，请将其设为 "NA_CATEGORY"。
 
     ---
@@ -124,12 +123,10 @@ def create_few_shot_prompt(text_to_classify, few_shot_examples):
 # --- 6. 对测试集全部数据进行分类推理 ---
 predicted_niveau1 = []
 predicted_niveau2 = []
-predicted_niveau3_1 = []
-predicted_niveau3_2 = []
+predicted_niveau3 = [] # 更改为单个 niveau3
 actual_niveau1 = test_df['niveau1'].tolist()
 actual_niveau2 = test_df['niveau2'].tolist()
-actual_niveau3_1 = test_df['niveau3_1'].tolist()
-actual_niveau3_2 = test_df['niveau3_2'].tolist()
+actual_niveau3 = test_df['niveau3'].tolist() # 从新的 'niveau3' 列获取实际标签
 
 # 获取测试集总样本数
 total_test_samples = len(test_df)
@@ -174,13 +171,7 @@ for index, row in test_df.iterrows():
 
             predicted_niveau1.append(classified_result.get('intention_generale', '未知'))
             predicted_niveau2.append(classified_result.get('objet_medical', '未知'))
-
-            sentiment_analysis = classified_result.get('sentiment_analysis', {})
-            predicted_niveau3_1.append(sentiment_analysis.get('sentiment_present', '未知'))
-            polarity = sentiment_analysis.get('polarity', '未知')
-            if sentiment_analysis.get('sentiment_present') == 'non' and polarity == '未知':
-                polarity = 'neutre'
-            predicted_niveau3_2.append(polarity)
+            predicted_niveau3.append(classified_result.get('emotion', '未知')) # 从 'emotion' 键获取
 
             # 如果成功，跳出重试循环
             break
@@ -197,15 +188,13 @@ for index, row in test_df.iterrows():
                 print(f"原始模型输出:\n{response.text if 'response' in locals() else '无响应'}")
                 predicted_niveau1.append('未知')
                 predicted_niveau2.append('未知')
-                predicted_niveau3_1.append('未知')
-                predicted_niveau3_2.append('未知')
+                predicted_niveau3.append('未知') # 失败时也添加 '未知'
                 break # 跳出重试循环，处理下一个样本
     else: # 如果所有重试都失败了
         print(f"处理文本 ID {row['ID']} 在 {max_retries} 次重试后仍然失败，跳过此项。")
         predicted_niveau1.append('未知')
         predicted_niveau2.append('未知')
-        predicted_niveau3_1.append('未知')
-        predicted_niveau3_2.append('未知')
+        predicted_niveau3.append('未知') # 失败时也添加 '未知'
 
     # 更新进度显示
     if (index + 1) % 10 == 0 or (index + 1) == total_test_samples:
@@ -218,8 +207,7 @@ print("\n--- 分类推理完成 ---")
 # 注意：这里的 actual_niveauX 列表不再需要切片，因为 predicted 列表现在包含了所有数据
 actual_niveau1_full = actual_niveau1
 actual_niveau2_full = actual_niveau2
-actual_niveau3_1_full = actual_niveau3_1
-actual_niveau3_2_full = actual_niveau3_2
+actual_niveau3_full = actual_niveau3 # 更改为单个 niveau3
 
 
 def evaluate_category(actual_labels, predicted_labels, category_name):
@@ -250,15 +238,10 @@ def evaluate_category(actual_labels, predicted_labels, category_name):
         # 只使用指定的标签
         all_possible_labels = ['symptome', 'traitement', 'diagnostique', 'NA_CATEGORY']
 
-    # 对于 niveau3.1
-    elif category_name == "情感存在 (Niveau 3.1)":
+    # 对于 niveau3 (情感)
+    elif category_name == "情感级别 (Niveau 3)":
         # 只使用指定的标签
-        all_possible_labels = ['oui', 'non']
-
-    # 对于 niveau3.2
-    elif category_name == "情感极性 (Niveau 3.2)":
-        # 只使用指定的标签
-        all_possible_labels = ['positif', 'negatif', 'neutre', 'NA_CATEGORY']
+        all_possible_labels = ['positif', 'negatif', 'non', 'NA_CATEGORY']
     else:
         all_possible_labels = sorted(list(set(filtered_actual + filtered_predicted))) # 备用方案
 
@@ -272,7 +255,6 @@ def evaluate_category(actual_labels, predicted_labels, category_name):
 # 评估所有数据
 evaluate_category(actual_niveau1_full, predicted_niveau1, "意图级别 (Niveau 1)")
 evaluate_category(actual_niveau2_full, predicted_niveau2, "医疗对象级别 (Niveau 2)")
-evaluate_category(actual_niveau3_1_full, predicted_niveau3_1, "情感存在 (Niveau 3.1)")
-evaluate_category(actual_niveau3_2_full, predicted_niveau3_2, "情感极性 (Niveau 3.2)")
+evaluate_category(actual_niveau3_full, predicted_niveau3, "情感级别 (Niveau 3)")
 
 print("\n--- 评估完成 ---")

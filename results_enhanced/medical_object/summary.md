@@ -2,117 +2,493 @@
 
 **Labels:** NA_CATEGORY, diagnostique, symptome, traitement
 
-## TF-IDF_MultinomialNB_Enhanced
+## BoW_SVM_Enhanced
 
-- **Weighted F1 Score:** 0.6639
-- **Accuracy:** 0.6630
-- **Best Parameters:** {'classifier__alpha': 0.1}
+- **Weighted F1 Score:** 0.6640
+- **Accuracy:** 0.6667
+- **Best Parameters:** {'classifier__C': 1, 'classifier__kernel': 'linear'}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.7692307692307693,
+        "recall": 0.5,
+        "f1-score": 0.6060606060606061,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.6190476190476191,
+        "recall": 0.7878787878787878,
+        "f1-score": 0.6933333333333334,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.6153846153846154,
+        "recall": 0.5925925925925926,
+        "f1-score": 0.6037735849056604,
+        "support": 27.0
+    },
+    "accuracy": 0.6666666666666666,
+    "macro avg": {
+        "precision": 0.7509157509157509,
+        "recall": 0.6844035594035593,
+        "f1-score": 0.7065611118441307,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.6830870279146142,
+        "recall": 0.6666666666666666,
+        "f1-score": 0.6639613491402692,
+        "support": 87.0
+    }
+}
+```
+
+## BoW_LogisticRegression_Enhanced
+
+- **Weighted F1 Score:** 0.6585
+- **Accuracy:** 0.6667
+- **Best Parameters:** {'classifier__C': 1, 'classifier__solver': 'liblinear'}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.75,
+        "recall": 0.45,
+        "f1-score": 0.5625,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.6363636363636364,
+        "recall": 0.8484848484848485,
+        "f1-score": 0.7272727272727273,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.6,
+        "recall": 0.5555555555555556,
+        "f1-score": 0.5769230769230769,
+        "support": 27.0
+    },
+    "accuracy": 0.6666666666666666,
+    "macro avg": {
+        "precision": 0.7465909090909091,
+        "recall": 0.6777958152958152,
+        "f1-score": 0.6974431818181819,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.6804597701149425,
+        "recall": 0.6666666666666666,
+        "f1-score": 0.6584880636604774,
+        "support": 87.0
+    }
+}
+```
+
+## TF-IDF_ngram_SVM_Enhanced
+
+- **Weighted F1 Score:** 0.6505
+- **Accuracy:** 0.6552
+- **Best Parameters:** {'classifier__C': 10, 'classifier__kernel': 'linear'}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.6428571428571429,
+        "recall": 0.45,
+        "f1-score": 0.5294117647058824,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.6666666666666666,
+        "recall": 0.7878787878787878,
+        "f1-score": 0.7222222222222222,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.5714285714285714,
+        "recall": 0.5925925925925926,
+        "f1-score": 0.5818181818181818,
+        "support": 27.0
+    },
+    "accuracy": 0.6551724137931034,
+    "macro avg": {
+        "precision": 0.7202380952380951,
+        "recall": 0.6719035594035594,
+        "f1-score": 0.6891322729558025,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.658456486042693,
+        "recall": 0.6551724137931034,
+        "f1-score": 0.6504850344606937,
+        "support": 87.0
+    }
+}
+```
+
+## TF-IDF_LogisticRegression_Enhanced
+
+- **Weighted F1 Score:** 0.6490
+- **Accuracy:** 0.6552
+- **Best Parameters:** {'classifier__C': 10, 'classifier__solver': 'liblinear'}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.6428571428571429,
+        "recall": 0.45,
+        "f1-score": 0.5294117647058824,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.675,
+        "recall": 0.8181818181818182,
+        "f1-score": 0.7397260273972602,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.5555555555555556,
+        "recall": 0.5555555555555556,
+        "f1-score": 0.5555555555555556,
+        "support": 27.0
+    },
+    "accuracy": 0.6551724137931034,
+    "macro avg": {
+        "precision": 0.7183531746031746,
+        "recall": 0.6702200577200577,
+        "f1-score": 0.6869425676839054,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.6566912972085386,
+        "recall": 0.6551724137931034,
+        "f1-score": 0.6489739386179965,
+        "support": 87.0
+    }
+}
+```
+
+## TF-IDF_SVM_Enhanced
+
+- **Weighted F1 Score:** 0.6342
+- **Accuracy:** 0.6322
+- **Best Parameters:** {'classifier__C': 10, 'classifier__kernel': 'linear'}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.5789473684210527,
+        "recall": 0.55,
+        "f1-score": 0.5641025641025641,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1-score": 0.6666666666666666,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.5517241379310345,
+        "recall": 0.5925925925925926,
+        "f1-score": 0.5714285714285714,
+        "support": 27.0
+    },
+    "accuracy": 0.632183908045977,
+    "macro avg": {
+        "precision": 0.6993345432546885,
+        "recall": 0.666600529100529,
+        "f1-score": 0.6813186813186813,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.6376494148569998,
+        "recall": 0.632183908045977,
+        "f1-score": 0.6341627720938066,
+        "support": 87.0
+    }
+}
+```
+
+## TF-IDF_ngram_DecisionTree_Enhanced
+
+- **Weighted F1 Score:** 0.6286
+- **Accuracy:** 0.6322
+- **Best Parameters:** {'classifier__max_depth': None}
 ```json
 {
     "NA_CATEGORY": {
         "precision": 0.8571428571428571,
-        "recall": 0.6,
-        "f1-score": 0.7058823529411765,
-        "support": 10.0
+        "recall": 0.8571428571428571,
+        "f1-score": 0.8571428571428571,
+        "support": 7.0
     },
     "diagnostique": {
-        "precision": 0.65,
-        "recall": 0.65,
-        "f1-score": 0.65,
+        "precision": 0.625,
+        "recall": 0.5,
+        "f1-score": 0.5555555555555556,
         "support": 20.0
     },
     "symptome": {
-        "precision": 0.6764705882352942,
-        "recall": 0.696969696969697,
-        "f1-score": 0.6865671641791045,
+        "precision": 0.6153846153846154,
+        "recall": 0.7272727272727273,
+        "f1-score": 0.6666666666666666,
         "support": 33.0
     },
     "traitement": {
-        "precision": 0.6129032258064516,
-        "recall": 0.6551724137931034,
-        "f1-score": 0.6333333333333333,
-        "support": 29.0
+        "precision": 0.6,
+        "recall": 0.5555555555555556,
+        "f1-score": 0.5769230769230769,
+        "support": 27.0
     },
-    "accuracy": 0.6630434782608695,
+    "accuracy": 0.632183908045977,
     "macro avg": {
-        "precision": 0.6991291677961508,
-        "recall": 0.6505355276907001,
-        "f1-score": 0.6689457126134036,
-        "support": 92.0
+        "precision": 0.6743818681318682,
+        "recall": 0.6599927849927849,
+        "f1-score": 0.6640720390720389,
+        "support": 87.0
     },
     "weighted avg": {
-        "precision": 0.6703168644736998,
-        "recall": 0.6630434782608695,
-        "f1-score": 0.6639370284129226,
-        "support": 92.0
+        "precision": 0.6322723253757737,
+        "recall": 0.632183908045977,
+        "f1-score": 0.6285980941153355,
+        "support": 87.0
+    }
+}
+```
+
+## TF-IDF_ngram_LogisticRegression_Enhanced
+
+- **Weighted F1 Score:** 0.6247
+- **Accuracy:** 0.6322
+- **Best Parameters:** {'classifier__C': 10, 'classifier__solver': 'liblinear'}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.6153846153846154,
+        "recall": 0.4,
+        "f1-score": 0.48484848484848486,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.6341463414634146,
+        "recall": 0.7878787878787878,
+        "f1-score": 0.7027027027027027,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.5555555555555556,
+        "recall": 0.5555555555555556,
+        "f1-score": 0.5555555555555556,
+        "support": 27.0
+    },
+    "accuracy": 0.632183908045977,
+    "macro avg": {
+        "precision": 0.7012716281008964,
+        "recall": 0.6501443001443001,
+        "f1-score": 0.6665459165459167,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.634879558344655,
+        "recall": 0.632183908045977,
+        "f1-score": 0.6246861764103143,
+        "support": 87.0
+    }
+}
+```
+
+## TF-IDF_MultinomialNB_Enhanced
+
+- **Weighted F1 Score:** 0.6184
+- **Accuracy:** 0.6207
+- **Best Parameters:** {'classifier__alpha': 0.1}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1-score": 0.5,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.6756756756756757,
+        "recall": 0.7575757575757576,
+        "f1-score": 0.7142857142857143,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.5416666666666666,
+        "recall": 0.48148148148148145,
+        "f1-score": 0.5098039215686274,
+        "support": 27.0
+    },
+    "accuracy": 0.6206896551724138,
+    "macro avg": {
+        "precision": 0.6793355855855855,
+        "recall": 0.649050024050024,
+        "f1-score": 0.6617916397328162,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.6197965206585896,
+        "recall": 0.6206896551724138,
+        "f1-score": 0.6183640564979308,
+        "support": 87.0
     }
 }
 ```
 
 ## BoW_MultinomialNB_Enhanced
 
-- **Weighted F1 Score:** 0.6417
-- **Accuracy:** 0.6413
-- **Best Parameters:** {'classifier__alpha': 1.0}
+- **Weighted F1 Score:** 0.6178
+- **Accuracy:** 0.6207
+- **Best Parameters:** {'classifier__alpha': 0.5}
 ```json
 {
     "NA_CATEGORY": {
         "precision": 1.0,
-        "recall": 0.6,
-        "f1-score": 0.75,
-        "support": 10.0
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
     },
     "diagnostique": {
-        "precision": 0.55,
-        "recall": 0.55,
-        "f1-score": 0.55,
+        "precision": 0.47058823529411764,
+        "recall": 0.4,
+        "f1-score": 0.43243243243243246,
         "support": 20.0
     },
     "symptome": {
-        "precision": 0.6578947368421053,
+        "precision": 0.6944444444444444,
         "recall": 0.7575757575757576,
-        "f1-score": 0.704225352112676,
+        "f1-score": 0.7246376811594203,
         "support": 33.0
     },
     "traitement": {
-        "precision": 0.6071428571428571,
-        "recall": 0.5862068965517241,
-        "f1-score": 0.5964912280701754,
-        "support": 29.0
+        "precision": 0.5357142857142857,
+        "recall": 0.5555555555555556,
+        "f1-score": 0.5454545454545454,
+        "support": 27.0
     },
-    "accuracy": 0.6413043478260869,
+    "accuracy": 0.6206896551724138,
     "macro avg": {
-        "precision": 0.7037593984962406,
-        "recall": 0.6234456635318704,
-        "f1-score": 0.6501791450457128,
-        "support": 92.0
+        "precision": 0.675186741363212,
+        "recall": 0.6425685425685426,
+        "f1-score": 0.6564003955308303,
+        "support": 87.0
     },
     "weighted avg": {
-        "precision": 0.655626838836221,
-        "recall": 0.6413043478260869,
-        "f1-score": 0.6417139373234064,
-        "support": 92.0
+        "precision": 0.6183070929521234,
+        "recall": 0.6206896551724138,
+        "f1-score": 0.6178218771921921,
+        "support": 87.0
+    }
+}
+```
+
+## TF-IDF_KNN_Enhanced
+
+- **Weighted F1 Score:** 0.5837
+- **Accuracy:** 0.5977
+- **Best Parameters:** {'classifier__n_neighbors': 7}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 0.8571428571428571,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.8571428571428571,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.47058823529411764,
+        "recall": 0.4,
+        "f1-score": 0.43243243243243246,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.6428571428571429,
+        "recall": 0.8181818181818182,
+        "f1-score": 0.72,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.5238095238095238,
+        "recall": 0.4074074074074074,
+        "f1-score": 0.4583333333333333,
+        "support": 27.0
+    },
+    "accuracy": 0.5977011494252874,
+    "macro avg": {
+        "precision": 0.6235994397759104,
+        "recall": 0.6206830206830207,
+        "f1-score": 0.6169771557271558,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.583550661643968,
+        "recall": 0.5977011494252874,
+        "f1-score": 0.5837200994097546,
+        "support": 87.0
     }
 }
 ```
 
 ## TF-IDF_ngram_MultinomialNB_Enhanced
 
-- **Weighted F1 Score:** 0.6324
-- **Accuracy:** 0.6304
+- **Weighted F1 Score:** 0.5832
+- **Accuracy:** 0.5862
 - **Best Parameters:** {'classifier__alpha': 0.1}
 ```json
 {
     "NA_CATEGORY": {
         "precision": 1.0,
-        "recall": 0.6,
-        "f1-score": 0.75,
-        "support": 10.0
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
     },
     "diagnostique": {
-        "precision": 0.6470588235294118,
-        "recall": 0.55,
-        "f1-score": 0.5945945945945946,
+        "precision": 0.47058823529411764,
+        "recall": 0.4,
+        "f1-score": 0.43243243243243246,
         "support": 20.0
     },
     "symptome": {
@@ -122,321 +498,180 @@
         "support": 33.0
     },
     "traitement": {
-        "precision": 0.53125,
-        "recall": 0.5862068965517241,
-        "f1-score": 0.5573770491803278,
-        "support": 29.0
+        "precision": 0.48148148148148145,
+        "recall": 0.48148148148148145,
+        "f1-score": 0.48148148148148145,
+        "support": 27.0
     },
-    "accuracy": 0.6304347826086957,
+    "accuracy": 0.5862068965517241,
     "macro avg": {
-        "precision": 0.7067393680445151,
-        "recall": 0.6158699059561128,
-        "f1-score": 0.6469214823723022,
-        "support": 92.0
+        "precision": 0.650179591356062,
+        "recall": 0.6164742664742665,
+        "f1-score": 0.6306762806762807,
+        "support": 87.0
     },
     "weighted avg": {
-        "precision": 0.6494873029999308,
-        "recall": 0.6304347826086957,
-        "f1-score": 0.6324391059423133,
-        "support": 92.0
+        "precision": 0.5841054035780203,
+        "recall": 0.5862068965517241,
+        "f1-score": 0.5832041211351556,
+        "support": 87.0
     }
 }
 ```
 
-## BoW_SVM_Enhanced
+## TF-IDF_ngram_KNN_Enhanced
 
-- **Weighted F1 Score:** 0.6152
-- **Accuracy:** 0.6087
-- **Best Parameters:** {'classifier__C': 1, 'classifier__kernel': 'linear'}
+- **Weighted F1 Score:** 0.5726
+- **Accuracy:** 0.5862
+- **Best Parameters:** {'classifier__n_neighbors': 7}
 ```json
 {
     "NA_CATEGORY": {
         "precision": 0.75,
-        "recall": 0.6,
-        "f1-score": 0.6666666666666666,
-        "support": 10.0
+        "recall": 0.8571428571428571,
+        "f1-score": 0.8,
+        "support": 7.0
     },
     "diagnostique": {
-        "precision": 0.42857142857142855,
-        "recall": 0.6,
-        "f1-score": 0.5,
+        "precision": 0.4444444444444444,
+        "recall": 0.4,
+        "f1-score": 0.42105263157894735,
         "support": 20.0
     },
     "symptome": {
-        "precision": 0.7,
-        "recall": 0.6363636363636364,
-        "f1-score": 0.6666666666666666,
+        "precision": 0.6190476190476191,
+        "recall": 0.7878787878787878,
+        "f1-score": 0.6933333333333334,
         "support": 33.0
     },
     "traitement": {
-        "precision": 0.6538461538461539,
+        "precision": 0.5789473684210527,
+        "recall": 0.4074074074074074,
+        "f1-score": 0.4782608695652174,
+        "support": 27.0
+    },
+    "accuracy": 0.5862068965517241,
+    "macro avg": {
+        "precision": 0.5981098579782791,
+        "recall": 0.6131072631072632,
+        "f1-score": 0.5981617086193746,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.5770004513198705,
         "recall": 0.5862068965517241,
-        "f1-score": 0.6181818181818182,
-        "support": 29.0
-    },
-    "accuracy": 0.6086956521739131,
-    "macro avg": {
-        "precision": 0.6331043956043956,
-        "recall": 0.6056426332288402,
-        "f1-score": 0.6128787878787878,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.6318800764452938,
-        "recall": 0.6086956521739131,
-        "f1-score": 0.6151515151515151,
-        "support": 92.0
+        "f1-score": 0.5725758173544806,
+        "support": 87.0
     }
 }
 ```
 
-## BoW_LogisticRegression_Enhanced
+## BoW_DecisionTree_Enhanced
 
-- **Weighted F1 Score:** 0.5940
-- **Accuracy:** 0.5870
-- **Best Parameters:** {'classifier__C': 10, 'classifier__solver': 'liblinear'}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 0.8571428571428571,
-        "recall": 0.6,
-        "f1-score": 0.7058823529411765,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.4074074074074074,
-        "recall": 0.55,
-        "f1-score": 0.46808510638297873,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.7096774193548387,
-        "recall": 0.6666666666666666,
-        "f1-score": 0.6875,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.5555555555555556,
-        "recall": 0.5172413793103449,
-        "f1-score": 0.5357142857142857,
-        "support": 29.0
-    },
-    "accuracy": 0.5869565217391305,
-    "macro avg": {
-        "precision": 0.6324458098651646,
-        "recall": 0.5834770114942528,
-        "f1-score": 0.5992954362596102,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.6114135072760599,
-        "recall": 0.5869565217391305,
-        "f1-score": 0.5939536950302785,
-        "support": 92.0
-    }
-}
-```
-
-## TF-IDF_SVM_Enhanced
-
-- **Weighted F1 Score:** 0.5847
-- **Accuracy:** 0.5761
-- **Best Parameters:** {'classifier__C': 10, 'classifier__kernel': 'linear'}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 0.8571428571428571,
-        "recall": 0.6,
-        "f1-score": 0.7058823529411765,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.4074074074074074,
-        "recall": 0.55,
-        "f1-score": 0.46808510638297873,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.7142857142857143,
-        "recall": 0.6060606060606061,
-        "f1-score": 0.6557377049180327,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.5333333333333333,
-        "recall": 0.5517241379310345,
-        "f1-score": 0.5423728813559322,
-        "support": 29.0
-    },
-    "accuracy": 0.5760869565217391,
-    "macro avg": {
-        "precision": 0.628042328042328,
-        "recall": 0.5769461859979101,
-        "f1-score": 0.59301951139953,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.6060616517138256,
-        "recall": 0.5760869565217391,
-        "f1-score": 0.5846596030292224,
-        "support": 92.0
-    }
-}
-```
-
-## TF-IDF_ngram_SVM_Enhanced
-
-- **Weighted F1 Score:** 0.5813
-- **Accuracy:** 0.5761
-- **Best Parameters:** {'classifier__C': 10, 'classifier__kernel': 'linear'}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 0.8571428571428571,
-        "recall": 0.6,
-        "f1-score": 0.7058823529411765,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.43478260869565216,
-        "recall": 0.5,
-        "f1-score": 0.46511627906976744,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.6774193548387096,
-        "recall": 0.6363636363636364,
-        "f1-score": 0.65625,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.5161290322580645,
-        "recall": 0.5517241379310345,
-        "f1-score": 0.5333333333333333,
-        "support": 29.0
-    },
-    "accuracy": 0.5760869565217391,
-    "macro avg": {
-        "precision": 0.6213684632338209,
-        "recall": 0.5720219435736678,
-        "f1-score": 0.5901454913360693,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.5933658846793793,
-        "recall": 0.5760869565217391,
-        "f1-score": 0.5813485410594977,
-        "support": 92.0
-    }
-}
-```
-
-## TF-IDF_ngram_LogisticRegression_Enhanced
-
-- **Weighted F1 Score:** 0.5809
-- **Accuracy:** 0.5761
-- **Best Parameters:** {'classifier__C': 10, 'classifier__solver': 'liblinear'}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 1.0,
-        "recall": 0.6,
-        "f1-score": 0.75,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.45454545454545453,
-        "recall": 0.5,
-        "f1-score": 0.47619047619047616,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.6176470588235294,
-        "recall": 0.6363636363636364,
-        "f1-score": 0.6268656716417911,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.5333333333333333,
-        "recall": 0.5517241379310345,
-        "f1-score": 0.5423728813559322,
-        "support": 29.0
-    },
-    "accuracy": 0.5760869565217391,
-    "macro avg": {
-        "precision": 0.6513814616755793,
-        "recall": 0.5720219435736678,
-        "f1-score": 0.5988572572970499,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.5971731380299155,
-        "recall": 0.5760869565217391,
-        "f1-score": 0.5808607635577246,
-        "support": 92.0
-    }
-}
-```
-
-## TF-IDF_LogisticRegression_Enhanced
-
-- **Weighted F1 Score:** 0.5807
-- **Accuracy:** 0.5761
-- **Best Parameters:** {'classifier__C': 10, 'classifier__solver': 'liblinear'}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 0.8571428571428571,
-        "recall": 0.6,
-        "f1-score": 0.7058823529411765,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.4782608695652174,
-        "recall": 0.55,
-        "f1-score": 0.5116279069767442,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.6551724137931034,
-        "recall": 0.5757575757575758,
-        "f1-score": 0.6129032258064516,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.5151515151515151,
-        "recall": 0.5862068965517241,
-        "f1-score": 0.5483870967741935,
-        "support": 29.0
-    },
-    "accuracy": 0.5760869565217391,
-    "macro avg": {
-        "precision": 0.6264319139131733,
-        "recall": 0.577991118077325,
-        "f1-score": 0.5947001456246415,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.5945296691010791,
-        "recall": 0.5760869565217391,
-        "f1-score": 0.5806566731196866,
-        "support": 92.0
-    }
-}
-```
-
-## TF-IDF_ngram_DecisionTree_Enhanced
-
-- **Weighted F1 Score:** 0.5346
-- **Accuracy:** 0.5435
+- **Weighted F1 Score:** 0.5205
+- **Accuracy:** 0.5287
 - **Best Parameters:** {'classifier__max_depth': None}
 ```json
 {
     "NA_CATEGORY": {
-        "precision": 0.5,
-        "recall": 0.5,
-        "f1-score": 0.5,
-        "support": 10.0
+        "precision": 1.0,
+        "recall": 0.7142857142857143,
+        "f1-score": 0.8333333333333334,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.46153846153846156,
+        "recall": 0.3,
+        "f1-score": 0.36363636363636365,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.5227272727272727,
+        "recall": 0.696969696969697,
+        "f1-score": 0.5974025974025974,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.48,
+        "recall": 0.4444444444444444,
+        "f1-score": 0.46153846153846156,
+        "support": 27.0
+    },
+    "accuracy": 0.5287356321839081,
+    "macro avg": {
+        "precision": 0.6160664335664336,
+        "recall": 0.5389249639249639,
+        "f1-score": 0.563977688977689,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.5338019451812556,
+        "recall": 0.5287356321839081,
+        "f1-score": 0.5204814342745377,
+        "support": 87.0
+    }
+}
+```
+
+## TF-IDF_DecisionTree_Enhanced
+
+- **Weighted F1 Score:** 0.4769
+- **Accuracy:** 0.5287
+- **Best Parameters:** {'classifier__max_depth': 10}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.5714285714285714,
+        "f1-score": 0.7272727272727273,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.6,
+        "recall": 0.15,
+        "f1-score": 0.24,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.49206349206349204,
+        "recall": 0.9393939393939394,
+        "f1-score": 0.6458333333333334,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.5333333333333333,
+        "recall": 0.2962962962962963,
+        "f1-score": 0.38095238095238093,
+        "support": 27.0
+    },
+    "accuracy": 0.5287356321839081,
+    "macro avg": {
+        "precision": 0.6563492063492063,
+        "recall": 0.4892797017797018,
+        "f1-score": 0.4985146103896104,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.5705528188286809,
+        "recall": 0.5287356321839081,
+        "f1-score": 0.4768864755933721,
+        "support": 87.0
+    }
+}
+```
+
+## BoW_KNN_Enhanced
+
+- **Weighted F1 Score:** 0.4634
+- **Accuracy:** 0.4943
+- **Best Parameters:** {'classifier__n_neighbors': 5}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 0.42857142857142855,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.5714285714285714,
+        "support": 7.0
     },
     "diagnostique": {
         "precision": 0.5,
@@ -445,332 +680,97 @@
         "support": 20.0
     },
     "symptome": {
-        "precision": 0.6,
+        "precision": 0.48,
         "recall": 0.7272727272727273,
-        "f1-score": 0.6575342465753424,
+        "f1-score": 0.5783132530120482,
         "support": 33.0
     },
     "traitement": {
-        "precision": 0.5,
-        "recall": 0.4827586206896552,
-        "f1-score": 0.49122807017543857,
-        "support": 29.0
+        "precision": 0.6666666666666666,
+        "recall": 0.2222222222222222,
+        "f1-score": 0.3333333333333333,
+        "support": 27.0
     },
-    "accuracy": 0.5434782608695652,
+    "accuracy": 0.4942528735632184,
     "macro avg": {
-        "precision": 0.525,
-        "recall": 0.5150078369905956,
-        "f1-score": 0.5151317556582835,
-        "support": 92.0
+        "precision": 0.5188095238095238,
+        "recall": 0.5391594516594517,
+        "f1-score": 0.47370996591407644,
+        "support": 87.0
     },
     "weighted avg": {
-        "precision": 0.5358695652173913,
-        "recall": 0.5434782608695652,
-        "f1-score": 0.534560198801316,
-        "support": 92.0
-    }
-}
-```
-
-## BoW_DecisionTree_Enhanced
-
-- **Weighted F1 Score:** 0.5323
-- **Accuracy:** 0.5326
-- **Best Parameters:** {'classifier__max_depth': None}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 0.8571428571428571,
-        "recall": 0.6,
-        "f1-score": 0.7058823529411765,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.4117647058823529,
-        "recall": 0.35,
-        "f1-score": 0.3783783783783784,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.5555555555555556,
-        "recall": 0.6060606060606061,
-        "f1-score": 0.5797101449275363,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.5,
-        "recall": 0.5517241379310345,
-        "f1-score": 0.5245901639344263,
-        "support": 29.0
-    },
-    "accuracy": 0.532608695652174,
-    "macro avg": {
-        "precision": 0.5811157796451913,
-        "recall": 0.5269461859979101,
-        "f1-score": 0.5471402600453794,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.5395658263305322,
-        "recall": 0.532608695652174,
-        "f1-score": 0.5322819634096347,
-        "support": 92.0
-    }
-}
-```
-
-## TF-IDF_DecisionTree_Enhanced
-
-- **Weighted F1 Score:** 0.5263
-- **Accuracy:** 0.5326
-- **Best Parameters:** {'classifier__max_depth': None}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 0.8333333333333334,
-        "recall": 0.5,
-        "f1-score": 0.625,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.3888888888888889,
-        "recall": 0.35,
-        "f1-score": 0.3684210526315789,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.5454545454545454,
-        "recall": 0.7272727272727273,
-        "f1-score": 0.6233766233766234,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.5416666666666666,
-        "recall": 0.4482758620689655,
-        "f1-score": 0.49056603773584906,
-        "support": 29.0
-    },
-    "accuracy": 0.532608695652174,
-    "macro avg": {
-        "precision": 0.5773358585858586,
-        "recall": 0.5063871473354231,
-        "f1-score": 0.5268409284360128,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.5415157004830917,
-        "recall": 0.532608695652174,
-        "f1-score": 0.5262637469391279,
-        "support": 92.0
-    }
-}
-```
-
-## TF-IDF_KNN_Enhanced
-
-- **Weighted F1 Score:** 0.4989
-- **Accuracy:** 0.5000
-- **Best Parameters:** {'classifier__n_neighbors': 5}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 0.7,
-        "recall": 0.7,
-        "f1-score": 0.7,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.34615384615384615,
-        "recall": 0.45,
-        "f1-score": 0.391304347826087,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.5882352941176471,
-        "recall": 0.6060606060606061,
-        "f1-score": 0.5970149253731343,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.45454545454545453,
-        "recall": 0.3448275862068966,
-        "f1-score": 0.39215686274509803,
-        "support": 29.0
-    },
-    "accuracy": 0.5,
-    "macro avg": {
-        "precision": 0.5222336487042369,
-        "recall": 0.5252220480668757,
-        "f1-score": 0.5201190339860798,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.5056158675084507,
-        "recall": 0.5,
-        "f1-score": 0.498914440363511,
-        "support": 92.0
-    }
-}
-```
-
-## TF-IDF_ngram_KNN_Enhanced
-
-- **Weighted F1 Score:** 0.4791
-- **Accuracy:** 0.4783
-- **Best Parameters:** {'classifier__n_neighbors': 7}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 0.8571428571428571,
-        "recall": 0.6,
-        "f1-score": 0.7058823529411765,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.3333333333333333,
-        "recall": 0.35,
-        "f1-score": 0.34146341463414637,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.5263157894736842,
-        "recall": 0.6060606060606061,
-        "f1-score": 0.5633802816901409,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.4230769230769231,
-        "recall": 0.3793103448275862,
-        "f1-score": 0.4,
-        "support": 29.0
-    },
-    "accuracy": 0.4782608695652174,
-    "macro avg": {
-        "precision": 0.5349672257566994,
-        "recall": 0.4838427377220481,
-        "f1-score": 0.5026815123163659,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.487779859347365,
-        "recall": 0.4782608695652174,
-        "f1-score": 0.4791265338898842,
-        "support": 92.0
-    }
-}
-```
-
-## BoW_KNN_Enhanced
-
-- **Weighted F1 Score:** 0.3702
-- **Accuracy:** 0.4239
-- **Best Parameters:** {'classifier__n_neighbors': 3}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 0.4,
-        "recall": 0.6,
-        "f1-score": 0.48,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.35714285714285715,
-        "recall": 0.25,
-        "f1-score": 0.29411764705882354,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.44642857142857145,
-        "recall": 0.7575757575757576,
-        "f1-score": 0.5617977528089888,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.42857142857142855,
-        "recall": 0.10344827586206896,
-        "f1-score": 0.16666666666666666,
-        "support": 29.0
-    },
-    "accuracy": 0.42391304347826086,
-    "macro avg": {
-        "precision": 0.4080357142857143,
-        "recall": 0.4277560083594566,
-        "f1-score": 0.3756455166336198,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.41634316770186336,
-        "recall": 0.42391304347826086,
-        "f1-score": 0.3701631751870265,
-        "support": 92.0
+        "precision": 0.5383908045977012,
+        "recall": 0.4942528735632184,
+        "f1-score": 0.46344403985108784,
+        "support": 87.0
     }
 }
 ```
 
 ## Word2Vec_KNN_Enhanced
 
-- **Weighted F1 Score:** 0.4708
-- **Accuracy:** 0.4565
-- **Best Parameters:** {'n_neighbors': 7}
+- **Weighted F1 Score:** 0.5315
+- **Accuracy:** 0.5287
+- **Best Parameters:** {'n_neighbors': 5}
 ```json
 {
     "NA_CATEGORY": {
         "precision": 1.0,
-        "recall": 0.6,
-        "f1-score": 0.75,
-        "support": 10.0
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
     },
     "diagnostique": {
-        "precision": 0.2857142857142857,
-        "recall": 0.5,
-        "f1-score": 0.36363636363636365,
+        "precision": 0.375,
+        "recall": 0.6,
+        "f1-score": 0.46153846153846156,
         "support": 20.0
     },
     "symptome": {
-        "precision": 0.5925925925925926,
-        "recall": 0.48484848484848486,
-        "f1-score": 0.5333333333333333,
+        "precision": 0.5625,
+        "recall": 0.5454545454545454,
+        "f1-score": 0.5538461538461539,
         "support": 33.0
     },
     "traitement": {
-        "precision": 0.4166666666666667,
-        "recall": 0.3448275862068966,
-        "f1-score": 0.37735849056603776,
-        "support": 29.0
+        "precision": 0.5882352941176471,
+        "recall": 0.37037037037037035,
+        "f1-score": 0.45454545454545453,
+        "support": 27.0
     },
-    "accuracy": 0.45652173913043476,
+    "accuracy": 0.5287356321839081,
     "macro avg": {
-        "precision": 0.5737433862433862,
-        "recall": 0.4824190177638454,
-        "f1-score": 0.5060820468839337,
-        "support": 92.0
+        "precision": 0.6314338235294118,
+        "recall": 0.5932419432419431,
+        "f1-score": 0.5982517482517482,
+        "support": 87.0
     },
     "weighted avg": {
-        "precision": 0.5147084195997239,
-        "recall": 0.45652173913043476,
-        "f1-score": 0.470827429338504,
-        "support": 92.0
+        "precision": 0.5625845165652468,
+        "recall": 0.5287356321839081,
+        "f1-score": 0.5315167591029661,
+        "support": 87.0
     }
 }
 ```
 
 ## FastText_KNN_Enhanced
 
-- **Weighted F1 Score:** 0.4460
-- **Accuracy:** 0.4348
+- **Weighted F1 Score:** 0.5002
+- **Accuracy:** 0.4943
 - **Best Parameters:** {'n_neighbors': 7}
 ```json
 {
     "NA_CATEGORY": {
         "precision": 1.0,
-        "recall": 0.5,
-        "f1-score": 0.6666666666666666,
-        "support": 10.0
+        "recall": 0.7142857142857143,
+        "f1-score": 0.8333333333333334,
+        "support": 7.0
     },
     "diagnostique": {
-        "precision": 0.2692307692307692,
-        "recall": 0.35,
-        "f1-score": 0.30434782608695654,
+        "precision": 0.36363636363636365,
+        "recall": 0.6,
+        "f1-score": 0.4528301886792453,
         "support": 20.0
     },
     "symptome": {
@@ -780,303 +780,305 @@
         "support": 33.0
     },
     "traitement": {
-        "precision": 0.41935483870967744,
-        "recall": 0.4482758620689655,
-        "f1-score": 0.43333333333333335,
-        "support": 29.0
+        "precision": 0.5789473684210527,
+        "recall": 0.4074074074074074,
+        "f1-score": 0.4782608695652174,
+        "support": 27.0
     },
-    "accuracy": 0.43478260869565216,
+    "accuracy": 0.4942528735632184,
     "macro avg": {
-        "precision": 0.5471464019851117,
-        "recall": 0.438205329153605,
-        "f1-score": 0.47013457556935817,
-        "support": 92.0
+        "precision": 0.6106459330143541,
+        "recall": 0.544059644059644,
+        "f1-score": 0.5601537169420681,
+        "support": 87.0
     },
     "weighted avg": {
-        "precision": 0.4787598446434351,
-        "recall": 0.43478260869565216,
-        "f1-score": 0.4460279953191107,
-        "support": 92.0
-    }
-}
-```
-
-## Word2Vec_LogisticRegression_Enhanced
-
-- **Weighted F1 Score:** 0.4404
-- **Accuracy:** 0.5109
-- **Best Parameters:** {'C': 0.1, 'solver': 'liblinear'}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 1.0,
-        "recall": 0.4,
-        "f1-score": 0.5714285714285714,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.4915254237288136,
-        "recall": 0.8787878787878788,
-        "f1-score": 0.6304347826086957,
-        "support": 33.0
-    },
-    "symptome": {
-        "precision": 0.4827586206896552,
-        "recall": 0.4827586206896552,
-        "f1-score": 0.4827586206896552,
-        "support": 29.0
-    },
-    "micro avg": {
-        "precision": 0.5108695652173914,
-        "recall": 0.6527777777777778,
-        "f1-score": 0.573170731707317,
-        "support": 72.0
-    },
-    "macro avg": {
-        "precision": 0.6580946814728229,
-        "recall": 0.5871821664925113,
-        "f1-score": 0.5615406582423074,
-        "support": 72.0
-    },
-    "weighted avg": {
-        "precision": 0.5586158192090396,
-        "recall": 0.6527777777777778,
-        "f1-score": 0.5627587991718426,
-        "support": 72.0
-    }
-}
-```
-
-## FastText_LogisticRegression_Enhanced
-
-- **Weighted F1 Score:** 0.4404
-- **Accuracy:** 0.5109
-- **Best Parameters:** {'C': 0.1, 'solver': 'liblinear'}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 1.0,
-        "recall": 0.4,
-        "f1-score": 0.5714285714285714,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.4915254237288136,
-        "recall": 0.8787878787878788,
-        "f1-score": 0.6304347826086957,
-        "support": 33.0
-    },
-    "symptome": {
-        "precision": 0.4827586206896552,
-        "recall": 0.4827586206896552,
-        "f1-score": 0.4827586206896552,
-        "support": 29.0
-    },
-    "micro avg": {
-        "precision": 0.5108695652173914,
-        "recall": 0.6527777777777778,
-        "f1-score": 0.573170731707317,
-        "support": 72.0
-    },
-    "macro avg": {
-        "precision": 0.6580946814728229,
-        "recall": 0.5871821664925113,
-        "f1-score": 0.5615406582423074,
-        "support": 72.0
-    },
-    "weighted avg": {
-        "precision": 0.5586158192090396,
-        "recall": 0.6527777777777778,
-        "f1-score": 0.5627587991718426,
-        "support": 72.0
-    }
-}
-```
-
-## Word2Vec_SVM_Enhanced
-
-- **Weighted F1 Score:** 0.4126
-- **Accuracy:** 0.4783
-- **Best Parameters:** {'C': 1, 'kernel': 'linear'}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 1.0,
-        "recall": 0.4,
-        "f1-score": 0.5714285714285714,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1-score": 0.0,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.453125,
-        "recall": 0.8787878787878788,
-        "f1-score": 0.5979381443298969,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.5,
-        "recall": 0.3793103448275862,
-        "f1-score": 0.43137254901960786,
-        "support": 29.0
-    },
-    "accuracy": 0.4782608695652174,
-    "macro avg": {
-        "precision": 0.48828125,
-        "recall": 0.4145245559038663,
-        "f1-score": 0.400184816194519,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.4288383152173913,
-        "recall": 0.4782608695652174,
-        "f1-score": 0.4125657434645754,
-        "support": 92.0
-    }
-}
-```
-
-## FastText_SVM_Enhanced
-
-- **Weighted F1 Score:** 0.4122
-- **Accuracy:** 0.4783
-- **Best Parameters:** {'C': 1, 'kernel': 'linear'}
-```json
-{
-    "NA_CATEGORY": {
-        "precision": 1.0,
-        "recall": 0.4,
-        "f1-score": 0.5714285714285714,
-        "support": 10.0
-    },
-    "diagnostique": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1-score": 0.0,
-        "support": 20.0
-    },
-    "symptome": {
-        "precision": 0.4603174603174603,
-        "recall": 0.8787878787878788,
-        "f1-score": 0.6041666666666666,
-        "support": 33.0
-    },
-    "traitement": {
-        "precision": 0.4782608695652174,
-        "recall": 0.3793103448275862,
-        "f1-score": 0.4230769230769231,
-        "support": 29.0
-    },
-    "accuracy": 0.4782608695652174,
-    "macro avg": {
-        "precision": 0.48464458247066944,
-        "recall": 0.4145245559038663,
-        "f1-score": 0.3996680402930403,
-        "support": 92.0
-    },
-    "weighted avg": {
-        "precision": 0.4245656674768206,
-        "recall": 0.4782608695652174,
-        "f1-score": 0.4121849617773531,
-        "support": 92.0
+        "precision": 0.5333828301160424,
+        "recall": 0.4942528735632184,
+        "f1-score": 0.5001984632122394,
+        "support": 87.0
     }
 }
 ```
 
 ## Word2Vec_DecisionTree_Enhanced
 
-- **Weighted F1 Score:** 0.3572
-- **Accuracy:** 0.3587
+- **Weighted F1 Score:** 0.4357
+- **Accuracy:** 0.4368
 - **Best Parameters:** {'max_depth': 10}
 ```json
 {
     "NA_CATEGORY": {
-        "precision": 0.5454545454545454,
-        "recall": 0.6,
-        "f1-score": 0.5714285714285714,
-        "support": 10.0
+        "precision": 0.4444444444444444,
+        "recall": 0.5714285714285714,
+        "f1-score": 0.5,
+        "support": 7.0
     },
     "diagnostique": {
-        "precision": 0.3125,
-        "recall": 0.25,
-        "f1-score": 0.2777777777777778,
+        "precision": 0.3888888888888889,
+        "recall": 0.35,
+        "f1-score": 0.3684210526315789,
         "support": 20.0
     },
     "symptome": {
-        "precision": 0.43478260869565216,
-        "recall": 0.30303030303030304,
-        "f1-score": 0.35714285714285715,
+        "precision": 0.41025641025641024,
+        "recall": 0.48484848484848486,
+        "f1-score": 0.4444444444444444,
         "support": 33.0
     },
     "traitement": {
-        "precision": 0.2857142857142857,
-        "recall": 0.41379310344827586,
-        "f1-score": 0.3380281690140845,
-        "support": 29.0
+        "precision": 0.5238095238095238,
+        "recall": 0.4074074074074074,
+        "f1-score": 0.4583333333333333,
+        "support": 27.0
     },
-    "accuracy": 0.358695652173913,
+    "accuracy": 0.4367816091954023,
     "macro avg": {
-        "precision": 0.39461285996612083,
-        "recall": 0.3917058516196447,
-        "f1-score": 0.3860943438408227,
-        "support": 92.0
+        "precision": 0.44184981684981683,
+        "recall": 0.4534211159211159,
+        "f1-score": 0.44279970760233917,
+        "support": 87.0
     },
     "weighted avg": {
-        "precision": 0.3732400633393072,
-        "recall": 0.358695652173913,
-        "f1-score": 0.3571562223583044,
-        "support": 92.0
+        "precision": 0.4433357191977882,
+        "recall": 0.4367816091954023,
+        "f1-score": 0.43574813470457757,
+        "support": 87.0
+    }
+}
+```
+
+## Word2Vec_LogisticRegression_Enhanced
+
+- **Weighted F1 Score:** 0.4049
+- **Accuracy:** 0.4943
+- **Best Parameters:** {'C': 10, 'solver': 'liblinear'}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.4626865671641791,
+        "recall": 0.9393939393939394,
+        "f1-score": 0.62,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.5,
+        "recall": 0.2222222222222222,
+        "f1-score": 0.3076923076923077,
+        "support": 27.0
+    },
+    "accuracy": 0.4942528735632184,
+    "macro avg": {
+        "precision": 0.4906716417910448,
+        "recall": 0.5046897546897547,
+        "f1-score": 0.4626923076923077,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.41113398524618283,
+        "recall": 0.4942528735632184,
+        "f1-score": 0.4049336870026525,
+        "support": 87.0
+    }
+}
+```
+
+## FastText_LogisticRegression_Enhanced
+
+- **Weighted F1 Score:** 0.4049
+- **Accuracy:** 0.4943
+- **Best Parameters:** {'C': 10, 'solver': 'liblinear'}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9230769230769231,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.4626865671641791,
+        "recall": 0.9393939393939394,
+        "f1-score": 0.62,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.5,
+        "recall": 0.2222222222222222,
+        "f1-score": 0.3076923076923077,
+        "support": 27.0
+    },
+    "accuracy": 0.4942528735632184,
+    "macro avg": {
+        "precision": 0.4906716417910448,
+        "recall": 0.5046897546897547,
+        "f1-score": 0.4626923076923077,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.41113398524618283,
+        "recall": 0.4942528735632184,
+        "f1-score": 0.4049336870026525,
+        "support": 87.0
+    }
+}
+```
+
+## Word2Vec_SVM_Enhanced
+
+- **Weighted F1 Score:** 0.3664
+- **Accuracy:** 0.4598
+- **Best Parameters:** {'C': 10, 'kernel': 'linear'}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.5714285714285714,
+        "f1-score": 0.7272727272727273,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.4305555555555556,
+        "recall": 0.9393939393939394,
+        "f1-score": 0.5904761904761905,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.5,
+        "recall": 0.18518518518518517,
+        "f1-score": 0.2702702702702703,
+        "support": 27.0
+    },
+    "accuracy": 0.45977011494252873,
+    "macro avg": {
+        "precision": 0.4826388888888889,
+        "recall": 0.424001924001924,
+        "f1-score": 0.39700479700479696,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.39894636015325674,
+        "recall": 0.45977011494252873,
+        "f1-score": 0.3663669042979388,
+        "support": 87.0
+    }
+}
+```
+
+## FastText_SVM_Enhanced
+
+- **Weighted F1 Score:** 0.3664
+- **Accuracy:** 0.4598
+- **Best Parameters:** {'C': 10, 'kernel': 'linear'}
+```json
+{
+    "NA_CATEGORY": {
+        "precision": 1.0,
+        "recall": 0.5714285714285714,
+        "f1-score": 0.7272727272727273,
+        "support": 7.0
+    },
+    "diagnostique": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 20.0
+    },
+    "symptome": {
+        "precision": 0.4305555555555556,
+        "recall": 0.9393939393939394,
+        "f1-score": 0.5904761904761905,
+        "support": 33.0
+    },
+    "traitement": {
+        "precision": 0.5,
+        "recall": 0.18518518518518517,
+        "f1-score": 0.2702702702702703,
+        "support": 27.0
+    },
+    "accuracy": 0.45977011494252873,
+    "macro avg": {
+        "precision": 0.4826388888888889,
+        "recall": 0.424001924001924,
+        "f1-score": 0.39700479700479696,
+        "support": 87.0
+    },
+    "weighted avg": {
+        "precision": 0.39894636015325674,
+        "recall": 0.45977011494252873,
+        "f1-score": 0.3663669042979388,
+        "support": 87.0
     }
 }
 ```
 
 ## FastText_DecisionTree_Enhanced
 
-- **Weighted F1 Score:** 0.3495
-- **Accuracy:** 0.3478
-- **Best Parameters:** {'max_depth': 10}
+- **Weighted F1 Score:** 0.3524
+- **Accuracy:** 0.3563
+- **Best Parameters:** {'max_depth': None}
 ```json
 {
     "NA_CATEGORY": {
-        "precision": 0.6666666666666666,
-        "recall": 0.6,
-        "f1-score": 0.631578947368421,
-        "support": 10.0
+        "precision": 0.5,
+        "recall": 0.42857142857142855,
+        "f1-score": 0.46153846153846156,
+        "support": 7.0
     },
     "diagnostique": {
-        "precision": 0.2608695652173913,
-        "recall": 0.3,
-        "f1-score": 0.27906976744186046,
+        "precision": 0.3225806451612903,
+        "recall": 0.5,
+        "f1-score": 0.39215686274509803,
         "support": 20.0
     },
     "symptome": {
-        "precision": 0.35294117647058826,
-        "recall": 0.36363636363636365,
-        "f1-score": 0.3582089552238806,
+        "precision": 0.3793103448275862,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.3548387096774194,
         "support": 33.0
     },
     "traitement": {
-        "precision": 0.3076923076923077,
-        "recall": 0.27586206896551724,
-        "f1-score": 0.2909090909090909,
-        "support": 29.0
+        "precision": 0.3333333333333333,
+        "recall": 0.25925925925925924,
+        "f1-score": 0.2916666666666667,
+        "support": 27.0
     },
-    "accuracy": 0.34782608695652173,
+    "accuracy": 0.3563218390804598,
     "macro avg": {
-        "precision": 0.3970424290117385,
-        "recall": 0.38487460815047025,
-        "f1-score": 0.38994169023581327,
-        "support": 92.0
+        "precision": 0.3838060808305524,
+        "recall": 0.3802910052910053,
+        "f1-score": 0.37505017515691147,
+        "support": 87.0
     },
     "weighted avg": {
-        "precision": 0.3527629751915307,
-        "recall": 0.34782608695652173,
-        "f1-score": 0.3495048258834035,
-        "support": 92.0
+        "precision": 0.3617109687647833,
+        "recall": 0.3563218390804598,
+        "f1-score": 0.3523975161497245,
+        "support": 87.0
     }
 }
 ```

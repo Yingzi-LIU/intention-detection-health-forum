@@ -10,7 +10,7 @@ SPECIFIC_20_IDS = [
     4, 23, 32, 75, 201, 21, 8, 38, 98, 91,
     568, 505, 526, 41, 481, 154, 475, 6, 784, 15
 ]
-LABEL_COLS = ['niveau1', 'niveau2', 'niveau3_1', 'niveau3_2']
+LABEL_COLS = ['niveau1', 'niveau2', 'niveau3']
 TEST_SIZE = 300
 VAL_SIZE = 100
 MIN_CLASS_COUNT = 2

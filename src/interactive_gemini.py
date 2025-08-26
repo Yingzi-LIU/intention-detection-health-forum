@@ -41,8 +41,8 @@ def create_few_shot_prompt(text_to_classify, few_shot_examples):
     """
     few_shot_section = ""
     for ex in few_shot_examples:
-        sentiment_present = ex['niveau3_1']
-        polarity = ex['niveau3_2'] if sentiment_present == 'oui' else 'neutre' # 确保非情感文本的极性是 'neutre'
+        # 现在 few_shot_examples 中的 'niveau3' 直接包含情感标签
+        emotion_label = ex['niveau3']
 
         few_shot_section += f"""
     **示例输入 (Exemple d'entrée):**
@@ -53,10 +53,7 @@ def create_few_shot_prompt(text_to_classify, few_shot_examples):
     {{
         "intention_generale": "{ex['niveau1']}",
         "objet_medical": "{ex['niveau2']}",
-        "sentiment_analysis": {{
-            "sentiment_present": "{sentiment_present}",
-            "polarity": "{polarity}"
-        }}
+        "emotion": "{emotion_label}"
     }}
     ```
     """
@@ -76,11 +73,13 @@ def create_few_shot_prompt(text_to_classify, few_shot_examples):
         * "diagnostique" (诊断)
         * "NA_CATEGORY" (不相关) (如果文本内容不涉及具体的医疗对象)
 
-    3.  **情感分析级别 (Niveau sentiment analysis)**：
-        * `sentiment_present`: "oui" (是) 或 "non" (否)
-        * `polarity`: "positif" (积极), "négatif" (消极) 或 "NA_CATEGORY" (不相关) (仅当 `sentiment_present` 为 "oui" 时需要填写 `polarity`)
+    3.  **情感级别 (Niveau emotion)**：
+        * "positif" (积极)
+        * "negatif" (消极)
+        * "non" (无情感)
+        * "NA_CATEGORY" (不相关)
 
-    请确保输出严格为JSON格式，包含 `intention_generale`, `objet_medical`, `sentiment_analysis` (包含 `sentiment_present` 和 `polarity`) 这三个顶层键。
+    请确保输出严格为JSON格式，包含 `intention_generale`, `objet_medical`, `emotion` 这三个顶层键。
     如果某个类别不适用，请将其设为 "NA_CATEGORY"。
 
     ---
@@ -148,8 +147,7 @@ while True:
     # --- 根据分类结果生成回复 ---
     intention = classified_result.get('intention_generale', '未知')
     medical_object = classified_result.get('objet_medical', '未知')
-    sentiment_present = classified_result.get('sentiment_analysis', {}).get('sentiment_present', '未知')
-    polarity = classified_result.get('sentiment_analysis', {}).get('polarity', '未知')
+    emotion = classified_result.get('emotion', '未知') # 获取新的 'emotion' 键
 
     response_prompt = f"""
     用户在医学论坛上发布了以下内容: "{user_input}"
@@ -157,8 +155,7 @@ while True:
     该内容的分类结果如下:
     - 意图级别: {intention}
     - 医疗对象级别: {medical_object}
-    - 情感存在: {sentiment_present}
-    - 情感极性: {polarity}
+    - 情感级别: {emotion}
 
     请根据这些分类结果，以一个专业的医学论坛助手的身份，给出一个合理且有帮助的回复。
     如果意图是 "recherche_information" 且医疗对象是 "symptome"，请提供一些关于症状的常见信息或建议用户咨询医生。
