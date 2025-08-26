@@ -12,3 +12,11 @@ new_intention_env/
 intention-env/
 
 .env
+# Large model files
+*.pth
+
+# Ignored data files
+*.xlsx
+
+# macOS specific files
+.DS_Store
