@@ -8,10 +8,9 @@ import pandas as pd
 import os
 
 # ====================================================================
-# 1. 用于评估的必要类和函数
+# 1. 模型和数据类
 # ====================================================================
 
-# 重新定义模型类 (必须和训练时完全一致)
 class BERT_MedicalMultiTache(nn.Module):
     def __init__(self, nom_modele_pre_entraine, num_intention, num_objet_medical, num_sentiment):
         super(BERT_MedicalMultiTache, self).__init__()
@@ -28,7 +27,6 @@ class BERT_MedicalMultiTache(nn.Module):
         logits_sentiment = self.classifieur_sentiment(pooled_output)
         return logits_intention, logits_objet_medical, logits_sentiment
 
-# 重新定义 Dataset 类
 class DatasetMultiTache(Dataset):
     def __init__(self, chemin_fichier, tokenizer, max_longueur):
         self.donnees = self._charger_donnees(chemin_fichier)
@@ -51,7 +49,6 @@ class DatasetMultiTache(Dataset):
         intention = self.etiquettes_intention[item['intention']]
         objet_medical = self.etiquettes_objet_medical[item['objet_medical']]
         sentiment = self.etiquettes_sentiment[item['sentiment']]
-
         encodage = self.tokenizer.encode_plus(
             texte,
             add_special_tokens=True,
@@ -68,7 +65,6 @@ class DatasetMultiTache(Dataset):
             'labels_sentiment': torch.tensor(sentiment, dtype=torch.long)
         }
 
-# 评估函数
 def evaluer(modele, chargeur_donnees, appareil):
     modele.eval()
     predictions_intention, labels_reels_intention = [], []
@@ -103,7 +99,6 @@ def evaluer(modele, chargeur_donnees, appareil):
         'acc_sentiment': acc_sentiment, 'f1_sentiment': f1_sentiment
     }
 
-# 数据转换函数
 def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
     if os.path.exists(chemin_jsonl):
         print(f"文件 {chemin_jsonl} 已找到, 跳过转换.")
@@ -135,17 +130,21 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
 # ====================================================================
 
 if __name__ == '__main__':
-    # 要比较的模型文件名
-    CHEMIN_MODELE_ORIGINAL = 'BERT_MedicalMultiTache.pth'
-    CHEMIN_MODELE_FOCAL = 'BERT_MedicalMultiTache_focal.pth'
+    # 定义所有要比较的模型
+    modeles_a_comparer = {
+        '原始模型 (损失加和)': 'BERT_MedicalMultiTache.pth',
+        'Focal Loss 模型': 'BERT_MedicalMultiTache_focal.pth',
+        '过采样模型': 'BERT_MedicalMultiTache_sampler.pth'
+    }
     
-    # 配置信息 (必须和训练时一致)
+    # 配置信息
     NOM_MODELE_BERT = 'bert-base-multilingual-cased'
     MAX_LONGUEUR = 128
     TAILLE_DE_LOT = 16
     CHEMIN_CSV_TEST = 'data/dataset/test_dataset.csv'
     CHEMIN_JSONL_TEST = 'data/dataset/test_dataset.jsonl'
     
+    # 准备测试数据
     verifier_et_convertir_donnees(CHEMIN_JSONL_TEST, CHEMIN_CSV_TEST)
     appareil = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = BertTokenizer.from_pretrained(NOM_MODELE_BERT)
@@ -156,45 +155,43 @@ if __name__ == '__main__':
     num_objet_medical = len(dataset_test.etiquettes_objet_medical)
     num_sentiment = len(dataset_test.etiquettes_sentiment)
 
-    # 实例化并加载两个模型
-    modele_original = BERT_MedicalMultiTache(NOM_MODELE_BERT, num_intention, num_objet_medical, num_sentiment).to(appareil)
-    modele_focal = BERT_MedicalMultiTache(NOM_MODELE_BERT, num_intention, num_objet_medical, num_sentiment).to(appareil)
-
-    try:
-        modele_original.load_state_dict(torch.load(CHEMIN_MODELE_ORIGINAL, map_location=appareil))
-        print(f"原始模型 ({CHEMIN_MODELE_ORIGINAL}) 加载成功.")
-    except FileNotFoundError:
-        print(f"错误: 找不到文件 {CHEMIN_MODELE_ORIGINAL}. 请检查文件路径和名称.")
-        exit()
-    try:
-        modele_focal.load_state_dict(torch.load(CHEMIN_MODELE_FOCAL, map_location=appareil))
-        print(f"Focal Loss 模型 ({CHEMIN_MODELE_FOCAL}) 加载成功.")
-    except FileNotFoundError:
-        print(f"错误: 找不到文件 {CHEMIN_MODELE_FOCAL}. 请检查文件路径和名称.")
-        exit()
+    # 依次评估每个模型并存储结果
+    resultats_comparaison = {}
+    for nom_modele, chemin_fichier in modeles_a_comparer.items():
+        print(f"\n--- 正在评估: {nom_modele} ---")
+        modele = BERT_MedicalMultiTache(NOM_MODELE_BERT, num_intention, num_objet_medical, num_sentiment).to(appareil)
+        try:
+            modele.load_state_dict(torch.load(chemin_fichier, map_location=appareil))
+            metriques = evaluer(modele, chargeur_donnees_test, appareil)
+            resultats_comparaison[nom_modele] = metriques
+            print(f"评估完成. Acc_Sentiment={metriques['acc_sentiment']:.4f}, F1_Sentiment={metriques['f1_sentiment']:.4f}")
+        except FileNotFoundError:
+            print(f"错误: 找不到文件 {chemin_fichier}. 跳过该模型.")
     
-    # 在测试集上评估两个模型
-    print("\n--- 正在评估原始模型(损失加和) ---")
-    metriques_original = evaluer(modele_original, chargeur_donnees_test, appareil)
-
-    print("\n--- 正在评估 Focal Loss 模型 ---")
-    metriques_focal = evaluer(modele_focal, chargeur_donnees_test, appareil)
-
-    # 打印对比结果
-    print("\n" + "="*80)
-    print(" " * 20 + "模型性能对比结果")
-    print("="*80)
+    # 打印最终对比表格
+    print("\n" + "="*120)
+    print(" " * 45 + "多模型性能对比结果")
+    print("="*120)
     
-    entete_tableau = "{:<20} | {:<25} | {:<25}".format("任务", "原始模型 (F1 / Acc)", "Focal Loss 模型 (F1 / Acc)")
-    ligne_separateur = "-"*80
+    entete_tableau = "{:<25} | {:<25} | {:<25} | {:<25}".format("任务", "原始模型 (F1 / Acc)", "Focal Loss 模型 (F1 / Acc)", "过采样模型 (F1 / Acc)")
+    ligne_separateur = "-"*120
     
     print(entete_tableau)
     print(ligne_separateur)
     
-    print("{:<20} | F1={:.4f} / Acc={:.4f} | F1={:.4f} / Acc={:.4f}".format("意图 (Intention)", metriques_original['f1_intention'], metriques_original['acc_intention'], metriques_focal['f1_intention'], metriques_focal['acc_intention']))
-    print("{:<20} | F1={:.4f} / Acc={:.4f} | F1={:.4f} / Acc={:.4f}".format("医学对象 (Medical Object)", metriques_original['f1_objet_medical'], metriques_original['acc_objet_medical'], metriques_focal['f1_objet_medical'], metriques_focal['acc_objet_medical']))
-    print("{:<20} | F1={:.4f} / Acc={:.4f} | F1={:.4f} / Acc={:.4f}".format("情感 (Sentiment)", metriques_original['f1_sentiment'], metriques_original['acc_sentiment'], metriques_focal['f1_sentiment'], metriques_focal['acc_sentiment']))
+    for tache in ['intention', 'objet_medical', 'sentiment']:
+        f1_original = resultats_comparaison['原始模型 (损失加和)'][f'f1_{tache}']
+        acc_original = resultats_comparaison['原始模型 (损失加和)'][f'acc_{tache}']
+        f1_focal = resultats_comparaison['Focal Loss 模型'][f'f1_{tache}']
+        acc_focal = resultats_comparaison['Focal Loss 模型'][f'acc_{tache}']
+        f1_sampler = resultats_comparaison['过采样模型'][f'f1_{tache}']
+        acc_sampler = resultats_comparaison['过采样模型'][f'acc_{tache}']
+        
+        print("{:<25} | F1={:.4f} / Acc={:.4f} | F1={:.4f} / Acc={:.4f} | F1={:.4f} / Acc={:.4f}".format(
+            f"{tache.capitalize()}",
+            f1_original, acc_original,
+            f1_focal, acc_focal,
+            f1_sampler, acc_sampler
+        ))
     
-    print("="*80)
-
-print("\n脚本运行完毕。")
+    print("="*120)
