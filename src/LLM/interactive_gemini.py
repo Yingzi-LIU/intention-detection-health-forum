@@ -144,10 +144,73 @@ while True:
         print("无法分类您的输入，请稍后再试。")
         continue
 
-    # --- 根据分类结果生成回复 ---
+# --- 根据分类结果生成回复 ---
     intention = classified_result.get('intention_generale', '未知')
     medical_object = classified_result.get('objet_medical', '未知')
     emotion = classified_result.get('emotion', '未知') # 获取新的 'emotion' 键
+
+    def get_response_strategy(intention, medical_object, emotion):
+        # 意图: recherche_information (信息查询)
+        if intention == "recherche_information":
+            if medical_object == "symptome":
+                if emotion == "positif":
+                    return "用户对症状持积极态度，可能是在寻求确认或进一步了解。请提供关于症状的常见信息，并建议用户咨询医生以获取专业意见。"
+                elif emotion == "negatif":
+                    return "用户对症状感到担忧或不适。请提供安慰，给出关于症状的常见信息，并强烈建议用户尽快咨询医生。"
+                else: # non / NA_CATEGORY
+                    return "用户正在查询症状信息。请提供关于症状的常见信息，并建议用户咨询医生。"
+            elif medical_object == "traitement":
+                if emotion == "positif":
+                    return "用户对治疗有积极的期望或正在分享治疗进展。请提供治疗相关的一般信息，并强调遵循医嘱的重要性。"
+                elif emotion == "negatif":
+                    return "用户对治疗感到沮丧、担忧或不满意。请提供支持和理解，建议用户回顾治疗方案或寻求第二意见。"
+                else: # non / NA_CATEGORY
+                    return "用户正在查询治疗信息。请提供治疗相关的一般信息，并强调遵循医嘱的重要性。"
+            elif medical_object == "diagnostique":
+                if emotion == "positif":
+                    return "用户对诊断结果持积极态度，可能是在寻求确认或了解更多。请提供诊断相关的一般信息，并建议用户与医生讨论后续步骤。"
+                elif emotion == "negatif":
+                    return "用户对诊断结果感到困惑、担忧或沮丧。请提供安慰和支持，建议用户寻求进一步的解释或第二意见。"
+                else: # non / NA_CATEGORY
+                    return "用户正在查询诊断信息。请提供诊断相关的一般信息，并建议用户与医生讨论后续步骤。"
+            else: # medical_object == "NA_CATEGORY"
+                return "用户正在查询信息，但医疗对象不明确。请提供通用健康信息或建议用户提供更具体的问题。"
+        
+        # 意图: partage_experience (经验分享)
+        elif intention == "partage_experience":
+            if medical_object == "symptome":
+                if emotion == "positif":
+                    return "用户积极分享症状经验。请鼓励用户分享更多细节，例如症状如何开始、持续多久、以及采取了哪些措施。同时，可以询问他们是否有任何积极的应对策略可以分享给其他社区成员。"
+                elif emotion == "negatif":
+                    return "用户消极分享症状经验。请表达同情和理解，鼓励用户详细描述他们的感受和遇到的挑战。可以询问他们目前正在寻求哪些支持，并提醒他们社区成员都在这里倾听和支持。"
+                else: # non / NA_CATEGORY
+                    return "用户正在分享症状经验。请鼓励用户分享更多细节，并提供支持。"
+            elif medical_object == "traitement":
+                if emotion == "positif":
+                    return "用户积极分享治疗经验。请鼓励用户分享治疗过程中的亮点、有效的策略或他们认为有帮助的资源。可以询问他们对其他正在经历类似治疗的成员有什么建议。"
+                elif emotion == "negatif":
+                    return "用户消极分享治疗经验。请表达同情和理解，鼓励用户分享治疗中遇到的困难、副作用或挫折。可以询问他们希望从社区获得哪些支持或建议，并提醒他们寻求专业帮助的重要性。"
+                else: # non / NA_CATEGORY
+                    return "用户正在分享治疗经验。请鼓励用户分享更多细节，并提供支持。"
+            elif medical_object == "diagnostique":
+                if emotion == "positif":
+                    return "用户积极分享诊断经验。请鼓励用户分享诊断过程中的关键信息、他们是如何接受诊断的，以及他们采取了哪些积极的应对措施。可以询问他们是否有任何资源或建议可以分享给新确诊的成员。"
+                elif emotion == "negatif":
+                    return "用户消极分享诊断经验。请表达同情和理解，鼓励用户分享诊断带来的情感冲击、困惑或挑战。可以询问他们目前最需要哪些方面的支持，并提醒他们寻求心理健康支持的重要性。"
+                else: # non / NA_CATEGORY
+                    return "用户正在分享诊断经验。请鼓励用户分享更多细节，并提供支持。"
+            else: # medical_object == "NA_CATEGORY"
+                return "用户正在分享经验，但医疗对象不明确。请鼓励用户分享更多细节，并提供通用支持。"
+
+        # 意图: fonction_phatique (寒暄或维持交流)
+        elif intention == "fonction_phatique":
+            return "请给予友好的回应，鼓励用户继续参与社区讨论。"
+        
+        # 未知意图
+        else:
+            return "无法识别意图，请提供通用且礼貌的回复，并引导用户提供更清晰的信息。"
+
+    response_strategy = get_response_strategy(intention, medical_object, emotion)
 
     response_prompt = f"""
     用户在医学论坛上发布了以下内容: "{user_input}"
@@ -158,9 +221,7 @@ while True:
     - 情感级别: {emotion}
 
     请根据这些分类结果，以一个专业的医学论坛助手的身份，给出一个合理且有帮助的回复。
-    如果意图是 "recherche_information" 且医疗对象是 "symptome"，请提供一些关于症状的常见信息或建议用户咨询医生。
-    如果意图是 "partage_experience"，请鼓励用户分享更多细节或提供支持。
-    如果意图是 "fonction_phatique"，请给予友好的回应。
+    {response_strategy}
     请确保回复是法语。
     """
 

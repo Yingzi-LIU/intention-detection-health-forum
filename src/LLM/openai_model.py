@@ -1,5 +1,5 @@
 import os
-import google.generativeai as genai
+from openai import OpenAI
 from dotenv import load_dotenv
 import pandas as pd
 import numpy as np
@@ -13,26 +13,27 @@ import argparse
 load_dotenv()
 
 # --- 解析命令行参数 ---
-parser = argparse.ArgumentParser(description='Process medical forum data with Gemini API.')
+parser = argparse.ArgumentParser(description='Process medical forum data with OpenAI API.')
 parser.add_argument('--num_samples', type=int, default=None,
                     help='Number of test samples to process (default: all)')
+parser.add_argument('--model_name', type=str, default='gpt-4o',
+                    help='OpenAI model name to use (default: gpt-4o)')
 args = parser.parse_args()
 
 try:
-    API_KEY = os.getenv('GEMINI_API_KEY')
+    API_KEY = os.getenv('OPENAI_API_KEY') # Changed from GEMINI_API_KEY
     if not API_KEY:
-        raise ValueError("GEMINI_API_KEY not found in .env file.")
-    genai.configure(api_key=API_KEY)
+        raise ValueError("OPENAI_API_KEY not found in .env file.")
+    
+    client = OpenAI(api_key=API_KEY) # Initialize OpenAI client
 except Exception as e:
     print(f"Error loading API Key: {e}")
-    print("Please ensure you have a .env file in the same directory with your Gemini API Key named 'GEMINI_API_KEY'.")
+    print("Please ensure you have a .env file in the same directory with your OpenAI API Key named 'OPENAI_API_KEY'.")
     exit()
 
-model = genai.GenerativeModel('models/gemini-2.5-flash')
-
-# --- 2. 配置 Gemini API (如果之前没有运行) ---
-# 使用环境变量中的 API 密钥，已在前面配置过
-model = genai.GenerativeModel('models/gemini-2.0-flash-001')
+# --- 2. 配置 OpenAI API ---
+# Model is initialized via client, and model name is passed in args
+model_name = args.model_name
 
 # --- 3. 加载数据集 ---
 test_file_path = 'data/dataset/test_dataset.csv'
@@ -106,7 +107,6 @@ def create_few_shot_prompt(text_to_classify, few_shot_examples):
         * "positif" (积极)
         * "negatif" (消极)
         * "non" (无情感)
-        * "NA_CATEGORY" (不相关)
 
     请确保输出严格为JSON格式，包含 `intention_generale`, `objet_medical`, `emotion` 这三个顶层键。
     如果某个类别不适用，请将其设为 "NA_CATEGORY"。
@@ -150,24 +150,19 @@ for index, row in test_df.iterrows():
 
     while retries < max_retries:
         try:
-            response = model.generate_content(
-                prompt,
-                generation_config=genai.types.GenerationConfig(
-                    temperature=0.2,
-                    max_output_tokens=200
-                )
+            response = client.chat.completions.create( # Changed to OpenAI chat completion
+                model=model_name,
+                messages=[
+                    {"role": "system", "content": "You are a professional French medical forum content analysis assistant. You need to analyze and classify user texts posted on a French medical forum."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.2,
+                max_tokens=200,
+                response_format={"type": "json_object"} # Request JSON output
             )
 
-            raw_output = response.text.strip()
-            # 清理并解析JSON
-            if raw_output.startswith("```json"):
-                json_str = raw_output[len("```json"):].strip()
-                if json_str.endswith("```"):
-                    json_str = json_str[:-len("```")].strip()
-            else:
-                json_str = raw_output
-
-            classified_result = json.loads(json_str)
+            raw_output = response.choices[0].message.content.strip()
+            classified_result = json.loads(raw_output)
 
             predicted_niveau1.append(classified_result.get('intention_generale', '未知'))
             predicted_niveau2.append(classified_result.get('objet_medical', '未知'))
@@ -177,7 +172,7 @@ for index, row in test_df.iterrows():
             break
 
         except Exception as e:
-            if "429" in str(e): # 检查是否是配额错误
+            if "429" in str(e) or "Rate limit" in str(e): # Check for rate limit errors
                 retries += 1
                 wait_time = base_delay * (2 ** (retries - 1)) + random.uniform(0, 1) # 指数增长并增加随机抖动
                 print(f"处理文本 ID {row['ID']} 遇到配额错误 (429)。第 {retries}/{max_retries} 次重试，等待 {wait_time:.2f} 秒...")
@@ -185,7 +180,7 @@ for index, row in test_df.iterrows():
             else:
                 # 其他错误，不重试
                 print(f"处理文本 ID {row['ID']} 失败: {e}")
-                print(f"原始模型输出:\n{response.text if 'response' in locals() else '无响应'}")
+                print(f"原始模型输出:\n{raw_output if 'raw_output' in locals() else '无响应'}")
                 predicted_niveau1.append('未知')
                 predicted_niveau2.append('未知')
                 predicted_niveau3.append('未知') # 失败时也添加 '未知'
@@ -241,7 +236,7 @@ def evaluate_category(actual_labels, predicted_labels, category_name):
     # 对于 niveau3 (情感)
     elif category_name == "情感级别 (Niveau 3)":
         # 只使用指定的标签
-        all_possible_labels = ['positif', 'negatif', 'non', 'NA_CATEGORY']
+        all_possible_labels = ['positif', 'negatif', 'non']
     else:
         all_possible_labels = sorted(list(set(filtered_actual + filtered_predicted))) # 备用方案
 

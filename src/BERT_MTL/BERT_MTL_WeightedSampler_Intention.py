@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, WeightedRandomSampler
 from transformers import BertModel, BertTokenizer, get_linear_schedule_with_warmup
 from torch.optim import AdamW
 from sklearn.metrics import accuracy_score, f1_score
@@ -8,40 +8,10 @@ import json
 import pandas as pd
 import os
 import torch.nn.functional as F
+from collections import Counter
 
 # ====================================================================
-# 1. Focal Loss 类
-# ====================================================================
-
-class FocalLoss(nn.Module):
-    def __init__(self, alpha=1, gamma=2, reduction='mean'):
-        super(FocalLoss, self).__init__()
-        self.alpha = alpha
-        self.gamma = gamma
-        self.reduction = reduction
-
-    def forward(self, inputs, targets):
-        log_prob = F.log_softmax(inputs, dim=-1)
-        prob = torch.exp(log_prob)
-        
-        targets_view = targets.view(-1, 1)
-
-        prob_pour_cibles = prob.gather(1, targets_view).squeeze(1)
-        log_prob_pour_cibles = log_prob.gather(1, targets_view).squeeze(1)
-
-        facteur_modulation = (1 - prob_pour_cibles) ** self.gamma
-        
-        perte_focale = -self.alpha * facteur_modulation * log_prob_pour_cibles
-        
-        if self.reduction == 'mean':
-            return torch.mean(perte_focale)
-        elif self.reduction == 'sum':
-            return torch.sum(perte_focale)
-        else:
-            return perte_focale
-
-# ====================================================================
-# 2. Dataset 类
+# 1. Dataset 类 (未更改)
 # ====================================================================
 
 class DatasetMultiTache(Dataset):
@@ -87,7 +57,7 @@ class DatasetMultiTache(Dataset):
         }
 
 # ====================================================================
-# 3. 多任务模型
+# 2. 多任务模型 (未更改)
 # ====================================================================
 
 class BERT_MedicalMultiTache(nn.Module):
@@ -111,7 +81,7 @@ class BERT_MedicalMultiTache(nn.Module):
         return logits_intention, logits_objet_medical, logits_sentiment
 
 # ====================================================================
-# 4. 训练和评估函数
+# 3. 训练和评估函数 (未更改)
 # ====================================================================
 
 def entrainer(modele, chargeur_donnees, optimiseur, scheduler, fonction_pertes, appareil):
@@ -187,17 +157,17 @@ def evaluer(modele, chargeur_donnees, appareil):
     }
 
 # ====================================================================
-# 5. 数据转换函数
+# 4. 数据转换函数 (未更改)
 # ====================================================================
 
 def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
     if os.path.exists(chemin_jsonl):
-        print(f"Fichier {chemin_jsonl} trouvé, conversion ignorée.")
+        print(f"文件 {chemin_jsonl} 已找到, 跳过转换.")
         return
 
-    print(f"Fichier {chemin_jsonl} non trouvé, conversion depuis {chemin_csv} en cours...")
+    print(f"文件 {chemin_jsonl} 未找到, 正在从 {chemin_csv} 进行转换...")
     if not os.path.exists(chemin_csv):
-        print(f"Erreur: Le fichier {chemin_csv} est introuvable. Veuillez vérifier le chemin d'accès.")
+        print(f"错误: 文件 {chemin_csv} 不存在. 请检查路径.")
         exit()
     
     repertoire_sortie = os.path.dirname(chemin_jsonl)
@@ -212,7 +182,7 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
         })
         colonnes_requises = ['texte', 'intention', 'objet_medical', 'sentiment']
         if not all(col in df.columns for col in colonnes_requises):
-            raise ValueError(f"Le fichier CSV ne contient pas toutes les colonnes requises.")
+            raise ValueError(f"CSV 文件不包含所有必需的列.")
         with open(chemin_jsonl, 'w', encoding='utf-8') as f:
             for _, row in df.iterrows():
                 dictionnaire_donnees = {
@@ -220,13 +190,13 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
                     'objet_medical': row['objet_medical'], 'sentiment': row['sentiment']
                 }
                 f.write(json.dumps(dictionnaire_donnees, ensure_ascii=False) + '\n')
-        print(f"Conversion réussie de {chemin_csv} en {chemin_jsonl}.")
+        print(f"成功将 {chemin_csv} 转换为 {chemin_jsonl}.")
     except Exception as e:
-        print(f"Une erreur est survenue lors de la conversion: {e}")
+        print(f"转换过程中发生错误: {e}")
         exit()
 
 # ====================================================================
-# 6. 主程序
+# 5. 主程序 (已修改 - 应用于 Intention)
 # ====================================================================
 
 if __name__ == '__main__':
@@ -254,7 +224,24 @@ if __name__ == '__main__':
     dataset_valid = DatasetMultiTache(CHEMIN_JSONL_VALID, tokenizer, MAX_LONGUEUR)
     dataset_test = DatasetMultiTache(CHEMIN_JSONL_TEST, tokenizer, MAX_LONGUEUR)
 
-    chargeur_donnees_train = DataLoader(dataset_train, batch_size=TAILLE_DE_LOT, shuffle=True)
+    # --- 关键改动：使用 WeightedRandomSampler 应用于 Intention 任务 ---
+    print("\n--- 正在计算意图分类的类别权重用于过采样 ---")
+    intention_labels = [item['intention'] for item in dataset_train.donnees]
+    class_counts = Counter(intention_labels)
+    num_samples = len(intention_labels)
+    
+    # 为每个样本计算权重 (与类别频率成反比)
+    weights = [num_samples / class_counts[label] for label in intention_labels]
+    
+    # 初始化 WeightedRandomSampler
+    sampler = WeightedRandomSampler(
+        weights, 
+        num_samples=num_samples, # 确保每个 epoch 的样本总数不变
+        replacement=True # 允许重复采样
+    )
+
+    # 在 DataLoader 中使用 sampler 并禁用 shuffle
+    chargeur_donnees_train = DataLoader(dataset_train, batch_size=TAILLE_DE_LOT, sampler=sampler)
     chargeur_donnees_valid = DataLoader(dataset_valid, batch_size=TAILLE_DE_LOT, shuffle=False)
     chargeur_donnees_test = DataLoader(dataset_test, batch_size=TAILLE_DE_LOT, shuffle=False)
 
@@ -266,10 +253,10 @@ if __name__ == '__main__':
     fonction_pertes = {
         'intention': nn.CrossEntropyLoss(),
         'objet_medical': nn.CrossEntropyLoss(),
-        'sentiment': FocalLoss(alpha=1, gamma=2)
+        'sentiment': nn.CrossEntropyLoss()
     }
 
-    print("\n--- 实验模式: Focal Loss 与简单损失加和 ---")
+    print("\n--- 实验模式: WeightedRandomSampler (Intention) + 损失加和 ---")
     modele = BERT_MedicalMultiTache(NOM_MODELE_BERT, num_intention, num_objet_medical, num_sentiment).to(appareil)
     optimiseur = AdamW(modele.parameters(), lr=TAUX_APPRENTISSAGE)
     total_etapes = len(chargeur_donnees_train) * EPOQUES
@@ -290,6 +277,6 @@ if __name__ == '__main__':
           f"Acc_Objet_Medical={metriques_test['acc_objet_medical']:.4f} F1={metriques_test['f1_objet_medical']:.4f} | "
           f"Acc_Sentiment={metriques_test['acc_sentiment']:.4f} F1={metriques_test['f1_sentiment']:.4f}")
 
-    chemin_sauvegarde_modele = 'BERT_MedicalMultiTache_focal.pth'
+    chemin_sauvegarde_modele = 'BERT_MedicalMultiTache_sampler_intention.pth'
     torch.save(modele.state_dict(), chemin_sauvegarde_modele)
     print(f"\n模型已保存为 {chemin_sauvegarde_modele}")

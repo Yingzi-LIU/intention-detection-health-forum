@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
-from torch.utils.data import Dataset, DataLoader, WeightedRandomSampler
-# 导入 Camembert 的分词器
-from transformers import AutoModel, CamembertTokenizer, get_linear_schedule_with_warmup
+from torch.utils.data import Dataset, DataLoader
+# 核心改动：不再导入 WeightedRandomSampler
+from transformers import AutoModel, AutoTokenizer, get_linear_schedule_with_warmup
 from torch.optim import AdamW
 from sklearn.metrics import accuracy_score, f1_score
 import json
@@ -11,7 +11,7 @@ import os
 from collections import Counter
 
 # ====================================================================
-# 1. 数据集和模型类
+# 1. Dataset 类 (未更改)
 # ====================================================================
 
 class DatasetMultiTache(Dataset):
@@ -19,6 +19,7 @@ class DatasetMultiTache(Dataset):
         self.donnees = self._charger_donnees(chemin_fichier)
         self.tokenizer = tokenizer
         self.max_longueur = max_longueur
+
         self.etiquettes_intention = {'recherche_information': 0, 'partage_experience': 1, 'fonction_phatique': 2}
         self.etiquettes_objet_medical = {'symptome': 0, 'traitement': 1, 'diagnostique': 2, 'NA_CATEGORY': 3}
         self.etiquettes_sentiment = {'positif': 0, 'negatif': 1, 'non': 2, 'RARE_CLASS': 3}
@@ -33,9 +34,11 @@ class DatasetMultiTache(Dataset):
     def __getitem__(self, index):
         item = self.donnees[index]
         texte = str(item['texte'])
+        
         intention = self.etiquettes_intention[item['intention']]
         objet_medical = self.etiquettes_objet_medical[item['objet_medical']]
         sentiment = self.etiquettes_sentiment[item['sentiment']]
+
         encodage = self.tokenizer.encode_plus(
             texte,
             add_special_tokens=True,
@@ -44,6 +47,7 @@ class DatasetMultiTache(Dataset):
             truncation=True,
             return_tensors='pt'
         )
+
         return {
             'input_ids': encodage['input_ids'].flatten(),
             'attention_mask': encodage['attention_mask'].flatten(),
@@ -52,52 +56,74 @@ class DatasetMultiTache(Dataset):
             'labels_sentiment': torch.tensor(sentiment, dtype=torch.long)
         }
 
-class BERT_MedicalMultiTache(nn.Module):
+# ====================================================================
+# 2. 多任务模型 (未更改)
+# ====================================================================
+
+class MedicalMultiTache(nn.Module):
     def __init__(self, nom_modele_pre_entraine, num_intention, num_objet_medical, num_sentiment):
-        super(BERT_MedicalMultiTache, self).__init__()
-        self.bert = AutoModel.from_pretrained(nom_modele_pre_entraine)
-        self.classifieur_intention = nn.Linear(self.bert.config.hidden_size, num_intention)
-        self.classifieur_objet_medical = nn.Linear(self.bert.config.hidden_size, num_objet_medical)
-        self.classifieur_sentiment = nn.Linear(self.bert.config.hidden_size, num_sentiment)
-    
+        super(MedicalMultiTache, self).__init__()
+        
+        self.model = AutoModel.from_pretrained(nom_modele_pre_entraine)
+        
+        self.classifieur_intention = nn.Linear(self.model.config.hidden_size, num_intention)
+        self.classifieur_objet_medical = nn.Linear(self.model.config.hidden_size, num_objet_medical)
+        self.classifieur_sentiment = nn.Linear(self.model.config.hidden_size, num_sentiment)
+        
     def forward(self, input_ids, attention_mask):
-        outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
-        pooled_output = outputs.last_hidden_state[:, 0, :]
+        outputs = self.model(input_ids=input_ids, attention_mask=attention_mask)
+        
+        pooled_output = outputs.pooler_output
+        
         logits_intention = self.classifieur_intention(pooled_output)
         logits_objet_medical = self.classifieur_objet_medical(pooled_output)
         logits_sentiment = self.classifieur_sentiment(pooled_output)
+        
         return logits_intention, logits_objet_medical, logits_sentiment
 
 # ====================================================================
-# 2. 训练和评估函数
+# 3. 训练和评估函数 (未更改)
 # ====================================================================
 
 def entrainer(modele, chargeur_donnees, optimiseur, scheduler, fonction_pertes, appareil):
     modele.train()
     perte_totale = 0
+    
     for batch in chargeur_donnees:
         input_ids = batch['input_ids'].to(appareil)
         attention_mask = batch['attention_mask'].to(appareil)
         labels_intention = batch['labels_intention'].to(appareil)
         labels_objet_medical = batch['labels_objet_medical'].to(appareil)
         labels_sentiment = batch['labels_sentiment'].to(appareil)
+        
         optimiseur.zero_grad()
-        logits_intention, logits_objet_medical, logits_sentiment = modele(input_ids=input_ids, attention_mask=attention_mask)
+        
+        logits_intention, logits_objet_medical, logits_sentiment = modele(
+            input_ids=input_ids,
+            attention_mask=attention_mask
+        )
+        
         perte_intention = fonction_pertes['intention'](logits_intention, labels_intention)
         perte_objet_medical = fonction_pertes['objet_medical'](logits_objet_medical, labels_objet_medical)
         perte_sentiment = fonction_pertes['sentiment'](logits_sentiment, labels_sentiment)
+        
         perte_totale_batch = perte_intention + perte_objet_medical + perte_sentiment
         perte_totale_batch.backward()
+        
         optimiseur.step()
         scheduler.step()
+        
         perte_totale += perte_totale_batch.item()
+    
     return perte_totale / len(chargeur_donnees)
 
 def evaluer(modele, chargeur_donnees, appareil):
     modele.eval()
+    
     predictions_intention, labels_reels_intention = [], []
     predictions_objet_medical, labels_reels_objet_medical = [], []
     predictions_sentiment, labels_reels_sentiment = [], []
+    
     with torch.no_grad():
         for batch in chargeur_donnees:
             input_ids = batch['input_ids'].to(appareil)
@@ -105,45 +131,65 @@ def evaluer(modele, chargeur_donnees, appareil):
             labels_intention = batch['labels_intention'].to(appareil)
             labels_objet_medical = batch['labels_objet_medical'].to(appareil)
             labels_sentiment = batch['labels_sentiment'].to(appareil)
-            logits_intention, logits_objet_medical, logits_sentiment = modele(input_ids=input_ids, attention_mask=attention_mask)
+            
+            logits_intention, logits_objet_medical, logits_sentiment = modele(
+                input_ids=input_ids,
+                attention_mask=attention_mask
+            )
+            
             predictions_intention.extend(torch.argmax(logits_intention, dim=1).cpu().numpy())
             labels_reels_intention.extend(labels_intention.cpu().numpy())
             predictions_objet_medical.extend(torch.argmax(logits_objet_medical, dim=1).cpu().numpy())
             labels_reels_objet_medical.extend(labels_objet_medical.cpu().numpy())
             predictions_sentiment.extend(torch.argmax(logits_sentiment, dim=1).cpu().numpy())
             labels_reels_sentiment.extend(labels_sentiment.cpu().numpy())
+
     acc_intention = accuracy_score(labels_reels_intention, predictions_intention)
     f1_intention = f1_score(labels_reels_intention, predictions_intention, average='macro')
     acc_objet_medical = accuracy_score(labels_reels_objet_medical, predictions_objet_medical)
     f1_objet_medical = f1_score(labels_reels_objet_medical, predictions_objet_medical, average='macro')
     acc_sentiment = accuracy_score(labels_reels_sentiment, predictions_sentiment)
     f1_sentiment = f1_score(labels_reels_sentiment, predictions_sentiment, average='macro')
+    
     return {
         'acc_intention': acc_intention, 'f1_intention': f1_intention,
         'acc_objet_medical': acc_objet_medical, 'f1_objet_medical': f1_objet_medical,
         'acc_sentiment': acc_sentiment, 'f1_sentiment': f1_sentiment
     }
 
+# ====================================================================
+# 4. 数据转换函数 (未更改)
+# ====================================================================
+
 def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
     if os.path.exists(chemin_jsonl):
         print(f"文件 {chemin_jsonl} 已找到, 跳过转换.")
         return
+
     print(f"文件 {chemin_jsonl} 未找到, 正在从 {chemin_csv} 进行转换...")
     if not os.path.exists(chemin_csv):
         print(f"错误: 文件 {chemin_csv} 不存在. 请检查路径.")
         exit()
+    
     repertoire_sortie = os.path.dirname(chemin_jsonl)
     if repertoire_sortie and not os.path.exists(repertoire_sortie):
         os.makedirs(repertoire_sortie)
+
     try:
         df = pd.read_csv(chemin_csv)
-        df = df.rename(columns={'Sentences': 'texte', 'niveau1': 'intention', 'niveau2': 'objet_medical', 'niveau3': 'sentiment'})
+        df = df.rename(columns={
+            'Sentences': 'texte', 'niveau1': 'intention',
+            'niveau2': 'objet_medical', 'niveau3': 'sentiment'
+        })
         colonnes_requises = ['texte', 'intention', 'objet_medical', 'sentiment']
         if not all(col in df.columns for col in colonnes_requises):
             raise ValueError(f"CSV 文件不包含所有必需的列.")
         with open(chemin_jsonl, 'w', encoding='utf-8') as f:
             for _, row in df.iterrows():
-                dictionnaire_donnees = {'texte': row['texte'], 'intention': row['intention'], 'objet_medical': row['objet_medical'], 'sentiment': row['sentiment']}
+                dictionnaire_donnees = {
+                    'texte': row['texte'], 'intention': row['intention'],
+                    'objet_medical': row['objet_medical'], 'sentiment': row['sentiment']
+                }
                 f.write(json.dumps(dictionnaire_donnees, ensure_ascii=False) + '\n')
         print(f"成功将 {chemin_csv} 转换为 {chemin_jsonl}.")
     except Exception as e:
@@ -151,13 +197,11 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
         exit()
 
 # ====================================================================
-# 3. 主程序
+# 5. 主程序 (应用 Camembert-bio，不使用采样)
 # ====================================================================
 
 if __name__ == '__main__':
-    # --- 关键改动: 使用 CamemBERT ---
-    NOM_MODELE_BERT = 'camembert/camembert-base'
-    
+    NOM_MODELE_PRE_ENTRAINE = 'almanach/camembert-bio-base'
     MAX_LONGUEUR = 128
     TAILLE_DE_LOT = 16
     EPOQUES = 3
@@ -175,38 +219,15 @@ if __name__ == '__main__':
     verifier_et_convertir_donnees(CHEMIN_JSONL_TEST, CHEMIN_CSV_TEST)
     
     appareil = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    # 明确使用 CamembertTokenizer
-    tokenizer = CamembertTokenizer.from_pretrained(NOM_MODELE_BERT)
+    tokenizer = AutoTokenizer.from_pretrained(NOM_MODELE_PRE_ENTRAINE)
 
     dataset_train = DatasetMultiTache(CHEMIN_JSONL_TRAIN, tokenizer, MAX_LONGUEUR)
     dataset_valid = DatasetMultiTache(CHEMIN_JSONL_VALID, tokenizer, MAX_LONGUEUR)
     dataset_test = DatasetMultiTache(CHEMIN_JSONL_TEST, tokenizer, MAX_LONGUEUR)
 
-    # --- 双任务过采样逻辑 ---
-    # 1. 计算情感分类的类别权重
-    sentiment_labels = [item['sentiment'] for item in dataset_train.donnees]
-    sentiment_class_counts = Counter(sentiment_labels)
-    sentiment_weights = {label: len(sentiment_labels) / count for label, count in sentiment_class_counts.items()}
-    
-    # 2. 计算医学对象分类的类别权重
-    objet_medical_labels = [item['objet_medical'] for item in dataset_train.donnees]
-    objet_medical_class_counts = Counter(objet_medical_labels)
-    objet_medical_weights = {label: len(objet_medical_labels) / count for label, count in objet_medical_class_counts.items()}
-
-    # 3. 计算每个样本的最终综合权重
-    final_weights = []
-    for item in dataset_train.donnees:
-        sentiment_label_str = item['sentiment']
-        objet_medical_label_str = item['objet_medical']
-        
-        weight_sentiment = sentiment_weights.get(sentiment_label_str, 1.0)
-        weight_objet_medical = objet_medical_weights.get(objet_medical_label_str, 1.0)
-        
-        final_weights.append(weight_sentiment * weight_objet_medical)
-
-    sampler = WeightedRandomSampler(final_weights, num_samples=len(final_weights), replacement=True)
-
-    chargeur_donnees_train = DataLoader(dataset_train, batch_size=TAILLE_DE_LOT, sampler=sampler)
+    # --- 关键改动：不使用任何采样器，只用 shuffle ---
+    print("\n--- 实验模式: Camembert-bio (无采样) ---")
+    chargeur_donnees_train = DataLoader(dataset_train, batch_size=TAILLE_DE_LOT, shuffle=True)
     chargeur_donnees_valid = DataLoader(dataset_valid, batch_size=TAILLE_DE_LOT, shuffle=False)
     chargeur_donnees_test = DataLoader(dataset_test, batch_size=TAILLE_DE_LOT, shuffle=False)
 
@@ -214,14 +235,14 @@ if __name__ == '__main__':
     num_objet_medical = len(dataset_train.etiquettes_objet_medical)
     num_sentiment = len(dataset_train.etiquettes_sentiment)
     
+    # 定义每项任务的损失函数
     fonction_pertes = {
         'intention': nn.CrossEntropyLoss(),
         'objet_medical': nn.CrossEntropyLoss(),
         'sentiment': nn.CrossEntropyLoss()
     }
 
-    print(f"\n--- 实验模式: CamemBERT + 双任务过采样 ---")
-    modele = BERT_MedicalMultiTache(NOM_MODELE_BERT, num_intention, num_objet_medical, num_sentiment).to(appareil)
+    modele = MedicalMultiTache(NOM_MODELE_PRE_ENTRAINE, num_intention, num_objet_medical, num_sentiment).to(appareil)
     optimiseur = AdamW(modele.parameters(), lr=TAUX_APPRENTISSAGE)
     total_etapes = len(chargeur_donnees_train) * EPOQUES
     scheduler = get_linear_schedule_with_warmup(optimiseur, num_warmup_steps=0, num_training_steps=total_etapes)
@@ -241,6 +262,6 @@ if __name__ == '__main__':
           f"Acc_Objet_Medical={metriques_test['acc_objet_medical']:.4f} F1={metriques_test['f1_objet_medical']:.4f} | "
           f"Acc_Sentiment={metriques_test['acc_sentiment']:.4f} F1={metriques_test['f1_sentiment']:.4f}")
 
-    chemin_sauvegarde_modele = 'BERT_MedicalMultiTache_camembert_double_sampler.pth'
+    chemin_sauvegarde_modele = 'Camembert-bio_MedicalMultiTache_no_sampler.pth'
     torch.save(modele.state_dict(), chemin_sauvegarde_modele)
     print(f"\n模型已保存为 {chemin_sauvegarde_modele}")

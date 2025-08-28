@@ -2,10 +2,11 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from transformers import BertModel, BertTokenizer
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 import json
 import pandas as pd
 import os
+from collections import Counter
 
 # ====================================================================
 # 1. 模型和数据类
@@ -87,16 +88,33 @@ def evaluer(modele, chargeur_donnees, appareil):
             labels_reels_objet_medical.extend(labels_objet_medical.cpu().numpy())
             predictions_sentiment.extend(torch.argmax(logits_sentiment, dim=1).cpu().numpy())
             labels_reels_sentiment.extend(labels_sentiment.cpu().numpy())
+    
+    # --- 指标计算 ---
     acc_intention = accuracy_score(labels_reels_intention, predictions_intention)
-    f1_intention = f1_score(labels_reels_intention, predictions_intention, average='macro')
+    f1_intention_macro = f1_score(labels_reels_intention, predictions_intention, average='macro', zero_division=0)
+    f1_intention_micro = f1_score(labels_reels_intention, predictions_intention, average='micro', zero_division=0)
+    precision_intention = precision_score(labels_reels_intention, predictions_intention, average='macro', zero_division=0)
+    recall_intention = recall_score(labels_reels_intention, predictions_intention, average='macro', zero_division=0)
+    f1_intention_per_class = f1_score(labels_reels_intention, predictions_intention, average=None, zero_division=0)
+
     acc_objet_medical = accuracy_score(labels_reels_objet_medical, predictions_objet_medical)
-    f1_objet_medical = f1_score(labels_reels_objet_medical, predictions_objet_medical, average='macro')
+    f1_objet_medical_macro = f1_score(labels_reels_objet_medical, predictions_objet_medical, average='macro', zero_division=0)
+    f1_objet_medical_micro = f1_score(labels_reels_objet_medical, predictions_objet_medical, average='micro', zero_division=0)
+    precision_objet_medical = precision_score(labels_reels_objet_medical, predictions_objet_medical, average='macro', zero_division=0)
+    recall_objet_medical = recall_score(labels_reels_objet_medical, predictions_objet_medical, average='macro', zero_division=0)
+    f1_objet_medical_per_class = f1_score(labels_reels_objet_medical, predictions_objet_medical, average=None, zero_division=0)
+    
     acc_sentiment = accuracy_score(labels_reels_sentiment, predictions_sentiment)
-    f1_sentiment = f1_score(labels_reels_sentiment, predictions_sentiment, average='macro')
+    f1_sentiment_macro = f1_score(labels_reels_sentiment, predictions_sentiment, average='macro', zero_division=0)
+    f1_sentiment_micro = f1_score(labels_reels_sentiment, predictions_sentiment, average='micro', zero_division=0)
+    precision_sentiment = precision_score(labels_reels_sentiment, predictions_sentiment, average='macro', zero_division=0)
+    recall_sentiment = recall_score(labels_reels_sentiment, predictions_sentiment, average='macro', zero_division=0)
+    f1_sentiment_per_class = f1_score(labels_reels_sentiment, predictions_sentiment, average=None, zero_division=0)
+    
     return {
-        'acc_intention': acc_intention, 'f1_intention': f1_intention,
-        'acc_objet_medical': acc_objet_medical, 'f1_objet_medical': f1_objet_medical,
-        'acc_sentiment': acc_sentiment, 'f1_sentiment': f1_sentiment
+        'acc_intention': acc_intention, 'f1_intention_macro': f1_intention_macro, 'f1_intention_micro': f1_intention_micro, 'precision_intention': precision_intention, 'recall_intention': recall_intention, 'f1_intention_per_class': f1_intention_per_class,
+        'acc_objet_medical': acc_objet_medical, 'f1_objet_medical_macro': f1_objet_medical_macro, 'f1_objet_medical_micro': f1_objet_medical_micro, 'precision_objet_medical': precision_objet_medical, 'recall_objet_medical': recall_objet_medical, 'f1_objet_medical_per_class': f1_objet_medical_per_class,
+        'acc_sentiment': acc_sentiment, 'f1_sentiment_macro': f1_sentiment_macro, 'f1_sentiment_micro': f1_sentiment_micro, 'precision_sentiment': precision_sentiment, 'recall_sentiment': recall_sentiment, 'f1_sentiment_per_class': f1_sentiment_per_class
     }
 
 def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
@@ -130,11 +148,12 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
 # ====================================================================
 
 if __name__ == '__main__':
-    # 定义所有要比较的模型
+    # 定义所有要对比的模型
     modeles_a_comparer = {
-        '原始模型 (损失加和)': 'BERT_MedicalMultiTache.pth',
-        'Focal Loss 模型': 'BERT_MedicalMultiTache_focal.pth',
-        '过采样模型': 'BERT_MedicalMultiTache_sampler.pth'
+        '基准模型': 'BERT_MedicalMultiTache.pth',
+        '意图过采样': 'BERT_MedicalMultiTache_sampler_intention.pth',
+        '医疗对象过采样': 'BERT_MedicalMultiTache_sampler_objet_medical.pth',
+        '情感过采样': 'BERT_MedicalMultiTache_sampler_sentiment.pth'
     }
     
     # 配置信息
@@ -161,37 +180,76 @@ if __name__ == '__main__':
         print(f"\n--- 正在评估: {nom_modele} ---")
         modele = BERT_MedicalMultiTache(NOM_MODELE_BERT, num_intention, num_objet_medical, num_sentiment).to(appareil)
         try:
+            # 加载模型状态字典
             modele.load_state_dict(torch.load(chemin_fichier, map_location=appareil))
             metriques = evaluer(modele, chargeur_donnees_test, appareil)
             resultats_comparaison[nom_modele] = metriques
-            print(f"评估完成. Acc_Sentiment={metriques['acc_sentiment']:.4f}, F1_Sentiment={metriques['f1_sentiment']:.4f}")
+            print("评估完成.")
         except FileNotFoundError:
             print(f"错误: 找不到文件 {chemin_fichier}. 跳过该模型.")
     
     # 打印最终对比表格
-    print("\n" + "="*120)
-    print(" " * 45 + "多模型性能对比结果")
-    print("="*120)
+    print("\n" + "="*160)
+    print(" " * 65 + "多模型性能对比结果")
+    print("="*160)
     
-    entete_tableau = "{:<25} | {:<25} | {:<25} | {:<25}".format("任务", "原始模型 (F1 / Acc)", "Focal Loss 模型 (F1 / Acc)", "过采样模型 (F1 / Acc)")
-    ligne_separateur = "-"*120
-    
-    print(entete_tableau)
-    print(ligne_separateur)
+    # 获取模型名称和任务标签
+    model_names = list(modeles_a_comparer.keys())
     
     for tache in ['intention', 'objet_medical', 'sentiment']:
-        f1_original = resultats_comparaison['原始模型 (损失加和)'][f'f1_{tache}']
-        acc_original = resultats_comparaison['原始模型 (损失加和)'][f'acc_{tache}']
-        f1_focal = resultats_comparaison['Focal Loss 模型'][f'f1_{tache}']
-        acc_focal = resultats_comparaison['Focal Loss 模型'][f'acc_{tache}']
-        f1_sampler = resultats_comparaison['过采样模型'][f'f1_{tache}']
-        acc_sampler = resultats_comparaison['过采样模型'][f'acc_{tache}']
+        print(f"\n任务: {tache.capitalize()}")
         
-        print("{:<25} | F1={:.4f} / Acc={:.4f} | F1={:.4f} / Acc={:.4f} | F1={:.4f} / Acc={:.4f}".format(
-            f"{tache.capitalize()}",
-            f1_original, acc_original,
-            f1_focal, acc_focal,
-            f1_sampler, acc_sampler
-        ))
-    
-    print("="*120)
+        # 定义所有要显示的指标
+        metrics_to_show = {
+            'F1 (Macro)': f'f1_{tache}_macro',
+            'F1 (Micro)': f'f1_{tache}_micro',
+            'Precision (Macro)': f'precision_{tache}',
+            'Recall (Macro)': f'recall_{tache}',
+            'Accuracy': f'acc_{tache}'
+        }
+
+        # 打印宏观指标表格
+        entete_macro = "{:<25} |".format("指标")
+        for name in model_names:
+            entete_macro += f" {name:<25} |"
+        print("-" * (25 + len(model_names) * 28))
+        print(entete_macro)
+        print("-" * (25 + len(model_names) * 28))
+        
+        for metric_display_name, metric_key in metrics_to_show.items():
+            ligne_metrique = "{:<25} |".format(metric_display_name)
+            for name in model_names:
+                score = resultats_comparaison.get(name, {}).get(metric_key, 'N/A')
+                ligne_metrique += f" {score:<25.4f} |" if isinstance(score, float) else f" {score:<25} |"
+            print(ligne_metrique)
+
+        # 打印分类别F1表格
+        print("\n" + "-" * (25 + len(model_names) * 28))
+        print("分类别 F1-Score:")
+        print("-" * (25 + len(model_names) * 28))
+        
+        if tache == 'intention':
+            class_labels = list(dataset_test.etiquettes_intention.keys())
+        elif tache == 'objet_medical':
+            class_labels = list(dataset_test.etiquettes_objet_medical.keys())
+        else:
+            class_labels = list(dataset_test.etiquettes_sentiment.keys())
+
+        entete_classes = "{:<25} |".format("类别")
+        for name in model_names:
+            entete_classes += f" {name:<25} |"
+        print(entete_classes)
+        print("-" * (25 + len(model_names) * 28))
+
+        for i, label in enumerate(class_labels):
+            ligne_f1 = "{:<25} |".format(label)
+            for name in model_names:
+                f1_per_class_scores = resultats_comparaison.get(name, {}).get(f'f1_{tache}_per_class', None)
+                if f1_per_class_scores is not None and len(f1_per_class_scores) > i:
+                    score = f1_per_class_scores[i]
+                    ligne_f1 += f" {score:<25.4f} |"
+                else:
+                    ligne_f1 += f" {'N/A':<25} |"
+            print(ligne_f1)
+            
+    print("="*160)
