@@ -34,21 +34,21 @@ except Exception as e:
     print(f"加载 Few-shot 示例失败: {e}")
     exit()
 
-# --- 5. 构建 Prompt 函数 ---
+# --- 5. Build Prompt Function ---
 def create_few_shot_prompt(text_to_classify, few_shot_examples):
     """
-    根据few-shot示例构建Prompt。
+    Builds a prompt based on few-shot examples.
     """
     few_shot_section = ""
     for ex in few_shot_examples:
-        # 现在 few_shot_examples 中的 'niveau3' 直接包含情感标签
+        
         emotion_label = ex['niveau3']
 
         few_shot_section += f"""
-    **示例输入 (Exemple d'entrée):**
+    **(Exemple d'entrée):**
     "{ex['Sentences']}"
 
-    **示例输出 (Exemple de sortie):**
+    **(Exemple de sortie):**
     ```json
     {{
         "intention_generale": "{ex['niveau1']}",
@@ -59,45 +59,45 @@ def create_few_shot_prompt(text_to_classify, few_shot_examples):
     """
 
     prompt = f"""
-    你是一个专业的法语医学论坛内容分析助手。你需要对用户在法语医学论坛上发布的文本进行分析和分类。
-    请根据以下三个维度对提供的文本进行分类，并以JSON格式输出结果：
+    Vous êtes un assistant professionnel d'analyse de contenu de forum médical français. Vous devez analyser et classer les textes publiés par les utilisateurs sur un forum médical français.
+    Veuillez classer le texte fourni selon les trois dimensions suivantes et afficher les résultats au format JSON :
 
-    1.  **意图级别 (Niveau de l'intention générale)**：
-        * "recherche_information" (信息查询)
-        * "partage_experience" (经验分享)
-        * "fonction_phatique" (寒暄或维持交流)
+    1.  **Niveau de l'intention générale** :
+        * "recherche_information" (Recherche d'informations)
+        * "partage_experience" (Partage d'expérience)
+        * "fonction_phatique" (Salutations ou maintien de la communication)
 
-    2.  **医疗对象级别 (Niveau de l'objet médical)**：
-        * "symptome" (症状)
-        * "traitement" (治疗)
-        * "diagnostique" (诊断)
-        * "NA_CATEGORY" (不相关) (如果文本内容不涉及具体的医疗对象)
+    2.  **Niveau de l'objet médical** :
+        * "symptome" (Symptôme)
+        * "traitement" (Traitement)
+        * "diagnostique" (Diagnostic)
+        * "NA_CATEGORY" (Non pertinent) (Si le contenu du texte ne concerne pas un objet médical spécifique)
 
-    3.  **情感级别 (Niveau emotion)**：
-        * "positif" (积极)
-        * "negatif" (消极)
-        * "non" (无情感)
-        * "NA_CATEGORY" (不相关)
+    3.  **Niveau émotionnel** :
+        * "positif" (Positif)
+        * "negatif" (Négatif)
+        * "non" (Neutre)
+        * "NA_CATEGORY" (Non pertinent)
 
-    请确保输出严格为JSON格式，包含 `intention_generale`, `objet_medical`, `emotion` 这三个顶层键。
-    如果某个类别不适用，请将其设为 "NA_CATEGORY"。
+    Veuillez vous assurer que la sortie est strictement au format JSON et contient les trois clés de niveau supérieur : `intention_generale`, `objet_medical`, `emotion`.
+    Si une catégorie n'est pas applicable, veuillez la définir sur "NA_CATEGORY".
 
     ---
-    **Few-Shot 示例 (Exemples Few-Shot):**
+    **(Exemples Few-Shot):**
     {few_shot_section}
     ---
-    **要分类的文本 (Texte à classifier):**
+    **(Texte à classifier):**
     "{text_to_classify}"
     """
     return prompt
 
 while True:
-    user_input = input("\n请输入您的医学论坛问题 (或输入 'exit' 退出): ")
+    user_input = input("\nVeuillez entrer votre question sur le forum médical (ou tapez 'exit' pour quitter) : ")
     if user_input.lower() == 'exit':
-        print("感谢使用，再见！")
+        print("Merci d'avoir utilisé, au revoir !")
         break
 
-    print("\n--- 正在分类您的输入 ---")
+    print("\n--- Classification de votre entrée en cours ---")
     classification_prompt = create_few_shot_prompt(user_input, few_shot_data)
 
     retries = 0
@@ -124,7 +124,7 @@ while True:
                 json_str = raw_output
 
             classified_result = json.loads(json_str)
-            print("\n--- 分类结果 ---")
+            print("\n--- Résultats de la classification ---")
             print(json.dumps(classified_result, indent=2, ensure_ascii=False))
             break
 
@@ -132,100 +132,100 @@ while True:
             if "429" in str(e):
                 retries += 1
                 wait_time = base_delay * (2 ** (retries - 1)) + random.uniform(0, 1)
-                print(f"分类遇到配额错误 (429)。第 {retries}/{max_retries} 次重试，等待 {wait_time:.2f} 秒...")
+                print(f"Erreur de quota (429) rencontrée lors de la classification. Tentative {retries}/{max_retries}, attente de {wait_time:.2f} secondes...")
                 time.sleep(wait_time)
             else:
-                print(f"分类失败: {e}")
-                print(f"原始模型输出:\n{response.text if 'response' in locals() else '无响应'}")
+                print(f"Échec de la classification : {e}")
+                print(f"Sortie brute du modèle :\n{response.text if 'response' in locals() else 'Aucune réponse'}")
                 classified_result = None
                 break
     
     if classified_result is None:
-        print("无法分类您的输入，请稍后再试。")
+        print("Impossible de classer votre entrée, veuillez réessayer plus tard.")
         continue
 
-# --- 根据分类结果生成回复 ---
-    intention = classified_result.get('intention_generale', '未知')
-    medical_object = classified_result.get('objet_medical', '未知')
-    emotion = classified_result.get('emotion', '未知') # 获取新的 'emotion' 键
+
+   intention = classified_result.get('intention_generale', 'inconnu')
+    medical_object = classified_result.get('objet_medical', 'inconnu')
+    emotion = classified_result.get('emotion', 'inconnu') 
 
     def get_response_strategy(intention, medical_object, emotion):
-        # 意图: recherche_information (信息查询)
+        # Intention: recherche_information (Information seeking)
         if intention == "recherche_information":
             if medical_object == "symptome":
                 if emotion == "positif":
-                    return "用户对症状持积极态度，可能是在寻求确认或进一步了解。请提供关于症状的常见信息，并建议用户咨询医生以获取专业意见。"
+                    return "L'utilisateur a une attitude positive envers les symptômes, il cherche peut-être une confirmation ou des informations supplémentaires. Veuillez fournir des informations générales sur les symptômes et conseiller à l'utilisateur de consulter un médecin pour un avis professionnel."
                 elif emotion == "negatif":
-                    return "用户对症状感到担忧或不适。请提供安慰，给出关于症状的常见信息，并强烈建议用户尽快咨询医生。"
+                    return "L'utilisateur est préoccupé ou mal à l'aise avec les symptômes. Veuillez offrir du réconfort, fournir des informations générales sur les symptômes et fortement conseiller à l'utilisateur de consulter un médecin dès que possible."
                 else: # non / NA_CATEGORY
-                    return "用户正在查询症状信息。请提供关于症状的常见信息，并建议用户咨询医生。"
+                    return "L'utilisateur recherche des informations sur les symptômes. Veuillez fournir des informations générales sur les symptômes et conseiller à l'utilisateur de consulter un médecin."
             elif medical_object == "traitement":
                 if emotion == "positif":
-                    return "用户对治疗有积极的期望或正在分享治疗进展。请提供治疗相关的一般信息，并强调遵循医嘱的重要性。"
+                    return "L'utilisateur a des attentes positives concernant le traitement ou partage des progrès. Veuillez fournir des informations générales sur le traitement et souligner l'importance de suivre les conseils médicaux."
                 elif emotion == "negatif":
-                    return "用户对治疗感到沮丧、担忧或不满意。请提供支持和理解，建议用户回顾治疗方案或寻求第二意见。"
+                    return "L'utilisateur est frustré, préoccupé ou insatisfait du traitement. Veuillez offrir soutien et compréhension, et suggérer à l'utilisateur de revoir le plan de traitement ou de demander un deuxième avis."
                 else: # non / NA_CATEGORY
-                    return "用户正在查询治疗信息。请提供治疗相关的一般信息，并强调遵循医嘱的重要性。"
+                    return "L'utilisateur recherche des informations sur le traitement. Veuillez fournir des informations générales sur le traitement et souligner l'importance de suivre les conseils médicaux."
             elif medical_object == "diagnostique":
                 if emotion == "positif":
-                    return "用户对诊断结果持积极态度，可能是在寻求确认或了解更多。请提供诊断相关的一般信息，并建议用户与医生讨论后续步骤。"
+                    return "L'utilisateur a une attitude positive envers le diagnostic, il cherche peut-être une confirmation ou des informations supplémentaires. Veuillez fournir des informations générales sur le diagnostic et conseiller à l'utilisateur de discuter des prochaines étapes avec son médecin."
                 elif emotion == "negatif":
-                    return "用户对诊断结果感到困惑、担忧或沮丧。请提供安慰和支持，建议用户寻求进一步的解释或第二意见。"
+                    return "L'utilisateur est confus, préoccupé ou frustré par le diagnostic. Veuillez offrir réconfort et soutien, et suggérer à l'utilisateur de demander des éclaircissements supplémentaires ou un deuxième avis."
                 else: # non / NA_CATEGORY
-                    return "用户正在查询诊断信息。请提供诊断相关的一般信息，并建议用户与医生讨论后续步骤。"
+                    return "L'utilisateur recherche des informations sur le diagnostic. Veuillez fournir des informations générales sur le diagnostic et conseiller à l'utilisateur de discuter des prochaines étapes avec son médecin."
             else: # medical_object == "NA_CATEGORY"
-                return "用户正在查询信息，但医疗对象不明确。请提供通用健康信息或建议用户提供更具体的问题。"
+                return "L'utilisateur recherche des informations, mais l'objet médical n'est pas clair. Veuillez fournir des informations générales sur la santé ou suggérer à l'utilisateur de poser une question plus spécifique."
         
-        # 意图: partage_experience (经验分享)
+        # Intention: partage_experience (Experience sharing)
         elif intention == "partage_experience":
             if medical_object == "symptome":
                 if emotion == "positif":
-                    return "用户积极分享症状经验。请鼓励用户分享更多细节，例如症状如何开始、持续多久、以及采取了哪些措施。同时，可以询问他们是否有任何积极的应对策略可以分享给其他社区成员。"
+                    return "L'utilisateur partage positivement son expérience des symptômes. Veuillez encourager l'utilisateur à partager plus de détails, tels que le début des symptômes, leur durée et les mesures prises. Vous pouvez également leur demander s'ils ont des stratégies d'adaptation positives à partager avec d'autres membres de la communauté."
                 elif emotion == "negatif":
-                    return "用户消极分享症状经验。请表达同情和理解，鼓励用户详细描述他们的感受和遇到的挑战。可以询问他们目前正在寻求哪些支持，并提醒他们社区成员都在这里倾听和支持。"
+                    return "L'utilisateur partage négativement son expérience des symptômes. Veuillez exprimer votre sympathie et votre compréhension, et encourager l'utilisateur à décrire en détail ses sentiments et les défis rencontrés. Vous pouvez leur demander quel type de soutien ils recherchent actuellement et leur rappeler que les membres de la communauté sont là pour écouter et soutenir."
                 else: # non / NA_CATEGORY
-                    return "用户正在分享症状经验。请鼓励用户分享更多细节，并提供支持。"
+                    return "L'utilisateur partage son expérience des symptômes. Veuillez encourager l'utilisateur à partager plus de détails et à offrir un soutien."
             elif medical_object == "traitement":
                 if emotion == "positif":
-                    return "用户积极分享治疗经验。请鼓励用户分享治疗过程中的亮点、有效的策略或他们认为有帮助的资源。可以询问他们对其他正在经历类似治疗的成员有什么建议。"
+                    return "L'utilisateur partage positivement son expérience du traitement. Veuillez encourager l'utilisateur à partager les points saillants du processus de traitement, les stratégies efficaces ou les ressources qu'il a trouvées utiles. Vous pouvez leur demander s'ils ont des conseils à donner aux autres membres qui suivent un traitement similaire."
                 elif emotion == "negatif":
-                    return "用户消极分享治疗经验。请表达同情和理解，鼓励用户分享治疗中遇到的困难、副作用或挫折。可以询问他们希望从社区获得哪些支持或建议，并提醒他们寻求专业帮助的重要性。"
+                    return "L'utilisateur partage négativement son expérience du traitement. Veuillez exprimer votre sympathie et votre compréhension, et encourager l'utilisateur à partager les difficultés, les effets secondaires ou les revers rencontrés pendant le traitement. Vous pouvez leur demander quel type de soutien ou de conseils ils souhaitent obtenir de la communauté et leur rappeler l'importance de demander une aide professionnelle."
                 else: # non / NA_CATEGORY
-                    return "用户正在分享治疗经验。请鼓励用户分享更多细节，并提供支持。"
+                    return "L'utilisateur partage son expérience du traitement. Veuillez encourager l'utilisateur à partager plus de détails et à offrir un soutien."
             elif medical_object == "diagnostique":
                 if emotion == "positif":
-                    return "用户积极分享诊断经验。请鼓励用户分享诊断过程中的关键信息、他们是如何接受诊断的，以及他们采取了哪些积极的应对措施。可以询问他们是否有任何资源或建议可以分享给新确诊的成员。"
+                    return "L'utilisateur partage positivement son expérience du diagnostic. Veuillez encourager l'utilisateur à partager les informations clés du processus de diagnostic, comment il a accepté le diagnostic et les mesures positives qu'il a prises. Vous pouvez leur demander s'ils ont des ressources ou des conseils à partager avec les membres nouvellement diagnostiqués."
                 elif emotion == "negatif":
-                    return "用户消极分享诊断经验。请表达同情和理解，鼓励用户分享诊断带来的情感冲击、困惑或挑战。可以询问他们目前最需要哪些方面的支持，并提醒他们寻求心理健康支持的重要性。"
+                    return "L'utilisateur partage négativement son expérience du diagnostic. Veuillez exprimer votre sympathie et votre compréhension, et encourager l'utilisateur à partager l'impact émotionnel, la confusion ou les défis du diagnostic. Vous pouvez leur demander quel type de soutien ils ont le plus besoin actuellement et leur rappeler l'importance de demander un soutien en santé mentale."
                 else: # non / NA_CATEGORY
-                    return "用户正在分享诊断经验。请鼓励用户分享更多细节，并提供支持。"
+                    return "L'utilisateur partage son expérience du diagnostic. Veuillez encourager l'utilisateur à partager plus de détails et à offrir un soutien."
             else: # medical_object == "NA_CATEGORY"
-                return "用户正在分享经验，但医疗对象不明确。请鼓励用户分享更多细节，并提供通用支持。"
+                return "L'utilisateur partage son expérience, mais l'objet médical n'est pas clair. Veuillez encourager l'utilisateur à partager plus de détails et à offrir un soutien général."
 
-        # 意图: fonction_phatique (寒暄或维持交流)
+        # Intention: fonction_phatique (Greetings or maintaining communication)
         elif intention == "fonction_phatique":
-            return "请给予友好的回应，鼓励用户继续参与社区讨论。"
+            return "Veuillez donner une réponse amicale et encourager l'utilisateur à continuer à participer aux discussions de la communauté."
         
-        # 未知意图
+        # Unknown intention
         else:
-            return "无法识别意图，请提供通用且礼貌的回复，并引导用户提供更清晰的信息。"
+            return "Intention non identifiée, veuillez fournir une réponse générale et polie, et guider l'utilisateur à fournir des informations plus claires."
 
     response_strategy = get_response_strategy(intention, medical_object, emotion)
 
     response_prompt = f"""
-    用户在医学论坛上发布了以下内容: "{user_input}"
+    L'utilisateur a posté le contenu suivant sur le forum médical : "{user_input}"
 
-    该内容的分类结果如下:
-    - 意图级别: {intention}
-    - 医疗对象级别: {medical_object}
-    - 情感级别: {emotion}
+    Les résultats de la classification de ce contenu sont les suivants :
+    - Niveau d'intention : {intention}
+    - Niveau d'objet médical : {medical_object}
+    - Niveau émotionnel : {emotion}
 
-    请根据这些分类结果，以一个专业的医学论坛助手的身份，给出一个合理且有帮助的回复。
+    Veuillez fournir une réponse raisonnable et utile en tant qu'assistant professionnel du forum médical, basée sur ces résultats de classification.
     {response_strategy}
-    请确保回复是法语。
+    Veuillez vous assurer que la réponse est en français.
     """
 
-    print("\n--- 正在生成回复 ---")
+    print("\n--- Génération de la réponse en cours ---")
     retries = 0
     generated_response = None
     while retries < max_retries:
@@ -238,20 +238,20 @@ while True:
                 )
             )
             generated_response = response.text.strip()
-            print("\n--- 助手回复 ---")
+            print("\n--- Réponse de l'assistant ---")
             print(generated_response)
             break
         except Exception as e:
             if "429" in str(e):
                 retries += 1
                 wait_time = base_delay * (2 ** (retries - 1)) + random.uniform(0, 1)
-                print(f"生成回复遇到配额错误 (429)。第 {retries}/{max_retries} 次重试，等待 {wait_time:.2f} 秒...")
+                print(f"Erreur de quota (429) rencontrée lors de la génération de la réponse. Tentative {retries}/{max_retries}, attente de {wait_time:.2f} secondes...")
                 time.sleep(wait_time)
             else:
-                print(f"生成回复失败: {e}")
-                print(f"原始模型输出:\n{response.text if 'response' in locals() else '无响应'}")
-                generated_response = "抱歉，无法生成回复。请稍后再试。"
+                print(f"Échec de la génération de la réponse : {e}")
+                print(f"Sortie brute du modèle :\n{response.text if 'response' in locals() else 'Aucune réponse'}")
+                generated_response = "Désolé, impossible de générer une réponse. Veuillez réessayer plus tard."
                 break
     
     if generated_response is None:
-        print("抱歉，无法生成回复。请稍后再试。")
+        print("Désolé, impossible de générer une réponse. Veuillez réessayer plus tard.")

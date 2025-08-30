@@ -9,7 +9,7 @@ import os
 from collections import Counter
 
 # ====================================================================
-# 1. 模型和数据类
+# 1. Model and Data Classes
 # ====================================================================
 
 class BERT_MedicalMultiTache(nn.Module):
@@ -89,7 +89,7 @@ def evaluer(modele, chargeur_donnees, appareil):
             predictions_sentiment.extend(torch.argmax(logits_sentiment, dim=1).cpu().numpy())
             labels_reels_sentiment.extend(labels_sentiment.cpu().numpy())
     
-    # --- 指标计算 ---
+    # --- Metric Calculation ---
     acc_intention = accuracy_score(labels_reels_intention, predictions_intention)
     f1_intention_macro = f1_score(labels_reels_intention, predictions_intention, average='macro', zero_division=0)
     f1_intention_micro = f1_score(labels_reels_intention, predictions_intention, average='micro', zero_division=0)
@@ -119,11 +119,11 @@ def evaluer(modele, chargeur_donnees, appareil):
 
 def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
     if os.path.exists(chemin_jsonl):
-        print(f"文件 {chemin_jsonl} 已找到, 跳过转换.")
+        print(f"File {chemin_jsonl} found, skipping conversion.")
         return
-    print(f"文件 {chemin_jsonl} 未找到, 正在从 {chemin_csv} 进行转换...")
+    print(f"File {chemin_jsonl} not found, converting from {chemin_csv}...")
     if not os.path.exists(chemin_csv):
-        print(f"错误: 文件 {chemin_csv} 不存在. 请检查路径.")
+        print(f"Error: File {chemin_csv} does not exist. Please check the path.")
         exit()
     repertoire_sortie = os.path.dirname(chemin_jsonl)
     if repertoire_sortie and not os.path.exists(repertoire_sortie):
@@ -133,37 +133,37 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
         df = df.rename(columns={'Sentences': 'texte', 'niveau1': 'intention', 'niveau2': 'objet_medical', 'niveau3': 'sentiment'})
         colonnes_requises = ['texte', 'intention', 'objet_medical', 'sentiment']
         if not all(col in df.columns for col in colonnes_requises):
-            raise ValueError(f"CSV 文件不包含所有必需的列.")
+            raise ValueError(f"CSV file does not contain all required columns.")
         with open(chemin_jsonl, 'w', encoding='utf-8') as f:
             for _, row in df.iterrows():
                 dictionnaire_donnees = {'texte': row['texte'], 'intention': row['intention'], 'objet_medical': row['objet_medical'], 'sentiment': row['sentiment']}
                 f.write(json.dumps(dictionnaire_donnees, ensure_ascii=False) + '\n')
-        print(f"成功将 {chemin_csv} 转换为 {chemin_jsonl}.")
+        print(f"Successfully converted {chemin_csv} to {chemin_jsonl}.")
     except Exception as e:
-        print(f"转换过程中发生错误: {e}")
+        print(f"An error occurred during conversion: {e}")
         exit()
 
 # ====================================================================
-# 2. 主程序
+# 2. Main Program
 # ====================================================================
 
 if __name__ == '__main__':
-    # 定义所有要对比的模型
+    # Define all models to compare
     modeles_a_comparer = {
-        '基准模型': 'BERT_MedicalMultiTache.pth',
-        '意图过采样': 'BERT_MedicalMultiTache_sampler_intention.pth',
-        '医疗对象过采样': 'BERT_MedicalMultiTache_sampler_objet_medical.pth',
-        '情感过采样': 'BERT_MedicalMultiTache_sampler_sentiment.pth'
+        'Baseline Model': 'BERT_MedicalMultiTache.pth',
+        'Intention Oversampling': 'BERT_MedicalMultiTache_sampler_intention.pth',
+        'Medical Object Oversampling': 'BERT_MedicalMultiTache_sampler_objet_medical.pth',
+        'Sentiment Oversampling': 'BERT_MedicalMultiTache_sampler_sentiment.pth'
     }
     
-    # 配置信息
+    # Configuration information
     NOM_MODELE_BERT = 'bert-base-multilingual-cased'
     MAX_LONGUEUR = 128
     TAILLE_DE_LOT = 16
     CHEMIN_CSV_TEST = 'data/dataset/test_dataset.csv'
     CHEMIN_JSONL_TEST = 'data/dataset/test_dataset.jsonl'
     
-    # 准备测试数据
+    # Prepare test data
     verifier_et_convertir_donnees(CHEMIN_JSONL_TEST, CHEMIN_CSV_TEST)
     appareil = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = BertTokenizer.from_pretrained(NOM_MODELE_BERT)
@@ -174,32 +174,32 @@ if __name__ == '__main__':
     num_objet_medical = len(dataset_test.etiquettes_objet_medical)
     num_sentiment = len(dataset_test.etiquettes_sentiment)
 
-    # 依次评估每个模型并存储结果
+    # Evaluate each model sequentially and store results
     resultats_comparaison = {}
     for nom_modele, chemin_fichier in modeles_a_comparer.items():
-        print(f"\n--- 正在评估: {nom_modele} ---")
+        print(f"\n--- Evaluating: {nom_modele} ---")
         modele = BERT_MedicalMultiTache(NOM_MODELE_BERT, num_intention, num_objet_medical, num_sentiment).to(appareil)
         try:
-            # 加载模型状态字典
+            # Load model state dictionary
             modele.load_state_dict(torch.load(chemin_fichier, map_location=appareil))
             metriques = evaluer(modele, chargeur_donnees_test, appareil)
             resultats_comparaison[nom_modele] = metriques
-            print("评估完成.")
+            print("Evaluation complete.")
         except FileNotFoundError:
-            print(f"错误: 找不到文件 {chemin_fichier}. 跳过该模型.")
+            print(f"Error: File {chemin_fichier} not found. Skipping this model.")
     
-    # 打印最终对比表格
+    # Print final comparison table
     print("\n" + "="*160)
-    print(" " * 65 + "多模型性能对比结果")
+    print(" " * 65 + "Multi-Model Performance Comparison Results")
     print("="*160)
     
-    # 获取模型名称和任务标签
+    # Get model names and task labels
     model_names = list(modeles_a_comparer.keys())
     
     for tache in ['intention', 'objet_medical', 'sentiment']:
-        print(f"\n任务: {tache.capitalize()}")
+        print(f"\nTask: {tache.capitalize()}")
         
-        # 定义所有要显示的指标
+        # Define all metrics to display
         metrics_to_show = {
             'F1 (Macro)': f'f1_{tache}_macro',
             'F1 (Micro)': f'f1_{tache}_micro',
@@ -208,8 +208,8 @@ if __name__ == '__main__':
             'Accuracy': f'acc_{tache}'
         }
 
-        # 打印宏观指标表格
-        entete_macro = "{:<25} |".format("指标")
+        # Print macro metrics table
+        entete_macro = "{:<25} |".format("Metric")
         for name in model_names:
             entete_macro += f" {name:<25} |"
         print("-" * (25 + len(model_names) * 28))
@@ -223,9 +223,9 @@ if __name__ == '__main__':
                 ligne_metrique += f" {score:<25.4f} |" if isinstance(score, float) else f" {score:<25} |"
             print(ligne_metrique)
 
-        # 打印分类别F1表格
+        # Print per-class F1 table
         print("\n" + "-" * (25 + len(model_names) * 28))
-        print("分类别 F1-Score:")
+        print("Per-Class F1-Score:")
         print("-" * (25 + len(model_names) * 28))
         
         if tache == 'intention':
@@ -235,7 +235,7 @@ if __name__ == '__main__':
         else:
             class_labels = list(dataset_test.etiquettes_sentiment.keys())
 
-        entete_classes = "{:<25} |".format("类别")
+        entete_classes = "{:<25} |".format("Class")
         for name in model_names:
             entete_classes += f" {name:<25} |"
         print(entete_classes)

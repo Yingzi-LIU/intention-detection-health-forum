@@ -12,7 +12,7 @@ import argparse
 # Load environment variables from .env file
 load_dotenv()
 
-# --- 解析命令行参数 ---
+# --- Parse command line arguments ---
 parser = argparse.ArgumentParser(description='Process medical forum data with OpenAI API.')
 parser.add_argument('--num_samples', type=int, default=None,
                     help='Number of test samples to process (default: all)')
@@ -27,58 +27,58 @@ try:
     
     client = OpenAI(api_key=API_KEY) # Initialize OpenAI client
 except Exception as e:
-    print(f"Error loading API Key: {e}")
-    print("Please ensure you have a .env file in the same directory with your OpenAI API Key named 'OPENAI_API_KEY'.")
+    print(f"Erreur lors du chargement de la clé API : {e}")
+    print("Veuillez vous assurer d'avoir un fichier .env dans le même répertoire avec votre clé API OpenAI nommée 'OPENAI_API_KEY'.")
     exit()
 
-# --- 2. 配置 OpenAI API ---
+# --- 2. Configure OpenAI API ---
 # Model is initialized via client, and model name is passed in args
 model_name = args.model_name
 
-# --- 3. 加载数据集 ---
+# --- 3. Load dataset ---
 test_file_path = 'data/dataset/test_dataset.csv'
 
 try:
     test_df = pd.read_csv(test_file_path)
-    print(f"测试集加载成功: {len(test_df)} 条数据")
+    print(f"Jeu de test chargé avec succès : {len(test_df)} données")
 except FileNotFoundError:
-    print("请确保 'test_dataset.csv' 文件存在于指定路径下。")
+    print("Veuillez vous assurer que le fichier 'test_dataset.csv' existe dans le chemin spécifié.")
     exit()
 
-# 数据预处理：处理NA_CATEGORY
+# Data preprocessing: handle NA_CATEGORY
 def process_categories(df):
     return df
 
 test_df = process_categories(test_df)
 
-# --- 4. 读取 Few-shot 示例 ---
+# --- 4. Load few-shot examples ---
 try:
     few_shot_file_path = 'data/few_shot_examples.csv'
     few_shot_df = pd.read_csv(few_shot_file_path)
     few_shot_data = few_shot_df.to_dict('records')
-    print(f"Few-shot 示例加载成功: {len(few_shot_data)} 条数据")
+    print(f"Few-shot examples download successful: {len(few_shot_data)} data")
 except FileNotFoundError:
-    print(f"请确保 'few_shot_examples.csv' 文件存在于 '{few_shot_file_path}' 路径下。")
+    print(f"please make sure 'few_shot_examples.csv' exist in '{few_shot_file_path}' .")
     exit()
 except Exception as e:
-    print(f"加载 Few-shot 示例失败: {e}")
+    print(f"download example unsuccessful: {e}")
     exit()
 
-# --- 5. 构建 Prompt 函数 ---
+# --- 5. Build Prompt Function ---
 def create_few_shot_prompt(text_to_classify, few_shot_examples):
     """
-    根据few-shot示例构建Prompt。
+    Builds a prompt based on few-shot examples.
     """
     few_shot_section = ""
     for ex in few_shot_examples:
-        # 现在 few_shot_examples 中的 'niveau3' 直接包含情感标签
+        
         emotion_label = ex['niveau3']
 
         few_shot_section += f"""
-    **示例输入 (Exemple d'entrée):**
+    **(Exemple d'entrée):**
     "{ex['Sentences']}"
 
-    **示例输出 (Exemple de sortie):**
+    **(Exemple de sortie):**
     ```json
     {{
         "intention_generale": "{ex['niveau1']}",
@@ -89,64 +89,64 @@ def create_few_shot_prompt(text_to_classify, few_shot_examples):
     """
 
     prompt = f"""
-    你是一个专业的法语医学论坛内容分析助手。你需要对用户在法语医学论坛上发布的文本进行分析和分类。
-    请根据以下三个维度对提供的文本进行分类，并以JSON格式输出结果：
+    Vous êtes un assistant professionnel d'analyse de contenu de forum médical français. Vous devez analyser et classer les textes publiés par les utilisateurs sur un forum médical français.
+    Veuillez classer le texte fourni selon les trois dimensions suivantes et afficher les résultats au format JSON :
 
-    1.  **意图级别 (Niveau de l'intention générale)**：
-        * "recherche_information" (信息查询)
-        * "partage_experience" (经验分享)
-        * "fonction_phatique" (寒暄或维持交流)
+    1.  **Niveau de l'intention générale** :
+        * "recherche_information" (Recherche d'informations)
+        * "partage_experience" (Partage d'expérience)
+        * "fonction_phatique" (Salutations ou maintien de la communication)
 
-    2.  **医疗对象级别 (Niveau de l'objet médical)**：
-        * "symptome" (症状)
-        * "traitement" (治疗)
-        * "diagnostique" (诊断)
-        * "NA_CATEGORY" (不相关) (如果文本内容不涉及具体的医疗对象)
+    2.  **Niveau de l'objet médical** :
+        * "symptome" (Symptôme)
+        * "traitement" (Traitement)
+        * "diagnostique" (Diagnostic)
+        * "NA_CATEGORY" (Non pertinent) (Si le contenu du texte ne concerne pas un objet médical spécifique)
 
-    3.  **情感级别 (Niveau emotion)**：
-        * "positif" (积极)
-        * "negatif" (消极)
-        * "non" (无情感)
+    3.  **Niveau émotionnel** :
+        * "positif" (Positif)
+        * "negatif" (Négatif)
+        * "non" (Neutre)
 
-    请确保输出严格为JSON格式，包含 `intention_generale`, `objet_medical`, `emotion` 这三个顶层键。
-    如果某个类别不适用，请将其设为 "NA_CATEGORY"。
+    Veuillez vous assurer que la sortie est strictement au format JSON et contient les trois clés de niveau supérieur : `intention_generale`, `objet_medical`, `emotion`.
+    Si une catégorie n'est pas applicable, veuillez la définir sur "NA_CATEGORY".
 
     ---
-    **Few-Shot 示例 (Exemples Few-Shot):**
+    **Few-Shot (Exemples Few-Shot):**
     {few_shot_section}
     ---
-    **要分类的文本 (Texte à classifier):**
+    **(Texte à classifier):**
     "{text_to_classify}"
     """
     return prompt
 
-# --- 6. 对测试集全部数据进行分类推理 ---
+# --- 6. Classification inference for all test set data ---
 predicted_niveau1 = []
 predicted_niveau2 = []
-predicted_niveau3 = [] # 更改为单个 niveau3
+predicted_niveau3 = []
 actual_niveau1 = test_df['niveau1'].tolist()
 actual_niveau2 = test_df['niveau2'].tolist()
-actual_niveau3 = test_df['niveau3'].tolist() # 从新的 'niveau3' 列获取实际标签
+actual_niveau3 = test_df['niveau3'].tolist() 
 
-# 获取测试集总样本数
+# get total samples
 total_test_samples = len(test_df)
 
-# 如果用户指定了处理的样本数量，则只处理指定数量的样本
+# If num_samples is specified, limit to that number
 if args.num_samples is not None:
     total_test_samples = min(args.num_samples, total_test_samples)
     test_df = test_df.head(total_test_samples)
-    print(f"\n--- 开始对测试集前 {total_test_samples} 个例子进行分类推理 ---")
+    print(f"\n--- Début de l'inférence de classification pour les {total_test_samples} premiers exemples du jeu de test ---")
 else:
-    print(f"\n--- 开始对测试集全部 {total_test_samples} 个例子进行分类推理 ---")
+    print(f"\n--- Début de l'inférence de classification pour les {total_test_samples} exemples du jeu de test ---")
 
-# 迭代测试集的所有行数据
+# Iterate through test samples
 for index, row in test_df.iterrows():
     text = row['Sentences']
     prompt = create_few_shot_prompt(text, few_shot_data)
 
     retries = 0
-    max_retries = 5  # 最大重试次数
-    base_delay = 5   # 初始延迟秒数
+    max_retries = 5  # Maximum number of retries
+    base_delay = 5   # Initial delay in seconds
 
     while retries < max_retries:
         try:
@@ -166,90 +166,90 @@ for index, row in test_df.iterrows():
 
             predicted_niveau1.append(classified_result.get('intention_generale', '未知'))
             predicted_niveau2.append(classified_result.get('objet_medical', '未知'))
-            predicted_niveau3.append(classified_result.get('emotion', '未知')) # 从 'emotion' 键获取
+            predicted_niveau3.append(classified_result.get('emotion', 'inconnu')) # Get from 'emotion' key
 
-            # 如果成功，跳出重试循环
+            # If successful, break out of the retry loop
             break
 
         except Exception as e:
             if "429" in str(e) or "Rate limit" in str(e): # Check for rate limit errors
                 retries += 1
-                wait_time = base_delay * (2 ** (retries - 1)) + random.uniform(0, 1) # 指数增长并增加随机抖动
-                print(f"处理文本 ID {row['ID']} 遇到配额错误 (429)。第 {retries}/{max_retries} 次重试，等待 {wait_time:.2f} 秒...")
+                wait_time = base_delay * (2 ** (retries - 1)) + random.uniform(0, 1) # Exponential backoff with jitter
+                print(f"Erreur de quota (429) rencontrée lors du traitement du texte ID {row['ID']}. Tentative {retries}/{max_retries}, attente de {wait_time:.2f} secondes...")
                 time.sleep(wait_time)
             else:
-                # 其他错误，不重试
-                print(f"处理文本 ID {row['ID']} 失败: {e}")
-                print(f"原始模型输出:\n{raw_output if 'raw_output' in locals() else '无响应'}")
-                predicted_niveau1.append('未知')
-                predicted_niveau2.append('未知')
-                predicted_niveau3.append('未知') # 失败时也添加 '未知'
-                break # 跳出重试循环，处理下一个样本
-    else: # 如果所有重试都失败了
-        print(f"处理文本 ID {row['ID']} 在 {max_retries} 次重试后仍然失败，跳过此项。")
-        predicted_niveau1.append('未知')
-        predicted_niveau2.append('未知')
-        predicted_niveau3.append('未知') # 失败时也添加 '未知'
+                # Other errors, no retry
+                print(f"Échec du traitement du texte ID {row['ID']} : {e}")
+                print(f"Sortie brute du modèle :\n{raw_output if 'raw_output' in locals() else 'Aucune réponse'}")
+                predicted_niveau1.append('inconnu')
+                predicted_niveau2.append('inconnu')
+                predicted_niveau3.append('inconnu') # Add 'inconnu' on failure
+                break # Break out of retry loop, process next sample
+    else: # If all retries failed
+        print(f"Le traitement du texte ID {row['ID']} a échoué après {max_retries} tentatives, cette entrée est ignorée.")
+        predicted_niveau1.append('inconnu')
+        predicted_niveau2.append('inconnu')
+        predicted_niveau3.append('inconnu') # Add 'inconnu' on failure
 
-    # 更新进度显示
+    # Progress update every 10 samples
     if (index + 1) % 10 == 0 or (index + 1) == total_test_samples:
-        print(f"已处理 {index + 1}/{total_test_samples} 条数据...")
+        print(f"{index + 1}/{total_test_samples} données traitées...")
 
-print("\n--- 分类推理完成 ---")
+print("\n--- Inférence de classification terminée ---")
 
-# --- 7. 评估模型性能 (对所有测试集数据进行评估) ---
+# --- 7. Evaluate model performance (evaluate on all test set data) ---
 
-# 注意：这里的 actual_niveauX 列表不再需要切片，因为 predicted 列表现在包含了所有数据
+# Note: The actual_niveauX lists no longer need slicing, as the predicted list now contains all data
 actual_niveau1_full = actual_niveau1
 actual_niveau2_full = actual_niveau2
-actual_niveau3_full = actual_niveau3 # 更改为单个 niveau3
+actual_niveau3_full = actual_niveau3 # Changed to a single niveau3
 
 
 def evaluate_category(actual_labels, predicted_labels, category_name):
-    print(f"\n--- 评估: {category_name} ---")
+    print(f"\n--- Évaluation : {category_name} ---")
 
-    # 过滤掉 '未知' 预测，只评估成功分类的部分
+    # Filter out 'inconnu' predictions, only evaluate successfully classified parts
     filtered_actual = []
     filtered_predicted = []
     for a, p in zip(actual_labels, predicted_labels):
-        if p != '未知':
+        if p != 'inconnu':
             filtered_actual.append(a)
             filtered_predicted.append(p)
 
     if not filtered_actual:
-        print(f"没有成功分类的数据用于评估 {category_name}。")
+        print(f"Aucune donnée classifiée avec succès pour évaluer {category_name}.")
         return
 
-    # 获取所有可能的标签，确保报告的完整性。
-    # 从完整的数据集中获取所有可能的标签，确保报告的完整性。
+    # Get all possible labels to ensure completeness of the report.
+    # Get all possible labels from the complete dataset to ensure completeness of the report.
 
-    # 对于 niveau1
-    if category_name == "意图级别 (Niveau 1)":
-        # 只使用提示中定义的带下划线的标签
+    # For niveau1
+    if category_name == "Niveau d'intention (Niveau 1)":
+        # Only use underlined labels defined in the prompt
         all_possible_labels = ['fonction_phatique', 'partage_experience', 'recherche_information']
 
-    # 对于 niveau2
-    elif category_name == "医疗对象级别 (Niveau 2)":
-        # 只使用指定的标签
+    # For niveau2
+    elif category_name == "Niveau d'objet médical (Niveau 2)":
+        # Only use specified labels
         all_possible_labels = ['symptome', 'traitement', 'diagnostique', 'NA_CATEGORY']
 
-    # 对于 niveau3 (情感)
-    elif category_name == "情感级别 (Niveau 3)":
-        # 只使用指定的标签
+    # For niveau3 (emotion)
+    elif category_name == "Niveau émotionnel (Niveau 3)":
+        # Only use specified labels
         all_possible_labels = ['positif', 'negatif', 'non']
     else:
-        all_possible_labels = sorted(list(set(filtered_actual + filtered_predicted))) # 备用方案
+        all_possible_labels = sorted(list(set(filtered_actual + filtered_predicted))) # Fallback
 
-    # 打印分类报告
+    # Print classification report
     print(classification_report(filtered_actual, filtered_predicted, labels=all_possible_labels, zero_division=0))
 
     accuracy = accuracy_score(filtered_actual, filtered_predicted)
-    print(f"准确率 (Accuracy): {accuracy:.4f}")
+    print(f"Précision (Accuracy) : {accuracy:.4f}")
 
 
-# 评估所有数据
-evaluate_category(actual_niveau1_full, predicted_niveau1, "意图级别 (Niveau 1)")
-evaluate_category(actual_niveau2_full, predicted_niveau2, "医疗对象级别 (Niveau 2)")
-evaluate_category(actual_niveau3_full, predicted_niveau3, "情感级别 (Niveau 3)")
+# Evaluate all data
+evaluate_category(actual_niveau1_full, predicted_niveau1, "Niveau d'intention (Niveau 1)")
+evaluate_category(actual_niveau2_full, predicted_niveau2, "Niveau d'objet médical (Niveau 2)")
+evaluate_category(actual_niveau3_full, predicted_niveau3, "Niveau émotionnel (Niveau 3)")
 
-print("\n--- 评估完成 ---")
+print("\n--- Évaluation terminée ---")

@@ -29,7 +29,7 @@ class DatasetMultiTache(Dataset):
         self.donnees = self._charger_donnees(chemin_fichier)
         self.tokenizer = tokenizer
         self.max_longueur = max_longueur
-        # 核心修正：匹配你训练脚本中的标签映射
+        # Core fix: Match the label mapping in your training script
         self.etiquettes_intention = {'recherche_information': 0, 'partage_experience': 1, 'fonction_phatique': 2}
         self.etiquettes_objet_medical = {'symptome': 0, 'traitement': 1, 'diagnostique': 2, 'NA_CATEGORY': 3}
         self.etiquettes_sentiment = {'positif': 0, 'negatif': 1, 'non': 2, 'RARE_CLASS': 3}
@@ -45,7 +45,7 @@ class DatasetMultiTache(Dataset):
         item = self.donnees[index]
         texte = str(item['texte'])
         
-        # 使用 .get() 方法安全地获取标签，并提供默认值
+        # Safely get labels using the .get() method and provide default values
         intention = self.etiquettes_intention.get(item['intention'], self.etiquettes_intention['fonction_phatique'])
         objet_medical = self.etiquettes_objet_medical.get(item['objet_medical'], self.etiquettes_objet_medical['NA_CATEGORY'])
         sentiment = self.etiquettes_sentiment.get(item['sentiment'], self.etiquettes_sentiment['non'])
@@ -239,13 +239,13 @@ if __name__ == '__main__':
         print("\nNo models were successfully evaluated. Please check your model files and their integrity.")
         exit()
 
-    # --- 更改部分开始 ---
+    # --- Changes start ---
     output_json_path = os.path.join(RESULTS_DIR, 'evaluation_results.json')
     with open(output_json_path, 'w', encoding='utf-8') as f:
         json.dump(all_results, f, ensure_ascii=False, indent=4)
     print(f"\nAll evaluation results saved to {output_json_path}")
 
-    # 将结果转换为DataFrame并保存为CSV
+    # Convert results to DataFrame and save as CSV
     csv_data = []
     for model_name, tasks in all_results.items():
         row_data = {"Model": model_name}
@@ -258,17 +258,17 @@ if __name__ == '__main__':
     output_csv_path = os.path.join(RESULTS_DIR, 'evaluation_results.csv')
     df_results.to_csv(output_csv_path, index=False)
     print(f"Evaluation results also saved to {output_csv_path}")
-    # --- 更改部分结束 ---
+    # --- Changes end ---
 
     print("\n" + "="*120)
-    print(" " * 40 + "最终评估结果")
+    print(" " * 40 + "Final Evaluation Results")
     print("="*120)
 
     for task in ['intention', 'objet_medical', 'sentiment']:
-        print(f"\n任务: {task.capitalize()}")
+        print(f"\nTask: {task.capitalize()}")
         print("-" * 120)
         
-        header_macro = "{:<30} | {:<20} | {:<20}".format("模型", "F1 (宏平均)", "准确率")
+        header_macro = "{:<30} | {:<20} | {:<20}".format("Model", "F1 (Macro)", "Accuracy")
         print(header_macro)
         print("-" * 120)
         for model_name, results in all_results.items():
@@ -280,7 +280,7 @@ if __name__ == '__main__':
                 )
                 print(line_macro)
         
-        print("\n各类别指标:")
+        print("\nMetrics per category:")
         print("-" * 120)
         
         if all_results:
@@ -288,7 +288,7 @@ if __name__ == '__main__':
             if task in all_results[first_model_name]:
                 labels_list = sorted(list(all_results[first_model_name][task]['per_label_metrics'].keys()))
                 
-                header_labels = "{:<30} | {:<15} | {:<15} | {:<15}".format("模型", "类别", "F1-Score", "召回率")
+                header_labels = "{:<30} | {:<15} | {:<15} | {:<15}".format("Model", "Category", "F1-Score", "Recall")
                 print(header_labels)
                 print("-" * 120)
                 

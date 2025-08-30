@@ -23,8 +23,8 @@ from models import save_experiment_results, CLASSIFIERS
 
 warnings.filterwarnings("ignore")
 
-# 这是一个自定义的转换器，用于从DataFrame中提取指定的列。
-# 这样就可以在ColumnTransformer中处理DataFrame，而不是只处理Series。
+# This is a custom transformer used to extract specified columns from a DataFrame.
+# This allows processing DataFrames within ColumnTransformer, rather than just Series.
 class ColumnExtractor(BaseEstimator, TransformerMixin):
     def __init__(self, columns):
         self.columns = columns
@@ -35,12 +35,12 @@ class ColumnExtractor(BaseEstimator, TransformerMixin):
 
 def run_experiment(X_train, y_train, X_val, y_val, label_names, vectorizers, vectorization_method=None):
     results = {}
-    print("🔬 Démarrage des expériences...")
+    print("🔬 Starting experiments...")
     methods_to_run = vectorizers.keys() if not vectorization_method else ([vectorization_method] if vectorization_method in vectorizers else vectorizers.keys())
 
     for method_type in methods_to_run:
         for fe_name, fe_model in vectorizers[method_type].items():
-            print(f"\n  -> Vectorisation avec {fe_name}...")
+            print(f"\n  -> Vectorization with {fe_name}...")
             # Traditional and Embedding vectorizers have different input requirements
             if method_type == 'traditional':
                 X_train_vec = fe_model.fit_transform(X_train)
@@ -72,12 +72,12 @@ def run_experiment(X_train, y_train, X_val, y_val, label_names, vectorizers, vec
                         'best_params': grid_search.best_params_
                     }
                 except Exception as e:
-                    print(f"Erreur: {e}")
+                    print(f"Error: {e}")
     return results
 
 def run_enhanced_traditional_experiments(X_train, y_train, X_val, y_val, label_names, vectorizers):
     results = {}
-    print("\n🔬 Démarrage des expériences avec des caractéristiques traditionnelles et des mots-clés...")
+    print("\n🔬 Starting experiments with traditional features and keywords...")
     keyword_cols = [col for col in X_train.columns if col.startswith('keyword_')]
 
     for fe_name, fe_model in vectorizers['traditional'].items():
@@ -108,39 +108,39 @@ def run_enhanced_traditional_experiments(X_train, y_train, X_val, y_val, label_n
             }
     return results
 
-# 新的增强嵌入实验函数，修复了数据泄露问题
+# New enhanced embedding experiment function, fixing data leakage issues
 def run_enhanced_embedding_experiments(X_train_df, y_train, X_val_df, y_val, label_names, vectorizers):
     results = {}
-    print("\n🔬 Démarrage des expériences avec des word embeddings et des mots-clés...")
+    print("\n🔬 Starting experiments with word embeddings and keywords...")
     
     keyword_cols = [col for col in X_train_df.columns if col.startswith('keyword_')]
 
-    # 定义一个转换器来处理两种特征
+    # Define a preprocessor to handle both types of features
     preprocessor = ColumnTransformer(
         transformers=[
-            # 处理文本列，生成词嵌入向量
+            # Process text column to generate word embedding vectors
             ('embedding_vectorizer', 'passthrough', 'Sentences_clean'),
-            # 处理关键词列，确保它们被正确处理
+            # Process keyword columns to ensure they are handled correctly
             ('keywords', 'passthrough', keyword_cols)
         ]
     )
 
     for fe_name, fe_model in vectorizers['embedding'].items():
-        print(f"\n  -> Vectorisation avec {fe_name}...")
+        print(f"\n  -> Vectorization with {fe_name}...")
         
-        # 使用自定义的ColumnExtractor来适应fit_transform方法
+        # Use a custom ColumnExtractor to adapt to the fit_transform method
         X_train_text = X_train_df['Sentences_clean']
         X_val_text = X_val_df['Sentences_clean']
         
-        # 生成嵌入向量
+        # Generate embedding vectors
         X_train_emb = fe_model.fit_transform(pd.Series(X_train_text))
         X_val_emb = fe_model.transform(pd.Series(X_val_text))
 
-        # 提取关键词特征
+        # Extract keyword features
         X_train_kw = X_train_df[keyword_cols].values
         X_val_kw = X_val_df[keyword_cols].values
         
-        # 将两种特征拼接起来
+        # Concatenate both types of features
         X_train_combined = np.hstack((X_train_emb, X_train_kw))
         X_val_combined = np.hstack((X_val_emb, X_val_kw))
 
@@ -212,7 +212,7 @@ def main(vectorization_method=None):
         unique_labels = np.unique(np.concatenate([temp_train_df[label_col], temp_val_df[label_col]]))
         label_names_list = label_encoders[label_name].inverse_transform(unique_labels)
 
-        # 传统模型的增强实验
+        # Enhanced experiments for traditional models
         if vectorization_method in ['traditional', None]:
             X_train_trad = temp_train_df[['Sentences_clean'] + [c for c in temp_train_df.columns if c.startswith('keyword_')]]
             X_val_trad = temp_val_df[['Sentences_clean'] + [c for c in temp_val_df.columns if c.startswith('keyword_')]]
@@ -224,7 +224,7 @@ def main(vectorization_method=None):
                 sorted_results_trad = sort_results_by_f1(results_trad)
                 save_experiment_results(sorted_results_trad, label_names_list, f'results_enhanced/{label_name}/')
 
-        # 嵌入模型的增强实验 (新版本)
+        # Enhanced experiments for embedding models (new version)
         if vectorization_method in ['embedding', None]:
             y_train = temp_train_df[label_col]
             y_val = temp_val_df[label_col]
@@ -234,7 +234,7 @@ def main(vectorization_method=None):
                 sorted_results_emb = sort_results_by_f1(results_emb)
                 save_experiment_results(sorted_results_emb, label_names_list, f'results_enhanced/{label_name}/', mode='a')
 
-    print("\n\n✅ Les expériences sont terminées.")
+    print("\n\n✅ Experiments completed.")
 
 if __name__ == "__main__":
     import argparse

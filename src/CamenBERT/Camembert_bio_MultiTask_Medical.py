@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
-# 核心改动：不再导入 WeightedRandomSampler
+# No longer importing WeightedRandomSampler
 from transformers import AutoModel, AutoTokenizer, get_linear_schedule_with_warmup
 from torch.optim import AdamW
 from sklearn.metrics import accuracy_score, f1_score
@@ -11,7 +11,7 @@ import os
 from collections import Counter
 
 # ====================================================================
-# 1. Dataset 类 (未更改)
+# 1. Dataset Class
 # ====================================================================
 
 class DatasetMultiTache(Dataset):
@@ -57,7 +57,7 @@ class DatasetMultiTache(Dataset):
         }
 
 # ====================================================================
-# 2. 多任务模型 (未更改)
+# 2. Multi-task Model
 # ====================================================================
 
 class MedicalMultiTache(nn.Module):
@@ -82,7 +82,7 @@ class MedicalMultiTache(nn.Module):
         return logits_intention, logits_objet_medical, logits_sentiment
 
 # ====================================================================
-# 3. 训练和评估函数 (未更改)
+# 3. Training and Evaluation Functions
 # ====================================================================
 
 def entrainer(modele, chargeur_donnees, optimiseur, scheduler, fonction_pertes, appareil):
@@ -158,17 +158,17 @@ def evaluer(modele, chargeur_donnees, appareil):
     }
 
 # ====================================================================
-# 4. 数据转换函数 (未更改)
+# 4. Data Conversion Function
 # ====================================================================
 
 def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
     if os.path.exists(chemin_jsonl):
-        print(f"文件 {chemin_jsonl} 已找到, 跳过转换.")
+        print(f"File {chemin_jsonl} found, skipping conversion.")
         return
 
-    print(f"文件 {chemin_jsonl} 未找到, 正在从 {chemin_csv} 进行转换...")
+    print(f"File {chemin_jsonl} not found, converting from {chemin_csv}...")
     if not os.path.exists(chemin_csv):
-        print(f"错误: 文件 {chemin_csv} 不存在. 请检查路径.")
+        print(f"Error: File {chemin_csv} does not exist. Please check the path.")
         exit()
     
     repertoire_sortie = os.path.dirname(chemin_jsonl)
@@ -183,7 +183,7 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
         })
         colonnes_requises = ['texte', 'intention', 'objet_medical', 'sentiment']
         if not all(col in df.columns for col in colonnes_requises):
-            raise ValueError(f"CSV 文件不包含所有必需的列.")
+            raise ValueError(f"CSV file does not contain all required columns.")
         with open(chemin_jsonl, 'w', encoding='utf-8') as f:
             for _, row in df.iterrows():
                 dictionnaire_donnees = {
@@ -191,13 +191,13 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
                     'objet_medical': row['objet_medical'], 'sentiment': row['sentiment']
                 }
                 f.write(json.dumps(dictionnaire_donnees, ensure_ascii=False) + '\n')
-        print(f"成功将 {chemin_csv} 转换为 {chemin_jsonl}.")
+        print(f"Successfully converted {chemin_csv} to {chemin_jsonl}.")
     except Exception as e:
-        print(f"转换过程中发生错误: {e}")
+        print(f"An error occurred during conversion: {e}")
         exit()
 
 # ====================================================================
-# 5. 主程序 (应用 Camembert-bio，不使用采样)
+# 5. Main Program (Applying Camembert-bio, no sampling)
 # ====================================================================
 
 if __name__ == '__main__':
@@ -225,8 +225,8 @@ if __name__ == '__main__':
     dataset_valid = DatasetMultiTache(CHEMIN_JSONL_VALID, tokenizer, MAX_LONGUEUR)
     dataset_test = DatasetMultiTache(CHEMIN_JSONL_TEST, tokenizer, MAX_LONGUEUR)
 
-    # --- 关键改动：不使用任何采样器，只用 shuffle ---
-    print("\n--- 实验模式: Camembert-bio (无采样) ---")
+    # --- No sampler used, only shuffle ---
+    print("\n--- Experiment Mode: Camembert-bio (No Sampling) ---")
     chargeur_donnees_train = DataLoader(dataset_train, batch_size=TAILLE_DE_LOT, shuffle=True)
     chargeur_donnees_valid = DataLoader(dataset_valid, batch_size=TAILLE_DE_LOT, shuffle=False)
     chargeur_donnees_test = DataLoader(dataset_test, batch_size=TAILLE_DE_LOT, shuffle=False)
@@ -235,7 +235,7 @@ if __name__ == '__main__':
     num_objet_medical = len(dataset_train.etiquettes_objet_medical)
     num_sentiment = len(dataset_train.etiquettes_sentiment)
     
-    # 定义每项任务的损失函数
+    # Define loss function for each task
     fonction_pertes = {
         'intention': nn.CrossEntropyLoss(),
         'objet_medical': nn.CrossEntropyLoss(),
@@ -248,20 +248,20 @@ if __name__ == '__main__':
     scheduler = get_linear_schedule_with_warmup(optimiseur, num_warmup_steps=0, num_training_steps=total_etapes)
 
     for epoque in range(EPOQUES):
-        print(f"Époque {epoque + 1}/{EPOQUES}")
+        print(f"Epoch {epoque + 1}/{EPOQUES}")
         perte_entrainement = entrainer(modele, chargeur_donnees_train, optimiseur, scheduler, fonction_pertes, appareil)
-        print(f"Perte d'entraînement: {perte_entrainement:.4f}")
+        print(f"Training Loss: {perte_entrainement:.4f}")
         metriques_validation = evaluer(modele, chargeur_donnees_valid, appareil)
-        print(f"Métriques de validation: Acc_Intention={metriques_validation['acc_intention']:.4f} F1={metriques_validation['f1_intention']:.4f} | "
+        print(f"Validation Metrics: Acc_Intention={metriques_validation['acc_intention']:.4f} F1={metriques_validation['f1_intention']:.4f} | "
               f"Acc_Objet_Medical={metriques_validation['acc_objet_medical']:.4f} F1={metriques_validation['f1_objet_medical']:.4f} | "
               f"Acc_Sentiment={metriques_validation['acc_sentiment']:.4f} F1={metriques_validation['f1_sentiment']:.4f}")
     
-    print("\n--- 在最终测试集上评估 ---")
+    print("\n--- Evaluating on Final Test Set ---")
     metriques_test = evaluer(modele, chargeur_donnees_test, appareil)
-    print(f"Métriques de test: Acc_Intention={metriques_test['acc_intention']:.4f} F1={metriques_test['f1_intention']:.4f} | "
+    print(f"Test Metrics: Acc_Intention={metriques_test['acc_intention']:.4f} F1={metriques_test['f1_intention']:.4f} | "
           f"Acc_Objet_Medical={metriques_test['acc_objet_medical']:.4f} F1={metriques_test['f1_objet_medical']:.4f} | "
           f"Acc_Sentiment={metriques_test['acc_sentiment']:.4f} F1={metriques_test['f1_sentiment']:.4f}")
 
     chemin_sauvegarde_modele = 'Camembert-bio_MedicalMultiTache_no_sampler.pth'
     torch.save(modele.state_dict(), chemin_sauvegarde_modele)
-    print(f"\n模型已保存为 {chemin_sauvegarde_modele}")
+    print(f"\nModel saved as {chemin_sauvegarde_modele}")

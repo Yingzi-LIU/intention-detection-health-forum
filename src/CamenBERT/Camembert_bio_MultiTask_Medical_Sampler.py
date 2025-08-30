@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader, WeightedRandomSampler
-# 核心改动：导入 Camembert 模型和分词器
+# Import Camembert model and tokenizer
 from transformers import AutoModel, AutoTokenizer, get_linear_schedule_with_warmup
 from torch.optim import AdamW
 from sklearn.metrics import accuracy_score, f1_score
@@ -11,7 +11,7 @@ import os
 from collections import Counter
 
 # ====================================================================
-# 1. Dataset 类 (为方便采样，增加返回所有标签的方法)
+# 1. Dataset Class
 # ====================================================================
 
 class DatasetMultiTache(Dataset):
@@ -20,7 +20,7 @@ class DatasetMultiTache(Dataset):
         self.tokenizer = tokenizer
         self.max_longueur = max_longueur
 
-        # Mappage des étiquettes vers des IDs
+        # Label mapping to IDs
         self.etiquettes_intention = {'recherche_information': 0, 'partage_experience': 1, 'fonction_phatique': 2}
         self.etiquettes_objet_medical = {'symptome': 0, 'traitement': 1, 'diagnostique': 2, 'NA_CATEGORY': 3}
         self.etiquettes_sentiment = {'positif': 0, 'negatif': 1, 'non': 2, 'RARE_CLASS': 3}
@@ -36,12 +36,12 @@ class DatasetMultiTache(Dataset):
         item = self.donnees[index]
         texte = str(item['texte'])
         
-        # Récupérer les étiquettes pour chaque tâche
+        # Retrieve labels for each task
         intention = self.etiquettes_intention[item['intention']]
         objet_medical = self.etiquettes_objet_medical[item['objet_medical']]
         sentiment = self.etiquettes_sentiment[item['sentiment']]
 
-        # Tokeniser le texte
+        # Tokenize the text
         encodage = self.tokenizer.encode_plus(
             texte,
             add_special_tokens=True,
@@ -60,7 +60,7 @@ class DatasetMultiTache(Dataset):
         }
 
     def get_all_labels(self, label_type):
-        """返回指定任务的所有标签列表，用于计算采样权重。"""
+        """Returns a list of all labels for the specified task, used to calculate sampling weights."""
         if label_type == 'intention':
             return [self.etiquettes_intention[d['intention']] for d in self.donnees]
         elif label_type == 'objet_medical':
@@ -71,29 +71,29 @@ class DatasetMultiTache(Dataset):
             raise ValueError("Invalid label_type. Choose from 'intention', 'objet_medical', 'sentiment'.")
 
 # ====================================================================
-# 2. 多任务模型 (使用 AutoModel)
+# 2. Multi-task Model (using AutoModel)
 # ====================================================================
 
 class MedicalMultiTache(nn.Module):
     def __init__(self, nom_modele_pre_entraine, num_intention, num_objet_medical, num_sentiment):
         super(MedicalMultiTache, self).__init__()
         
-        # 使用 AutoModel 自动加载任何 BERT-like 模型
+        # Use AutoModel to automatically load any BERT-like model
         self.model = AutoModel.from_pretrained(nom_modele_pre_entraine)
         
-        # 独立的分类头
+        # Independent classification heads
         self.classifieur_intention = nn.Linear(self.model.config.hidden_size, num_intention)
         self.classifieur_objet_medical = nn.Linear(self.model.config.hidden_size, num_objet_medical)
         self.classifieur_sentiment = nn.Linear(self.model.config.hidden_size, num_sentiment)
         
     def forward(self, input_ids, attention_mask):
-        # 通过预训练模型编码器
+        # Through the pre-trained model encoder
         outputs = self.model(input_ids=input_ids, attention_mask=attention_mask)
         
-        # 使用池化输出 (通常是 [CLS] token 的表示)
+        # Use pooled output (usually the representation of the [CLS] token)
         pooled_output = outputs.pooler_output
         
-        # 独立分类
+        # Independent classification
         logits_intention = self.classifieur_intention(pooled_output)
         logits_objet_medical = self.classifieur_objet_medical(pooled_output)
         logits_sentiment = self.classifieur_sentiment(pooled_output)
@@ -101,7 +101,7 @@ class MedicalMultiTache(nn.Module):
         return logits_intention, logits_objet_medical, logits_sentiment
 
 # ====================================================================
-# 3. 训练和评估函数 (保持不变)
+# 3. Training and Evaluation Functions
 # ====================================================================
 
 def entrainer(modele, chargeur_donnees, optimiseur, scheduler, fonction_pertes, appareil):
@@ -177,17 +177,17 @@ def evaluer(modele, chargeur_donnees, appareil):
     }
 
 # ====================================================================
-# 4. 数据转换函数 (保持不变)
+# 4. Data Conversion Function
 # ====================================================================
 
 def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
     if os.path.exists(chemin_jsonl):
-        print(f"文件 {chemin_jsonl} 已找到, 跳过转换.")
+        print(f"File {chemin_jsonl} found, skipping conversion.")
         return
 
-    print(f"文件 {chemin_jsonl} 未找到, 正在从 {chemin_csv} 进行转换...")
+    print(f"File {chemin_jsonl} not found, converting from {chemin_csv}...")
     if not os.path.exists(chemin_csv):
-        print(f"错误: 文件 {chemin_csv} 不存在. 请检查路径.")
+        print(f"Error: File {chemin_csv} does not exist. Please check the path.")
         exit()
     
     repertoire_sortie = os.path.dirname(chemin_jsonl)
@@ -202,7 +202,7 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
         })
         colonnes_requises = ['texte', 'intention', 'objet_medical', 'sentiment']
         if not all(col in df.columns for col in colonnes_requises):
-            raise ValueError(f"CSV 文件不包含所有必需的列.")
+            raise ValueError(f"CSV file does not contain all required columns.")
         with open(chemin_jsonl, 'w', encoding='utf-8') as f:
             for _, row in df.iterrows():
                 dictionnaire_donnees = {
@@ -210,17 +210,16 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
                     'objet_medical': row['objet_medical'], 'sentiment': row['sentiment']
                 }
                 f.write(json.dumps(dictionnaire_donnees, ensure_ascii=False) + '\n')
-        print(f"成功将 {chemin_csv} 转换为 {chemin_jsonl}.")
+        print(f"Successfully converted {chemin_csv} to {chemin_jsonl}.")
     except Exception as e:
-        print(f"转换过程中发生错误: {e}")
+        print(f"An error occurred during conversion: {e}")
         exit()
 
 # ====================================================================
-# 5. 主程序 (应用 Camembert-bio 并对 Objet Médical 采样)
+# 5. Main Program (Applying Camembert-bio and sampling for Medical Object)
 # ====================================================================
 
 if __name__ == '__main__':
-    # 核心改动：使用领域特定模型
     NOM_MODELE_PRE_ENTRAINE = 'almanach/camembert-bio-base'
     MAX_LONGUEUR = 128
     TAILLE_DE_LOT = 16
@@ -239,25 +238,25 @@ if __name__ == '__main__':
     verifier_et_convertir_donnees(CHEMIN_JSONL_TEST, CHEMIN_CSV_TEST)
     
     appareil = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    # 使用 AutoTokenizer 自动加载与模型匹配的分词器
+    # Use AutoTokenizer to automatically load the tokenizer matching the model
     tokenizer = AutoTokenizer.from_pretrained(NOM_MODELE_PRE_ENTRAINE)
 
     dataset_train = DatasetMultiTache(CHEMIN_JSONL_TRAIN, tokenizer, MAX_LONGUEUR)
     dataset_valid = DatasetMultiTache(CHEMIN_JSONL_VALID, tokenizer, MAX_LONGUEUR)
     dataset_test = DatasetMultiTache(CHEMIN_JSONL_TEST, tokenizer, MAX_LONGUEUR)
 
-    # --- 对 Objet Médical 任务应用 WeightedRandomSampler ---
-    print("\n--- 正在计算医疗对象分类的类别权重用于过采样 ---")
+    # --- Apply WeightedRandomSampler to the Medical Object task ---
+    print("\n--- Calculating class weights for medical object classification for oversampling ---")
     objet_medical_labels = dataset_train.get_all_labels('objet_medical')
     class_counts = Counter(objet_medical_labels)
     num_samples = len(objet_medical_labels)
     
-    # 为每个样本计算权重 (与类别频率成反比)
+    # Calculate weights for each sample (inversely proportional to class frequency)
     weights = [num_samples / class_counts[label] for label in objet_medical_labels]
     
-    # 初始化 WeightedRandomSampler
+    # Initialize WeightedRandomSampler
     sampler = WeightedRandomSampler(
-        weights, 
+        weights,
         num_samples=num_samples,
         replacement=True
     )
@@ -270,34 +269,34 @@ if __name__ == '__main__':
     num_objet_medical = len(dataset_train.etiquettes_objet_medical)
     num_sentiment = len(dataset_train.etiquettes_sentiment)
     
-    # 定义每项任务的损失函数
+    # Define loss function for each task
     fonction_pertes = {
         'intention': nn.CrossEntropyLoss(),
         'objet_medical': nn.CrossEntropyLoss(),
         'sentiment': nn.CrossEntropyLoss()
     }
 
-    print("\n--- 实验模式: Camembert-bio + WeightedRandomSampler (Objet Médical) ---")
+    print("\n--- Experiment Mode: Camembert-bio + WeightedRandomSampler (Medical Object) ---")
     modele = MedicalMultiTache(NOM_MODELE_PRE_ENTRAINE, num_intention, num_objet_medical, num_sentiment).to(appareil)
     optimiseur = AdamW(modele.parameters(), lr=TAUX_APPRENTISSAGE)
     total_etapes = len(chargeur_donnees_train) * EPOQUES
     scheduler = get_linear_schedule_with_warmup(optimiseur, num_warmup_steps=0, num_training_steps=total_etapes)
 
     for epoque in range(EPOQUES):
-        print(f"Époque {epoque + 1}/{EPOQUES}")
+        print(f"Epoch {epoque + 1}/{EPOQUES}")
         perte_entrainement = entrainer(modele, chargeur_donnees_train, optimiseur, scheduler, fonction_pertes, appareil)
-        print(f"Perte d'entraînement: {perte_entrainement:.4f}")
+        print(f"Training Loss: {perte_entrainement:.4f}")
         metriques_validation = evaluer(modele, chargeur_donnees_valid, appareil)
-        print(f"Métriques de validation: Acc_Intention={metriques_validation['acc_intention']:.4f} F1={metriques_validation['f1_intention']:.4f} | "
+        print(f"Validation Metrics: Acc_Intention={metriques_validation['acc_intention']:.4f} F1={metriques_validation['f1_intention']:.4f} | "
               f"Acc_Objet_Medical={metriques_validation['acc_objet_medical']:.4f} F1={metriques_validation['f1_objet_medical']:.4f} | "
               f"Acc_Sentiment={metriques_validation['acc_sentiment']:.4f} F1={metriques_validation['f1_sentiment']:.4f}")
     
-    print("\n--- 在最终测试集上评估 ---")
+    print("\n--- Evaluating on Final Test Set ---")
     metriques_test = evaluer(modele, chargeur_donnees_test, appareil)
-    print(f"Métriques de test: Acc_Intention={metriques_test['acc_intention']:.4f} F1={metriques_test['f1_intention']:.4f} | "
+    print(f"Test Metrics: Acc_Intention={metriques_test['acc_intention']:.4f} F1={metriques_test['f1_intention']:.4f} | "
           f"Acc_Objet_Medical={metriques_test['acc_objet_medical']:.4f} F1={metriques_test['f1_objet_medical']:.4f} | "
           f"Acc_Sentiment={metriques_test['acc_sentiment']:.4f} F1={metriques_test['f1_sentiment']:.4f}")
 
     chemin_sauvegarde_modele = 'Camembert-bio_MedicalMultiTache_sampler_objet_medical.pth'
     torch.save(modele.state_dict(), chemin_sauvegarde_modele)
-    print(f"\n模型已保存为 {chemin_sauvegarde_modele}")
+    print(f"\nModel saved as {chemin_sauvegarde_modele}")

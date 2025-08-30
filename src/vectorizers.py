@@ -16,7 +16,7 @@ class Word2VecVectorizer:
         """Trains the Word2Vec model on the provided text data."""
         # Gensim's Word2Vec and FastText require a list of tokenized sentences.
         tokenized_sentences = [str(doc).split() for doc in X]
-        print("    -> Entraînement de Word2Vec...")
+        print("    -> Training Word2Vec...")
         self.model = Word2Vec(
             sentences=tokenized_sentences,
             vector_size=self.size,
@@ -24,7 +24,7 @@ class Word2VecVectorizer:
             min_count=self.min_count,
             workers=self.workers
         )
-        print("    ✅ Word2Vec entraîné.")
+        print("    ✅ Word2Vec trained.")
         return self
 
     def transform(self, X):
@@ -63,7 +63,7 @@ class FastTextVectorizer:
     def fit(self, X):
         """Trains the FastText model on the provided text data."""
         tokenized_sentences = [str(doc).split() for doc in X]
-        print("    -> Entraînement de FastText...")
+        print("    -> Training FastText...")
         self.model = FastText(
             sentences=tokenized_sentences,
             vector_size=self.size,
@@ -71,7 +71,7 @@ class FastTextVectorizer:
             min_count=self.min_count,
             workers=self.workers
         )
-        print("    ✅ FastText entraîné.")
+        print("    ✅ FastText trained.")
         return self
 
     def transform(self, X):

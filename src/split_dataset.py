@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import numpy as np
 
-# --- 配置 ---
+# --- Configuration ---
 FULL_DATA_PATH = 'data/projet_annotation_sante_final_M1.csv'
 SPECIFIC_20_IDS = [
     3, 24, 18, 17, 238, 242, 307, 324, 326, 656,
@@ -15,10 +15,10 @@ TEST_SIZE = 300
 VAL_SIZE = 100
 MIN_CLASS_COUNT = 2
 
-# --- 1. 加载数据 ---
+# --- 1. Load Data ---
 df = pd.read_csv(FULL_DATA_PATH)
 
-# 处理 NaN
+# Handle NaN values
 nan_cols = df.isnull().sum()
 if nan_cols.sum() > 0:
     print("\nColumns with NaN values before handling:")
@@ -29,9 +29,9 @@ else:
     print("\nNo NaN values found in the dataset.")
 
 if 'ID' not in df.columns:
-    raise ValueError("数据集中未找到 'ID' 列")
+    raise ValueError("Column 'ID' not found in the dataset")
 
-# --- 2. 合并每列稀有类别 ---
+# --- 2. Merge Rare Classes per Column ---
 def merge_rare_classes(df, label_col, min_count=2):
     counts = df[label_col].value_counts()
     rare_classes = counts[counts < min_count].index
@@ -41,23 +41,23 @@ def merge_rare_classes(df, label_col, min_count=2):
 for col in LABEL_COLS:
     df = merge_rare_classes(df, col, min_count=MIN_CLASS_COUNT)
 
-# --- 3. 创建组合标签 ---
+# --- 3. Create Combined Labels ---
 df['combined_labels'] = df[LABEL_COLS].astype(str).agg('_'.join, axis=1)
 
-# --- 3.1 全量合并单样本类别 ---
+# --- 3.1 Merge Single-Sample Classes in Full Dataset ---
 counts = df['combined_labels'].value_counts()
 rare_classes = counts[counts < 2].index
 if len(rare_classes) > 0:
-    print("⚠️ 全量数据中以下组合标签只有 1 个样本，将它们合并为 RARE_CLASS：", rare_classes.tolist())
+    print("⚠️ The following combined labels in the full dataset have only 1 sample and will be merged into RARE_CLASS:", rare_classes.tolist())
     df['combined_labels'] = df['combined_labels'].apply(
         lambda x: x if x not in rare_classes else 'RARE_CLASS'
     )
 
-# --- 4. 拆出固定训练集 ---
+# --- 4. Split Fixed Training Set ---
 df_train_fixed = df[df['ID'].isin(SPECIFIC_20_IDS)].copy()
 df_remaining = df[~df['ID'].isin(SPECIFIC_20_IDS)].copy()
 
-# --- 4.1 df_remaining 再次合并单样本类别 ---
+# --- 4.1 df_remaining: Merge Single-Sample Classes Again ---
 df_remaining['combined_labels'] = df_remaining[LABEL_COLS].astype(str).agg('_'.join, axis=1)
 counts_remaining = df_remaining['combined_labels'].value_counts()
 rare_classes_remaining = counts_remaining[counts_remaining < 2].index
@@ -65,22 +65,22 @@ df_remaining['combined_labels'] = df_remaining['combined_labels'].apply(
     lambda x: x if x not in rare_classes_remaining else 'RARE_CLASS'
 )
 
-# --- 4.2 如果 RARE_CLASS 只有 1 个样本，直接放入训练集 ---
+# --- 4.2 If RARE_CLASS has only 1 sample, add it directly to the training set ---
 rare_count = df_remaining[df_remaining['combined_labels']=='RARE_CLASS'].shape[0]
 if rare_count == 1:
     df_train_fixed = pd.concat([df_train_fixed, df_remaining[df_remaining['combined_labels']=='RARE_CLASS']])
     df_remaining = df_remaining[df_remaining['combined_labels']!='RARE_CLASS']
 
-# --- 4.3 确保每个组合标签至少有2个样本，以便进行分层划分 ---
+# --- 4.3 Ensure each combined label has at least 2 samples for stratified splitting ---
 counts_remaining = df_remaining['combined_labels'].value_counts()
 rare_classes_remaining = counts_remaining[counts_remaining < 2].index
 if len(rare_classes_remaining) > 0:
-    print("⚠️ 剩余数据中以下组合标签只有 1 个样本，将它们合并为 RARE_CLASS：", rare_classes_remaining.tolist())
+    print("⚠️ The following combined labels in the remaining data have only 1 sample and will be merged into RARE_CLASS:", rare_classes_remaining.tolist())
     df_remaining['combined_labels'] = df_remaining['combined_labels'].apply(
         lambda x: x if x not in rare_classes_remaining else 'RARE_CLASS'
     )
 
-# --- 5. 划分测试集 ---
+# --- 5. Split Test Set ---
 df_remaining, df_test = train_test_split(
     df_remaining,
     test_size=TEST_SIZE,
@@ -88,15 +88,15 @@ df_remaining, df_test = train_test_split(
     stratify=df_remaining['combined_labels']
 )
 
-# --- 6. 划分随机训练集和验证集 ---
+# --- 6. Split Random Training and Validation Sets ---
 random_train_size = 572 - len(df_train_fixed)
 val_ratio = VAL_SIZE / len(df_remaining)
 
-# 确保验证集划分时每个类别至少有2个样本
+# Ensure each category has at least 2 samples for validation set splitting
 counts_remaining = df_remaining['combined_labels'].value_counts()
 rare_classes_remaining = counts_remaining[counts_remaining < 2].index
 if len(rare_classes_remaining) > 0:
-    print("⚠️ 验证集划分前，以下组合标签只有 1 个样本，将它们合并为 RARE_CLASS：", rare_classes_remaining.tolist())
+    print("⚠️ Before validation set splitting, the following combined labels have only 1 sample and will be merged into RARE_CLASS:", rare_classes_remaining.tolist())
     df_remaining['combined_labels'] = df_remaining['combined_labels'].apply(
         lambda x: x if x not in rare_classes_remaining else 'RARE_CLASS'
     )
@@ -111,23 +111,23 @@ df_random_train, df_val = train_test_split(
 if len(df_random_train) > random_train_size:
     df_random_train = df_random_train.sample(n=random_train_size, random_state=42)
 
-# --- 7. 合并训练集 ---
+# --- 7. Merge Training Sets ---
 df_train_final = pd.concat([df_train_fixed, df_random_train])
 
-# --- 8. 保存 CSV ---
+# --- 8. Save CSV ---
 df_train_final.to_csv('data/dataset/train_dataset.csv', index=False, encoding='utf-8')
 df_val.to_csv('data/dataset/validation_dataset.csv', index=False, encoding='utf-8')
 df_test.to_csv('data/dataset/test_dataset.csv', index=False, encoding='utf-8')
 
-# --- 9. 打印 & 保存分布 ---
+# --- 9. Print & Save Distribution ---
 def print_distribution(df, name):
-    print(f"\n{name} ({len(df)} 行) 分布统计:")
+    print(f"\n{name} ({len(df)} rows) Distribution Statistics:")
     print("-" * 40)
-    print("组合标签分布:")
+    print("Combined Label Distribution:")
     print(df['combined_labels'].value_counts().sort_index())
-    print("\n子标签分布:")
+    print("\nSub-label Distribution:")
     for col in LABEL_COLS:
-        print(f"{col} 分布:")
+        print(f"{col} Distribution:")
         print(df[col].value_counts().sort_index())
         print("-" * 20)
 
@@ -154,7 +154,7 @@ save_distribution(df_train_final, "train")
 save_distribution(df_val, "validation")
 save_distribution(df_test, "test")
 
-# --- 10. 绘制分布条形图 ---
+# --- 10. Plot Distribution Bar Chart ---
 def plot_distribution_grouped(dfs, labels, cols, save_path_prefix="data/dataset/distribution/dist_plot"):
     for col in cols:
         all_labels = sorted(set().union(*[df[col].unique() for df in dfs.values()]))
@@ -167,9 +167,9 @@ def plot_distribution_grouped(dfs, labels, cols, save_path_prefix="data/dataset/
             values = [counts.get(label, 0) for label in all_labels]
             plt.bar(x + i*width, values, width=width, alpha=0.8, label=labels[name])
 
-        plt.title(f"Répartition des étiquettes ({col})", fontsize=14)
-        plt.xlabel("Étiquettes", fontsize=12)
-        plt.ylabel("Nombre d'échantillons", fontsize=12)
+        plt.title(f"Label Distribution ({col})", fontsize=14)
+        plt.xlabel("Labels", fontsize=12)
+        plt.ylabel("Number of Samples", fontsize=12)
         plt.xticks(x + width, all_labels, rotation=45, ha="right")
         plt.legend()
         plt.tight_layout()
@@ -181,4 +181,4 @@ labels = {"train": "Entraînement", "validation": "Validation", "test": "Test"}
 
 plot_distribution_grouped(dfs, labels, ['combined_labels'] + LABEL_COLS)
 
-print("\n✅ 数据集划分完成：固定训练集 + 随机训练集 + 验证集 + 测试集，稀有类别合并 + 分布图保存完成。")
+print("\n✅ Dataset splitting complete: fixed training set + random training set + validation set + test set, rare classes merged + distribution plots saved.")

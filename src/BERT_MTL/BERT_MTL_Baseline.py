@@ -9,7 +9,7 @@ import pandas as pd
 import os
 
 # ====================================================================
-# 1. Classe de Dataset
+# 1. Dataset Class
 # ====================================================================
 
 class DatasetMultiTache(Dataset):
@@ -18,7 +18,7 @@ class DatasetMultiTache(Dataset):
         self.tokenizer = tokenizer
         self.max_longueur = max_longueur
 
-        # Mappage des étiquettes vers des IDs
+        # Label mapping to IDs
         self.etiquettes_intention = {'recherche_information': 0, 'partage_experience': 1, 'fonction_phatique': 2}
         self.etiquettes_objet_medical = {'symptome': 0, 'traitement': 1, 'diagnostique': 2, 'NA_CATEGORY': 3}
         self.etiquettes_sentiment = {'positif': 0, 'negatif': 1, 'non': 2, 'RARE_CLASS': 3}
@@ -34,12 +34,12 @@ class DatasetMultiTache(Dataset):
         item = self.donnees[index]
         texte = str(item['texte'])
         
-        # Récupérer les étiquettes pour chaque tâche
+        # Retrieve labels for each task
         intention = self.etiquettes_intention[item['intention']]
         objet_medical = self.etiquettes_objet_medical[item['objet_medical']]
         sentiment = self.etiquettes_sentiment[item['sentiment']]
 
-        # Tokeniser le texte
+        # Tokenize the text
         encodage = self.tokenizer.encode_plus(
             texte,
             add_special_tokens=True,
@@ -58,29 +58,29 @@ class DatasetMultiTache(Dataset):
         }
 
 # ====================================================================
-# 2. Modèle multi-tâche
+# 2. Multi-task Model
 # ====================================================================
 
 class BERT_MedicalMultiTache(nn.Module):
     def __init__(self, nom_modele_pre_entraine, num_intention, num_objet_medical, num_sentiment):
         super(BERT_MedicalMultiTache, self).__init__()
         
-        # Encodeur partagé
+        # Shared encoder
         self.bert = BertModel.from_pretrained(nom_modele_pre_entraine)
         
-        # Têtes de classification indépendantes
+        # Independent classification heads
         self.classifieur_intention = nn.Linear(self.bert.config.hidden_size, num_intention)
         self.classifieur_objet_medical = nn.Linear(self.bert.config.hidden_size, num_objet_medical)
         self.classifieur_sentiment = nn.Linear(self.bert.config.hidden_size, num_sentiment)
         
     def forward(self, input_ids, attention_mask):
-        # Passage par l'encodeur BERT
+        # Pass through BERT encoder
         outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
         
-        # Utiliser la sortie du token [CLS] comme représentation de la phrase
+        # Use the [CLS] token output as the sentence representation
         pooled_output = outputs.pooler_output
         
-        # Classification indépendante pour chaque tâche
+        # Independent classification for each task
         logits_intention = self.classifieur_intention(pooled_output)
         logits_objet_medical = self.classifieur_objet_medical(pooled_output)
         logits_sentiment = self.classifieur_sentiment(pooled_output)
@@ -88,7 +88,7 @@ class BERT_MedicalMultiTache(nn.Module):
         return logits_intention, logits_objet_medical, logits_sentiment
 
 # ====================================================================
-# 3. Fonctions d'entraînement et d'évaluation
+# 3. Training and Evaluation Functions
 # ====================================================================
 
 def entrainer(modele, chargeur_donnees, optimiseur, scheduler, fonction_perte, appareil):
@@ -143,7 +143,7 @@ def evaluer(modele, chargeur_donnees, appareil):
                 attention_mask=attention_mask
             )
             
-            # Sauvegarder les prédictions et les vraies étiquettes
+            # Save predictions and true labels
             predictions_intention.extend(torch.argmax(logits_intention, dim=1).cpu().numpy())
             labels_reels_intention.extend(labels_intention.cpu().numpy())
             
@@ -153,7 +153,7 @@ def evaluer(modele, chargeur_donnees, appareil):
             predictions_sentiment.extend(torch.argmax(logits_sentiment, dim=1).cpu().numpy())
             labels_reels_sentiment.extend(labels_sentiment.cpu().numpy())
 
-    # Calculer les métriques d'évaluation
+    # Calculate evaluation metrics
     acc_intention = accuracy_score(labels_reels_intention, predictions_intention)
     f1_intention = f1_score(labels_reels_intention, predictions_intention, average='macro')
     
@@ -170,23 +170,23 @@ def evaluer(modele, chargeur_donnees, appareil):
     }
 
 # ====================================================================
-# 4. Fonction de conversion CSV en JSONL
+# 4. CSV to JSONL Conversion Function
 # ====================================================================
 
 def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
     """
-    Vérifie si le fichier .jsonl existe. Si ce n'est pas le cas, le convertit depuis le fichier .csv.
+    Checks if the .jsonl file exists. If not, converts it from the .csv file.
     """
     if os.path.exists(chemin_jsonl):
-        print(f"Fichier {chemin_jsonl} trouvé, conversion ignorée.")
+        print(f"File {chemin_jsonl} found, conversion skipped.")
         return
 
-    print(f"Fichier {chemin_jsonl} non trouvé, conversion depuis {chemin_csv} en cours...")
+    print(f"File {chemin_jsonl} not found, converting from {chemin_csv}...")
     if not os.path.exists(chemin_csv):
-        print(f"Erreur: Le fichier {chemin_csv} est introuvable. Veuillez vérifier le chemin d'accès.")
+        print(f"Error: File {chemin_csv} not found. Please check the path.")
         exit()
     
-    # S'assurer que le répertoire de sortie existe
+    # Ensure the output directory exists
     repertoire_sortie = os.path.dirname(chemin_jsonl)
     if repertoire_sortie and not os.path.exists(repertoire_sortie):
         os.makedirs(repertoire_sortie)
@@ -194,7 +194,7 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
     try:
         df = pd.read_csv(chemin_csv)
         
-        # Renommer les colonnes pour correspondre aux attentes du script
+        # Rename columns to match script expectations
         df = df.rename(columns={
             'Sentences': 'texte',
             'niveau1': 'intention',
@@ -204,7 +204,7 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
 
         colonnes_requises = ['texte', 'intention', 'objet_medical', 'sentiment']
         if not all(col in df.columns for col in colonnes_requises):
-            raise ValueError(f"Le fichier CSV ne contient pas toutes les colonnes requises après renommage. Assurez-vous d'inclure les colonnes suivantes : {colonnes_requises}")
+            raise ValueError(f"The CSV file does not contain all required columns after renaming. Ensure the following columns are included: {colonnes_requises}")
 
         with open(chemin_jsonl, 'w', encoding='utf-8') as f:
             for _, row in df.iterrows():
@@ -216,24 +216,24 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
                 }
                 f.write(json.dumps(dictionnaire_donnees, ensure_ascii=False) + '\n')
         
-        print(f"Conversion réussie de {chemin_csv} en {chemin_jsonl}.")
+        print(f"Successfully converted {chemin_csv} to {chemin_jsonl}.")
     except Exception as e:
-        print(f"Une erreur est survenue lors de la conversion: {e}")
+        print(f"An error occurred during conversion: {e}")
         exit()
 
 # ====================================================================
-# 5. Programme principal
+# 5. Main Program
 # ====================================================================
 
 if __name__ == '__main__':
-    # Hyperparamètres
-    NOM_MODELE_BERT = 'bert-base-multilingual-cased' # Modèle multilingue pour les textes en français
+    # Hyperparameters
+    NOM_MODELE_BERT = 'bert-base-multilingual-cased' # Multilingual model for French texts
     MAX_LONGUEUR = 128
     TAILLE_DE_LOT = 16
     EPOQUES = 3
     TAUX_APPRENTISSAGE = 2e-5
 
-    # Chemins des fichiers de données
+    # Data file paths
     CHEMIN_CSV_TRAIN = 'data/dataset/train_dataset.csv'
     CHEMIN_CSV_VALID = 'data/dataset/validation_dataset.csv'
     CHEMIN_CSV_TEST = 'data/dataset/test_dataset.csv'
@@ -242,34 +242,34 @@ if __name__ == '__main__':
     CHEMIN_JSONL_VALID = 'data/dataset/validation_dataset.jsonl'
     CHEMIN_JSONL_TEST = 'data/dataset/test_dataset.jsonl'
     
-    # Vérifier et convertir le format des données
+    # Check and convert data format
     verifier_et_convertir_donnees(CHEMIN_JSONL_TRAIN, CHEMIN_CSV_TRAIN)
     verifier_et_convertir_donnees(CHEMIN_JSONL_VALID, CHEMIN_CSV_VALID)
     verifier_et_convertir_donnees(CHEMIN_JSONL_TEST, CHEMIN_CSV_TEST)
     
     appareil = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # Initialiser le tokenizer
+    # Initialize tokenizer
     tokenizer = BertTokenizer.from_pretrained(NOM_MODELE_BERT)
 
-    # Charger les datasets
+    # Load datasets
     dataset_train = DatasetMultiTache(CHEMIN_JSONL_TRAIN, tokenizer, MAX_LONGUEUR)
     dataset_valid = DatasetMultiTache(CHEMIN_JSONL_VALID, tokenizer, MAX_LONGUEUR)
     dataset_test = DatasetMultiTache(CHEMIN_JSONL_TEST, tokenizer, MAX_LONGUEUR)
 
-    # Créer les DataLoaders
+    # Create DataLoaders
     chargeur_donnees_train = DataLoader(dataset_train, batch_size=TAILLE_DE_LOT, shuffle=True)
     chargeur_donnees_valid = DataLoader(dataset_valid, batch_size=TAILLE_DE_LOT, shuffle=False)
     chargeur_donnees_test = DataLoader(dataset_test, batch_size=TAILLE_DE_LOT, shuffle=False)
 
-    # Instancier le modèle
+    # Instantiate the model
     num_intention = len(dataset_train.etiquettes_intention)
     num_objet_medical = len(dataset_train.etiquettes_objet_medical)
     num_sentiment = len(dataset_train.etiquettes_sentiment)
     
     modele = BERT_MedicalMultiTache(NOM_MODELE_BERT, num_intention, num_objet_medical, num_sentiment).to(appareil)
 
-    # Configurer l'optimiseur et le scheduler de taux d'apprentissage
+    # Configure optimizer and learning rate scheduler
     optimiseur = AdamW(modele.parameters(), lr=TAUX_APPRENTISSAGE)
     total_etapes = len(chargeur_donnees_train) * EPOQUES
     scheduler = get_linear_schedule_with_warmup(
@@ -278,27 +278,27 @@ if __name__ == '__main__':
         num_training_steps=total_etapes
     )
     
-    # Fonction de perte
+    # Loss function
     fonction_perte = nn.CrossEntropyLoss()
 
-    # Lancer la boucle d'entraînement
+    # Start training loop
     for epoque in range(EPOQUES):
-        print(f"Époque {epoque + 1}/{EPOQUES}")
+        print(f"Epoch {epoque + 1}/{EPOQUES}")
         perte_entrainement = entrainer(modele, chargeur_donnees_train, optimiseur, scheduler, fonction_perte, appareil)
-        print(f"Perte d'entraînement: {perte_entrainement:.4f}")
+        print(f"Training Loss: {perte_entrainement:.4f}")
         
         metriques_validation = evaluer(modele, chargeur_donnees_valid, appareil)
-        print(f"Métriques de validation: Acc_Intention={metriques_validation['acc_intention']:.4f} F1={metriques_validation['f1_intention']:.4f} | "
+        print(f"Validation Metrics: Acc_Intention={metriques_validation['acc_intention']:.4f} F1={metriques_validation['f1_intention']:.4f} | "
               f"Acc_Objet_Medical={metriques_validation['acc_objet_medical']:.4f} F1={metriques_validation['f1_objet_medical']:.4f} | "
               f"Acc_Sentiment={metriques_validation['acc_sentiment']:.4f} F1={metriques_validation['f1_sentiment']:.4f}")
 
-    # Évaluer le modèle final sur le jeu de test
-    print("\n--- Évaluation sur le jeu de test ---")
+    # Evaluate the final model on the test set
+    print("\n--- Evaluation on Test Set ---")
     metriques_test = evaluer(modele, chargeur_donnees_test, appareil)
-    print(f"Métriques de test: Acc_Intention={metriques_test['acc_intention']:.4f} F1={metriques_test['f1_intention']:.4f} | "
+    print(f"Test Metrics: Acc_Intention={metriques_test['acc_intention']:.4f} F1={metriques_test['f1_intention']:.4f} | "
           f"Acc_Objet_Medical={metriques_test['acc_objet_medical']:.4f} F1={metriques_test['f1_objet_medical']:.4f} | "
           f"Acc_Sentiment={metriques_test['acc_sentiment']:.4f} F1={metriques_test['f1_sentiment']:.4f}")
 
-    # Sauvegarder le modèle
+    # Save the model
     torch.save(modele.state_dict(), 'BERT_MedicalMultiTache.pth')
-    print("Modèle sauvegardé sous BERT_MedicalMultiTache.pth")
+    print("Model saved as BERT_MedicalMultiTache.pth")

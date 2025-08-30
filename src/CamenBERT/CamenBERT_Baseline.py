@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
-# 核心改动：导入 CamembertTokenizer
+# mport CamembertTokenizer
 from transformers import BertModel, CamembertTokenizer, get_linear_schedule_with_warmup
 from torch.optim import AdamW
 from sklearn.metrics import accuracy_score, f1_score
@@ -11,7 +11,7 @@ import os
 from collections import Counter
 
 # ====================================================================
-# 1. Dataset 类 (未更改)
+# 1. Dataset Class
 # ====================================================================
 
 class DatasetMultiTache(Dataset):
@@ -60,7 +60,7 @@ class DatasetMultiTache(Dataset):
         }
 
 # ====================================================================
-# 2. Modèle multi-tâche (未更改)
+# 2. Multi-task Model
 # ====================================================================
 
 class BERT_MedicalMultiTache(nn.Module):
@@ -90,7 +90,7 @@ class BERT_MedicalMultiTache(nn.Module):
         return logits_intention, logits_objet_medical, logits_sentiment
 
 # ====================================================================
-# 3. Fonctions d'entraînement et d'évaluation (未更改)
+# 3. Training and Evaluation Functions
 # ====================================================================
 
 def entrainer(modele, chargeur_donnees, optimiseur, scheduler, fonction_perte, appareil):
@@ -172,7 +172,7 @@ def evaluer(modele, chargeur_donnees, appareil):
     }
 
 # ====================================================================
-# 4. Fonction de conversion CSV en JSONL (未更改)
+# 4. CSV to JSONL Conversion Function
 # ====================================================================
 
 def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
@@ -180,12 +180,12 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
     Vérifie si le fichier .jsonl existe. Si ce n'est pas le cas, le convertit depuis le fichier .csv.
     """
     if os.path.exists(chemin_jsonl):
-        print(f"Fichier {chemin_jsonl} trouvé, conversion ignorée.")
+        print(f"File {chemin_jsonl} found, skipping conversion.")
         return
 
-    print(f"Fichier {chemin_jsonl} non trouvé, conversion depuis {chemin_csv} en cours...")
+    print(f"File {chemin_jsonl} not found, converting from {chemin_csv}...")
     if not os.path.exists(chemin_csv):
-        print(f"Erreur: Le fichier {chemin_csv} est introuvable. Veuillez vérifier le chemin d'accès.")
+        print(f"Error: File {chemin_csv} not found. Please check the path.")
         exit()
     
     # S'assurer que le répertoire de sortie existe
@@ -218,17 +218,17 @@ def verifier_et_convertir_donnees(chemin_jsonl, chemin_csv):
                 }
                 f.write(json.dumps(dictionnaire_donnees, ensure_ascii=False) + '\n')
         
-        print(f"Conversion réussie de {chemin_csv} en {chemin_jsonl}.")
+        print(f"Successfully converted {chemin_csv} to {chemin_jsonl}.")
     except Exception as e:
-        print(f"Une erreur est survenue lors de la conversion: {e}")
+        print(f"An error occurred during conversion: {e}")
         exit()
 
 # ====================================================================
-# 5. Programme principal (已修改)
+# 5. Main Program
 # ====================================================================
 
 if __name__ == '__main__':
-    # 核心改动：使用 Camembert 模型
+    # Use Camembert model
     NOM_MODELE_BERT = 'camembert-base'
     MAX_LONGUEUR = 128
     TAILLE_DE_LOT = 16
@@ -251,7 +251,7 @@ if __name__ == '__main__':
     
     appareil = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # 核心改动：使用 CamembertTokenizer
+    # Use CamembertTokenizer
     tokenizer = CamembertTokenizer.from_pretrained(NOM_MODELE_BERT)
 
     # Charger les datasets
@@ -285,22 +285,22 @@ if __name__ == '__main__':
 
     # Lancer la boucle d'entraînement
     for epoque in range(EPOQUES):
-        print(f"Époque {epoque + 1}/{EPOQUES}")
+        print(f"Epoch {epoque + 1}/{EPOQUES}")
         perte_entrainement = entrainer(modele, chargeur_donnees_train, optimiseur, scheduler, fonction_perte, appareil)
-        print(f"Perte d'entraînement: {perte_entrainement:.4f}")
+        print(f"Training Loss: {perte_entrainement:.4f}")
         
         metriques_validation = evaluer(modele, chargeur_donnees_valid, appareil)
-        print(f"Métriques de validation: Acc_Intention={metriques_validation['acc_intention']:.4f} F1={metriques_validation['f1_intention']:.4f} | "
+        print(f"Validation Metrics: Acc_Intention={metriques_validation['acc_intention']:.4f} F1={metriques_validation['f1_intention']:.4f} | "
               f"Acc_Objet_Medical={metriques_validation['acc_objet_medical']:.4f} F1={metriques_validation['f1_objet_medical']:.4f} | "
               f"Acc_Sentiment={metriques_validation['acc_sentiment']:.4f} F1={metriques_validation['f1_sentiment']:.4f}")
 
     # Évaluer le modèle final sur le jeu de test
-    print("\n--- Évaluation sur le jeu de test ---")
+    print("\n--- Evaluating on Test Set ---")
     metriques_test = evaluer(modele, chargeur_donnees_test, appareil)
-    print(f"Métriques de test: Acc_Intention={metriques_test['acc_intention']:.4f} F1={metriques_test['f1_intention']:.4f} | "
+    print(f"Test Metrics: Acc_Intention={metriques_test['acc_intention']:.4f} F1={metriques_test['f1_intention']:.4f} | "
           f"Acc_Objet_Medical={metriques_test['acc_objet_medical']:.4f} F1={metriques_test['f1_objet_medical']:.4f} | "
           f"Acc_Sentiment={metriques_test['acc_sentiment']:.4f} F1={metriques_test['f1_sentiment']:.4f}")
 
     # Sauvegarder le modèle
     torch.save(modele.state_dict(), 'BERT_MedicalMultiTache_camembert.pth')
-    print("Modèle sauvegardé sous BERT_MedicalMultiTache_camembert.pth")
+    print("Model saved as BERT_MedicalMultiTache_camembert.pth")

@@ -9,7 +9,7 @@ import pandas as pd
 import os
 
 # ====================================================================
-# 1. Dataset, Model and Helper Functions (保持与之前版本一致)
+# 1. Dataset, Model and Helper Functions
 # ====================================================================
 
 class DatasetMultiTache(Dataset):
@@ -149,26 +149,26 @@ def train_model(train_data_path, model_path, tokenizer, num_intention, num_objet
             optimiseur.step()
             scheduler.step()
             perte_totale += perte.item()
-        print(f"Époque {epoque + 1}/{EPOQUES}, Perte: {perte_totale / len(chargeur_donnees_train):.4f}")
+        print(f"Epoch {epoque + 1}/{EPOQUES}, Loss: {perte_totale / len(chargeur_donnees_train):.4f}")
     
     torch.save(modele.state_dict(), model_path)
     print(f"Model saved to {model_path}")
 
 # ====================================================================
-# 2. 主程序
+# 2. Main Program
 # ====================================================================
 
 if __name__ == '__main__':
-    # 定义所有要运行的实验
+    # Define all experiments to run
     experiments = {
-        '基准模型': {'train_data': 'data/dataset/train_dataset.jsonl', 'model_path': 'BERT_MedicalMultiTache.pth'},
-        '过采样模型': {'train_data': 'data/dataset/train_dataset_sampler.jsonl', 'model_path': 'BERT_MedicalMultiTache_sampler.pth'},
-        '反向翻译模型': {'train_data': 'data/dataset/train_dataset_backtrans.jsonl', 'model_path': 'BERT_MedicalMultiTache_backtrans.pth'},
-        '关键词模型': {'train_data': 'data/dataset/train_dataset_keywords.jsonl', 'model_path': 'BERT_MedicalMultiTache_keywords.pth'},
-        '组合模型': {'train_data': 'data/dataset/train_dataset_combined.jsonl', 'model_path': 'BERT_MedicalMultiTache_combined.pth'}
+        'Baseline Model': {'train_data': 'data/dataset/train_dataset.jsonl', 'model_path': 'BERT_MedicalMultiTache.pth'},
+        'Oversampling Model': {'train_data': 'data/dataset/train_dataset_sampler.jsonl', 'model_path': 'BERT_MedicalMultiTache_sampler.pth'},
+        'Back-translation Model': {'train_data': 'data/dataset/train_dataset_backtrans.jsonl', 'model_path': 'BERT_MedicalMultiTache_backtrans.pth'},
+        'Keyword Model': {'train_data': 'data/dataset/train_dataset_keywords.jsonl', 'model_path': 'BERT_MedicalMultiTache_keywords.pth'},
+        'Combined Model': {'train_data': 'data/dataset/train_dataset_combined.jsonl', 'model_path': 'BERT_MedicalMultiTache_combined.pth'}
     }
 
-    # 配置信息
+    # configurations
     NOM_MODELE_BERT = 'bert-base-multilingual-cased'
     MAX_LONGUEUR = 128
     TAILLE_DE_LOT = 16
@@ -192,45 +192,45 @@ if __name__ == '__main__':
     num_objet_medical = len(dataset_test.etiquettes_objet_medical)
     num_sentiment = len(dataset_test.etiquettes_sentiment)
 
-    # 训练所有模型并保存
+    # Train and save all models
     for exp_name, config in experiments.items():
         if os.path.exists(config['model_path']):
-            print(f"\n模型 {exp_name} 已存在, 跳过训练.")
+            print(f"\nModel {exp_name} already exists, skipping training.")
             continue
         train_model(config['train_data'], config['model_path'], tokenizer, num_intention, num_objet_medical, num_sentiment, appareil, EPOQUES, TAILLE_DE_LOT, TAUX_APPRENTISSAGE)
 
-    # 评估所有模型并打印对比表格
+    # Evaluate all models and print comparison table
     resultats_comparaison = {}
     print("\n" + "="*80)
-    print(" " * 25 + "开始评估所有模型")
+    print(" " * 25 + "Starting evaluation of all models")
     print("="*80)
 
     for exp_name, config in experiments.items():
-        print(f"\n--- 正在评估: {exp_name} ---")
+        print(f"\n--- Evaluating: {exp_name} ---")
         modele = BERT_MedicalMultiTache(NOM_MODELE_BERT, num_intention, num_objet_medical, num_sentiment).to(appareil)
         try:
             modele.load_state_dict(torch.load(config['model_path'], map_location=appareil))
             metriques = evaluer(modele, chargeur_donnees_test, appareil)
             resultats_comparaison[exp_name] = metriques
-            print("评估完成.")
+            print("Evaluation complete.")
         except FileNotFoundError:
-            print(f"错误: 找不到文件 {config['model_path']}. 跳过该模型.")
+            print(f"Error: File {config['model_path']} not found. Skipping this model.")
 
     print("\n" + "="*160)
-    print(" " * 65 + "最终性能对比结果")
+    print(" " * 65 + "Final Performance Comparison Results")
     print("="*160)
     
     model_names = list(resultats_comparaison.keys())
     
     for tache in ['intention', 'objet_medical', 'sentiment']:
-        print(f"\n任务: {tache.capitalize()}")
+        print(f"\nTask: {tache.capitalize()}")
         
         metrics_to_show = {
             'F1 (Macro)': f'f1_{tache}_macro',
             'Accuracy': f'acc_{tache}'
         }
 
-        entete_macro = "{:<25} |".format("指标")
+        entete_macro = "{:<25} |".format("Metric")
         for name in model_names:
             entete_macro += f" {name:<25} |"
         print("-" * (25 + len(model_names) * 28))
