@@ -1,16 +1,18 @@
-# Analyse de l'Intention des Messages sur le Forum de Santé Doctissimo
+# Détection des intentions dans les postes des utilisateurs sur le forum de santé Doctissimo
 
-Ce projet de recherche porte sur l’analyse des intentions exprimées dans les messages publiés par les utilisateurs du forum de santé **Doctissimo**. L’objectif est de classer automatiquement des phrases extraites de ces posts selon trois niveaux d’annotation complémentaires : l’intention générale du locuteur, l’objet médical évoqué et le sentiment exprimé. Pour ce faire, le projet s’appuie à la fois sur des méthodes traditionnelles de TAL (vectorisation BoW/TF-IDF, embeddings Word2Vec et FastText, caractéristiques basées sur les mots-clés) et sur des modèles récents de type Transformer (BERT, CamemBERT, CamemBERT-bio), entraînés et **fine-tunés** dans un cadre multi-tâches. L’ensemble de ces approches vise à mieux comprendre les besoins, les expériences et les émotions des utilisateurs, tout en évaluant les apports respectifs des techniques classiques et des modèles de pointe pour l’analyse de données issues de forums médicaux en ligne.
+Ce projet de recherche porte sur l’analyse des intentions exprimées dans les postes publiés par les utilisateurs du forum de santé **Doctissimo**. L’objectif est de classer automatiquement des phrases extraites de ces postes selon trois niveaux d’annotation complémentaires : l’intention générale du locuteur, l’objet médical évoqué et le sentiment exprimé. Pour ce faire, le projet s’appuie sur une combinaison de méthodes traditionnelles de traitement automatique des langues (TAL) (vectorisation BoW/TF-IDF, embeddings Word2Vec et FastText, caractéristiques basées sur les mots-clés), de modèles récents de type Transformer (BERT, CamemBERT, CamemBERT-bio) entraînés et **fine-tunés** dans un cadre multi-tâches, ainsi que sur l’exploration de **Grands Modèles de Langage (LLM)** (Google Gemini, OpenAI GPT) via des approches de *few-shot prompting*. L’ensemble de ces approches vise à mieux comprendre les besoins, les expériences et les émotions des utilisateurs, tout en évaluant les apports respectifs des techniques classiques, des modèles spécialisés et des LLM de pointe pour l’analyse de données issues de forums médicaux en ligne.
 
 
 ## Données et Annotation
 
-Le jeu de données se compose de 972 phrases en français, extraites individuellement des paragraphes des posts du forum. Chaque phrase est annotée selon trois catégories principales :
+Le jeu de données se compose de 972 phrases en français, extraites individuellement des paragraphes des postes du forum de santé Doctissimo. Les catégories d’annotation utilisées dans ce projet — couvrant l’intention générale, l’objet médical et le sentiment — ont été proposées par les étudiantes du Master en TAL, Lise Brisset, Patricia Augustyn et Solomiia Korol, dans le cadre du cours *Enrichissement de corpus* dirigé par Mme Eshkol-Taravella l’année 2024. Leur contribution a permis de définir les conventions d’annotation sur lesquelles repose ce travail.
 
-1.  **Niveau d'Intention Générale (`niveau1`)** : Ce niveau se rapproche des actes de langage et de l'intention communicative du locuteur. Les étiquettes incluent :
+Ces catégories se déclinent en trois niveaux d’annotation complémentaires, détaillés ci-dessous :
+
+1.  **Niveau d'Intention Générale (`niveau1`)** : Ce niveau se rapproche des actes de paroles en linguistique et des intentions des locuteurs. Les étiquettes incluent :
     *   `recherche_information` (Recherche d'information)
     *   `partage_experience` (Partage d'expérience)
-    *   `fonction_phatique` (Fonction phatique / Salutations)
+    *   `fonction_phatique` (Fonction phatique)
 
 2.  **Niveau d'Objet Médical (`niveau2`)** : Ce niveau identifie les concepts médicaux abordés dans la phrase. Les étiquettes incluent :
     *   `symptome` (Symptôme)
@@ -23,10 +25,13 @@ Le jeu de données se compose de 972 phrases en français, extraites individuell
     *   `negatif` (Négatif)
     *   `non` (Neutre)
 
-
 ## Méthodologie
 
-Le projet adopte une approche complète, combinant des techniques de traitement du langage naturel (TAL) traditionnelles et des modèles d'apprentissage profond basés sur les Transformers.
+Le projet adopte une approche complète et comparative, articulée autour de trois axes principaux.  
+D’abord, des techniques classiques de traitement automatique des langues (TAL) sont mobilisées, incluant la vectorisation (BoW, TF-IDF), les embeddings de type Word2Vec et FastText, ainsi que des caractéristiques basées sur des mots-clés. Ensuite, des modèles modernes de type Transformer (BERT, CamemBERT, CamemBERT-bio) sont entraînés et fine-tunés dans un cadre multi-tâches pour capturer plus finement le contexte linguistique. Enfin, le projet explore l’apport des Grands Modèles de Langage (LLM) comme Gemini et GPT, utilisés via des techniques de *few-shot prompting*, afin d’évaluer leur capacité à classifier les intentions, objets médicaux et sentiments sans entraînement spécifique, tout en générant des réponses interactives.  
+
+Cette méthodologie permet de confronter des approches fondées sur des représentations explicites, des modèles entraînés en profondeur et des modèles pré-entraînés de grande échelle, afin de mesurer leurs forces et limites respectives.
+
 
 ### 1. Préparation et Division des Données
 
@@ -85,7 +90,26 @@ Le cœur du projet réside dans l'application de modèles d'apprentissage multi-
     *   **Augmentation par mots-clés** : Ajout de mots-clés pertinents aux phrases.
     *   **Augmentation combinée** : Intégration de plusieurs méthodes d'augmentation.
 
-### 5. Évaluation
+### 5. Utilisation des Grands Modèles de Langage (LLM)
+
+Le projet explore également l'utilisation de **Grands Modèles de Langage (LLM)** pour la classification des intentions, des objets médicaux et des sentiments, en tirant parti de leurs capacités de raisonnement contextuel et de compréhension du langage naturel.
+
+*   **Modèles utilisés** :
+    *   **Google Gemini** : Via l'API Gemini (modèle `gemini-2.0-flash-001` ou `gemini-2.5-flash`).
+    *   **OpenAI GPT** : Via l'API OpenAI (modèles comme `gpt-4o`).
+*   **Approche Few-Shot Prompting** :
+    *   Les modèles LLM sont utilisés avec une approche de *few-shot prompting*. Cela implique de fournir au modèle quelques exemples annotés (`data/few_shot_examples.csv`) directement dans le prompt, afin de guider le modèle vers le format de sortie et les catégories souhaitées.
+    *   Le prompt est structuré pour demander une classification en format JSON pour les trois niveaux d'annotation (intention générale, objet médical, sentiment).
+*   **Processus de classification** :
+    *   Chargement des exemples *few-shot* et du jeu de données de test.
+    *   Construction dynamique du prompt pour chaque phrase à classer, incluant les instructions et les exemples.
+    *   Appel à l'API du LLM (Gemini ou OpenAI) pour obtenir les prédictions.
+    *   Gestion des erreurs et des limites de taux (*rate limits*) avec des mécanismes de réessai.
+*   **Génération de réponses interactives (pour Gemini)** :
+    *   Un module interactif (`src/LLM/interactive_gemini.py`) permet de tester le classifieur LLM en temps réel.
+    *   Après classification, une stratégie de réponse personnalisée est générée en français, basée sur l'intention, l'objet médical et le sentiment détectés dans la phrase de l'utilisateur. Cela simule un assistant de forum médical capable de fournir des conseils ou un soutien adaptés.
+
+### 6. Évaluation
 
 Les performances des modèles sont évaluées à l'aide de plusieurs métriques, notamment :
 
