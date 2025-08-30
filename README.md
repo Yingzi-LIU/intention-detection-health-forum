@@ -120,3 +120,17 @@ Les performances des modèles sont évaluées à l'aide de plusieurs métriques,
 *   F1-score par classe
 
 Des scripts sont mis en place pour automatiser l'entraînement, l'évaluation et la comparaison des différents modèles et stratégies d'augmentation, générant des rapports de performance détaillés.
+
+### 7. Résultats des Modèles
+
+Les résultats détaillés de chaque expérience (incluant les scores F1 pondérés, la précision, les meilleurs hyperparamètres et les rapports de classification) sont sauvegardés dans les répertoires suivants :
+
+*   **`results_baseline/`** : Contient les résultats des modèles d'apprentissage automatique traditionnels.
+    *   Chaque sous-répertoire (par exemple, `emotion/`, `medical_object/`, `overall_intent/`) contient :
+        *   `results.json` : Fichier JSON avec les résultats bruts.
+        *   `summary.md` : Résumé lisible des performances du modèle.
+*   **`results_enhanced/`** : Contient les résultats des modèles améliorés avec des caractéristiques basées sur les mots-clés.
+    *   Structure similaire à `results_baseline/`.
+*   **`results_MTL/`** : Contient les résultats des modèles d'apprentissage multi-tâches basés sur les Transformers.
+    *   `evaluation_results.json` : Fichier JSON avec les résultats d'évaluation agrégés.
+    *   `evaluation_results.csv` : Fichier CSV avec les résultats d'évaluation agrégés.
