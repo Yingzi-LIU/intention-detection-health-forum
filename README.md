@@ -1,11 +1,11 @@
 # Détection des intentions dans les postes des utilisateurs sur le forum de santé Doctissimo
 
-Ce projet de recherche porte sur l’analyse des intentions exprimées dans les postes publiés par les utilisateurs du forum de santé **Doctissimo**. L’objectif est de classer automatiquement des phrases extraites de ces postes selon trois niveaux d’annotation complémentaires : l’intention générale du locuteur, l’objet médical évoqué et le sentiment exprimé. Pour ce faire, le projet s’appuie sur une combinaison de méthodes traditionnelles de traitement automatique des langues (TAL) (vectorisation BoW/TF-IDF, embeddings Word2Vec et FastText, caractéristiques basées sur les mots-clés), de modèles récents de type Transformer (BERT, CamemBERT, CamemBERT-bio) entraînés et **fine-tunés** dans un cadre multi-tâches, ainsi que sur l’exploration de **Grands Modèles de Langage (LLM)** (Google Gemini, OpenAI GPT) via des approches de *few-shot prompting*. L’ensemble de ces approches vise à mieux comprendre les besoins, les expériences et les émotions des utilisateurs, tout en évaluant les apports respectifs des techniques classiques, des modèles spécialisés et des LLM de pointe pour l’analyse de données issues de forums médicaux en ligne.
+Ce projet de recherche porte sur l’analyse des intentions exprimées dans les postes publiés par les utilisateurs du forum de santé **Doctissimo**. L’objectif est de classer automatiquement des phrases extraites de ces postes selon trois niveaux d’annotation complémentaires : l’intention générale du locuteur, l’objet médical évoqué et le sentiment exprimé. Pour ce faire, le projet s’appuie sur une combinaison de méthodes traditionnelles de traitement automatique des langues (TAL) (vectorisation BoW/TF-IDF, embeddings Word2Vec et FastText, vectorisation BERT, caractéristiques basées sur les mots-clés), de modèles récents de type Transformer (BERT, CamemBERT, CamemBERT-bio) entraînés et **fine-tunés** dans un cadre **multi-tâches**, ainsi que sur l’exploration de **Grands Modèles de Langage (LLM)** (Google Gemini, OpenAI GPT) via des approches de *few-shot prompting*. L’ensemble de ces approches vise à mieux comprendre les besoins, les expériences et les émotions des utilisateurs, tout en évaluant les apports respectifs des techniques classiques, des modèles spécialisés et des LLM de pointe pour l’analyse de données issues de forums médicaux en ligne.
 
 
 ## Données et Annotation
 
-Le jeu de données se compose de 972 phrases en français, extraites individuellement des paragraphes des postes du forum de santé Doctissimo. Les catégories d’annotation utilisées dans ce projet — couvrant l’intention générale, l’objet médical et le sentiment — ont été proposées par les étudiantes du Master en TAL, Lise Brisset, Patricia Augustyn et Solomiia Korol, dans le cadre du cours *Enrichissement de corpus* dirigé par Mme Eshkol-Taravella l’année 2024. Leur contribution a permis de définir les conventions d’annotation sur lesquelles repose ce travail.
+Le jeu de données se compose de 972 phrases en français, extraites individuellement des paragraphes des postes du forum de santé Doctissimo. Les catégories d’annotation utilisées dans ce projet — couvrant l’intention générale, l’objet médical et le sentiment — ainsi que le travail concret d’annotation ont été proposés et réalisés par les étudiantes du Master en TAL, Lise Brisset, Patricia Augustyn et Solomiia Korol, dans le cadre du cours *Enrichissement de corpus* dirigé par Mme Eshkol-Taravella en 2024. Leur contribution a permis de définir les conventions d’annotation et de constituer le jeu de données sur lequel repose ce travail.
 
 Ces catégories se déclinent en trois niveaux d’annotation complémentaires, détaillés ci-dessous :
 
@@ -27,10 +27,23 @@ Ces catégories se déclinent en trois niveaux d’annotation complémentaires, 
 
 ## Méthodologie
 
-Le projet adopte une approche complète et comparative, articulée autour de trois axes principaux.  
-D’abord, des techniques classiques de traitement automatique des langues (TAL) sont mobilisées, incluant la vectorisation (BoW, TF-IDF), les embeddings de type Word2Vec et FastText, ainsi que des caractéristiques basées sur des mots-clés. Ensuite, des modèles modernes de type Transformer (BERT, CamemBERT, CamemBERT-bio) sont entraînés et fine-tunés dans un cadre multi-tâches pour capturer plus finement le contexte linguistique. Enfin, le projet explore l’apport des Grands Modèles de Langage (LLM) comme Gemini et GPT, utilisés via des techniques de *few-shot prompting*, afin d’évaluer leur capacité à classifier les intentions, objets médicaux et sentiments sans entraînement spécifique, tout en générant des réponses interactives.  
+Le projet adopte une approche complète et comparative, articulée autour de trois axes principaux. Dans un premier temps, des méthodes classiques de traitement automatique des langues (TAL) sont mobilisées, combinant différentes stratégies de **représentation linguistique** — telles que la vectorisation (BoW, TF-IDF), les embeddings de type Word2Vec et FastText, la vectorisation BERT, ainsi que des caractéristiques basées sur des mots-clés — avec l’application de modèles d’**apprentissage automatique supervisé** (régression logistique, SVM, Naïve Bayes, arbres de décision, k-plus proches voisins), dont les hyperparamètres sont optimisés par recherche systématique (Grid Search). Dans un second temps, des modèles modernes fondés sur les architectures **Transformer (BERT, CamemBERT, CamemBERT-bio)** sont entraînés et fine-tunés dans un cadre **multi-tâches**, permettant de capturer plus finement le contexte linguistique et de traiter simultanément les trois dimensions d’annotation
 
-Cette méthodologie permet de confronter des approches fondées sur des représentations explicites, des modèles entraînés en profondeur et des modèles pré-entraînés de grande échelle, afin de mesurer leurs forces et limites respectives.
+L’entraînement de ces modèles intègre plusieurs stratégies avancées :  
+
+* **Fonction de perte adaptée** : entropie croisée multi-tâches.  
+* **Optimiseur et Scheduler** : gestion du taux d’apprentissage (learning rate).  
+* **Échantillonnage pondéré aléatoire** (`WeightedRandomSampler`) : pour contrer le déséquilibre des classes.  
+* **Augmentation des données**, incluant :  
+  * **Sur-échantillonnage** des classes minoritaires.  
+  * **Rétro-traduction** (français → anglais → français).  
+  * **Augmentation par mots-clés**.  
+  * **Stratégies combinées** intégrant plusieurs méthodes d’augmentation.
+
+Enfin, l’étude examine l’apport des **Grands Modèles de Langage (LLM)**, tels que Gemini et GPT, exploités au moyen de techniques de **few-shot prompting** afin d’évaluer leur capacité à réaliser les classifications sans entraînement spécifique, tout en produisant des réponses interactives adaptées au contenu analysé.  
+
+Cette méthodologie permet de confronter des approches fondées sur des représentations explicites et l’apprentissage automatique supervisé, des modèles entraînés en profondeur et des modèles pré-entraînés de grande échelle, 
+afin d’évaluer de manière systématique leurs forces et limites respectives dans l’analyse des intentions générales, objets médicaux et sentiments des utilisateurs du forum de santé **Doctissimo**.
 
 
 ### 1. Préparation et Division des Données
@@ -46,7 +59,7 @@ Cette méthodologie permet de confronter des approches fondées sur des représe
     *   Remplacement des nombres par `NUM`.
     *   Lemmatisation des mots français.
     *   Suppression optionnelle des mots vides (stop words) français.
-*   **Division du jeu de données** : Le jeu de données est divisé en ensembles d'entraînement, de validation et de test. L'ensemble d'entraînement est composé d'un sous-ensemble fixe (basé sur des IDs spécifiques) et d'une partie échantillonnée aléatoirement, en utilisant un échantillonnage stratifié pour maintenir la distribution des étiquettes.
+*   **Division du jeu de données** : Le jeu de données est divisé en trois ensembles : 572 phrases pour l'entraînement, 100 phrases pour la validation et 300 phrases pour le test. L'ensemble d'entraînement est composé d'un sous-ensemble fixe (basé sur des IDs spécifiques) et d'une partie échantillonnée aléatoirement, en utilisant un échantillonnage stratifié pour maintenir la distribution des étiquettes.
 *   **Encodage des étiquettes** : Les étiquettes textuelles sont converties en IDs numériques à l'aide de `LabelEncoder`.
 
 ### 2. Ingénierie des Caractéristiques et Vectorisation
@@ -58,7 +71,7 @@ Cette méthodologie permet de confronter des approches fondées sur des représe
     *   Word2Vec (`Word2VecVectorizer`).
     *   FastText (`FastTextVectorizer`).
 *   **Vectorisation BERT** : Utilisation de modèles BERT pré-entraînés (`BertVectorizer`) pour générer des embeddings de phrases.
-*   **Caractéristiques basées sur les mots-clés** : Des caractéristiques booléennes sont ajoutées, indiquant la présence de mots-clés spécifiques (définis dans un dictionnaire) pour chaque tâche et étiquette. Ces caractéristiques peuvent être combinées avec des méthodes de vectorisation traditionnelles ou des embeddings pour des modèles "améliorés".
+*   **Caractéristiques basées sur les mots-clés** : Des caractéristiques booléennes sont ajoutées, indiquant la présence de mots-clés spécifiques (définis sur la base de notre expertise et de notre compréhension des catégories d’annotation) pour chaque tâche et étiquette. Ces caractéristiques peuvent ensuite être combinées avec des méthodes de vectorisation traditionnelles ou des embeddings pour enrichir l’entrée des modèles d’apprentissage automatique ou des Transformers.
 
 ### 3. Modèles d'Apprentissage Automatique (Baseline et Améliorés)
 
