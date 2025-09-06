@@ -2,14 +2,12 @@ import pandas as pd
 import re
 import emoji
 from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
 from sklearn.preprocessing import LabelEncoder
 import nltk
 import os
 
 # Download NLTK resources
 nltk.download('stopwords')
-nltk.download('wordnet')
 
 def load_data(base_path):
     """
@@ -68,7 +66,6 @@ def clean_text(text, remove_stopwords=False):
     text = re.sub(r"\d+", " NUM ", text)
     text = re.sub(r"\s+", " ", text).strip()
     words = text.split()
-    words = [lemmatizer.lemmatize(w) for w in words]
     if remove_stopwords:
         words = [w for w in words if w not in french_stopwords]
     return " ".join(words)
