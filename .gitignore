@@ -1,8 +1,4 @@
-# Ignore data and schema directories
-# Ignore schema directory
-schema/
-
-# Do not ignore specific data files/directories that will be managed by Git LFS
+# Must keep the following specific data files/directories
 !data/dataset/
 !data/projet_annotation_sante_final_M1.csv
 
