@@ -4,27 +4,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Load CSV file
+# Charger le fichier CSV
 file_path = 'data/projet_annotation_sante_final_M1.csv'
 try:
     df = pd.read_csv(file_path)
-    print(f"Successfully loaded '{file_path}'. Shape: {df.shape}")
+    print(f"Le fichier '{file_path}' a été chargé avec succès. Dimensions : {df.shape}")
 except FileNotFoundError:
-    print(f"Error: '{file_path}' not found. Please ensure the file is uploaded to your Colab environment.")
+    print(f"Erreur : Le fichier '{file_path}' n'a pas été trouvé. Veuillez vous assurer que le fichier est bien présent dans votre environnement Colab.")
     exit()
 
-# Check and handle potential NaN values
+# Vérifier et gérer les valeurs NaN potentielles
 nan_cols = df.isnull().sum()
 nan_cols = nan_cols[nan_cols > 0]
 if not nan_cols.empty:
-    print("\nColumns with NaN values before handling:")
+    print("\nColonnes avec des valeurs NaN avant traitement :")
     print(nan_cols)
     df = df.fillna('NA_CATEGORY')
-    print("NaN values have been replaced with 'NA_CATEGORY'.")
+    print("Les valeurs NaN ont été remplacées par 'NA_CATEGORY'.")
 else:
-    print("\nNo NaN values found in the dataset.")
-
-
+    print("\nAucune valeur NaN n'a été trouvée dans le jeu de données.")
 
 
 label_col1 = 'niveau1' 
@@ -34,34 +32,42 @@ label_col3 = 'niveau3'
 
 for col in [label_col1, label_col2, label_col3]:
     if col not in df.columns:
-        print(f"Error: Label column '{col}' not found in the DataFrame. Please check your CSV column names.")
+        print(f"Erreur : La colonne de libellé '{col}' est introuvable dans le DataFrame. Veuillez vérifier les noms des colonnes de votre fichier CSV.")
         exit()
-# Analyze original data label distribution before splitting 
-print("\n--- Analyzing Original Dataset Label Distribution ---")
+
+# Définir les titres pour chaque graphique
+plot_titles = {
+    label_col1: 'Niveau de l\'intention générale',
+    label_col2: 'Niveau de l\'objet médical',
+    label_col3: 'Niveau d\'analyse de sentiment'
+}
+
+# Analyser la distribution des libellés dans le jeu de données original
+print("\n--- Analyse de la distribution des libellés du jeu de données original ---")
 label_cols_to_plot = [label_col1, label_col2, label_col3]
 
 for col in label_cols_to_plot:
     plt.figure(figsize=(12, 6))
     
-    # Count the frequency of each label
-    label_counts = df[col].astype(str).value_counts().sort_values(ascending=True)  # Horizontal charts are usually sorted from bottom to top
+    # Compter la fréquence de chaque libellé
+    label_counts = df[col].astype(str).value_counts().sort_values(ascending=True)
     
-    # Horizontal bar chart
-    sns.barplot(y=label_counts.index, x=label_counts.values, palette='viridis')
+    # Créer le graphique à barres horizontal
+    ax = sns.barplot(y=label_counts.index, x=label_counts.values, palette='viridis')
     
-    # Add title and labels
-    plt.title(f'Distribution of Label: {col} in Original Dataset', fontsize=16)
-    plt.xlabel('Frequency', fontsize=12)
-    plt.ylabel('Label Categories', fontsize=12)
+    # Ajouter les titres, les étiquettes des axes et les chiffres sur les barres
+    plt.title(plot_titles.get(col, f'Distribution des catégories : {col}'), fontsize=16)
+    plt.xlabel('Nombres', fontsize=12)
+    plt.ylabel('Catégories', fontsize=12)
     
-    # Display specific values on the bar chart
+    # Ajouter les valeurs numériques sur les barres
     for index, value in enumerate(label_counts.values):
-        plt.text(value + max(label_counts.values)*0.01, index, str(value), va='center')
-    
-    plt.tight_layout()
-    plt.savefig(f'schema/distribution_{col}.png') # Save the plot
-    plt.close() # Close the plot to free up memory
+        plt.text(value + 1, index, str(value), va='center')
 
-print("Original dataset label distribution analysis complete. Proceeding with data splitting.")
+    plt.tight_layout()
+    plt.savefig(f'schema/distribution_{col}.png')
+    plt.close()
+
+print("L'analyse de la distribution des libellés est terminée. La suite du code de division des données peut être exécutée.")
 
 
