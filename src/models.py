@@ -8,13 +8,21 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
+# This classifier dictionary is suitable for models that work with both dense (embeddings)
+# and sparse (BoW, TF-IDF) feature representations.
 CLASSIFIERS = {
     'LogisticRegression': (LogisticRegression(), {'C': [0.1, 1, 10], 'solver': ['liblinear']}),
     'SVM': (SVC(), {'C': [0.1, 1, 10], 'kernel': ['linear']}),
-    'MultinomialNB': (MultinomialNB(), {'alpha': [0.1, 0.5, 1.0]}),
     'DecisionTree': (DecisionTreeClassifier(), {'max_depth': [None, 5, 10]}),
     'KNN': (KNeighborsClassifier(), {'n_neighbors': [3, 5, 7]})
 }
+
+# This separate classifier is for models that require count-based, non-negative features.
+# It should only be used with traditional vectorizers like CountVectorizer or TfidfVectorizer.
+TRADITIONAL_CLASSIFIERS = {
+    'MultinomialNB': (MultinomialNB(), {'alpha': [0.1, 0.5, 1.0]})
+}
+
 
 def save_experiment_results(results, label_names, output_dir, mode='w'):
     """

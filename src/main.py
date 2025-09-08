@@ -18,8 +18,8 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.impute import SimpleImputer
 
 from preprocessing import load_data, preprocess_dataset, encode_labels, add_keyword_features, save_cleaned_data
-from vectorizers import Word2VecVectorizer, FastTextVectorizer, BertVectorizer
-from models import save_experiment_results, CLASSIFIERS
+from vectorizers import Word2VecVectorizer, FastTextVectorizer, GloveVectorizer
+from models import save_experiment_results, CLASSIFIERS, TRADITIONAL_CLASSIFIERS
 
 warnings.filterwarnings("ignore")
 
@@ -33,30 +33,30 @@ class ColumnExtractor(BaseEstimator, TransformerMixin):
     def transform(self, X):
         return X[self.columns]
 
-def run_experiment(X_train, y_train, X_val, y_val, label_names, vectorizers, vectorization_method=None):
+def run_baseline_experiments(X_train, y_train, X_val, y_val, label_names, vectorizers, vectorization_method=None):
     results = {}
-    print("🔬 Starting experiments...")
+    print("🔬 Starting baseline experiments...")
+    
     methods_to_run = vectorizers.keys() if not vectorization_method else ([vectorization_method] if vectorization_method in vectorizers else vectorizers.keys())
 
     for method_type in methods_to_run:
         for fe_name, fe_model in vectorizers[method_type].items():
             print(f"\n  -> Vectorization with {fe_name}...")
-            # Traditional and Embedding vectorizers have different input requirements
+            
+            # Vectorize the data based on the method type
             if method_type == 'traditional':
                 X_train_vec = fe_model.fit_transform(X_train)
                 X_val_vec = fe_model.transform(X_val)
+                # Use both traditional and dense classifiers
+                classifiers_to_use = {**CLASSIFIERS, **TRADITIONAL_CLASSIFIERS}
             elif method_type == 'embedding':
                 X_train_vec = fe_model.fit_transform(pd.Series(X_train))
                 X_val_vec = fe_model.transform(pd.Series(X_val))
-            elif method_type == 'bert':
-                X_train_vec = fe_model.transform(X_train)
-                X_val_vec = fe_model.transform(X_val)
+                # Use only dense classifiers
+                classifiers_to_use = CLASSIFIERS
 
-            for clf_name, (clf_model, param_grid) in CLASSIFIERS.items():
+            for clf_name, (clf_model, param_grid) in classifiers_to_use.items():
                 model_name = f"{fe_name}_{clf_name}"
-                # Handle models that cannot handle negative inputs (MultinomialNB)
-                if isinstance(clf_model, MultinomialNB) and (method_type in ['embedding', 'bert'] or np.any(X_train_vec.data < 0)):
-                    continue
                 
                 grid_search = GridSearchCV(clf_model, param_grid, cv=3, scoring='f1_weighted', n_jobs=-1, verbose=0)
                 try:
@@ -72,13 +72,16 @@ def run_experiment(X_train, y_train, X_val, y_val, label_names, vectorizers, vec
                         'best_params': grid_search.best_params_
                     }
                 except Exception as e:
-                    print(f"Error: {e}")
+                    print(f"Error with model {model_name}: {e}")
     return results
 
 def run_enhanced_traditional_experiments(X_train, y_train, X_val, y_val, label_names, vectorizers):
     results = {}
     print("\n🔬 Starting experiments with traditional features and keywords...")
     keyword_cols = [col for col in X_train.columns if col.startswith('keyword_')]
+    
+    # Combine all classifiers suitable for dense and sparse data
+    all_classifiers = {**CLASSIFIERS, **TRADITIONAL_CLASSIFIERS}
 
     for fe_name, fe_model in vectorizers['traditional'].items():
         preprocessor = ColumnTransformer(
@@ -87,7 +90,7 @@ def run_enhanced_traditional_experiments(X_train, y_train, X_val, y_val, label_n
                 ('keywords', 'passthrough', keyword_cols)
             ]
         )
-        for clf_name, (clf_model, param_grid) in CLASSIFIERS.items():
+        for clf_name, (clf_model, param_grid) in all_classifiers.items():
             model_name = f"{fe_name}_{clf_name}_Enhanced"
             pipeline = Pipeline([
                 ('preprocessor', preprocessor),
@@ -95,17 +98,20 @@ def run_enhanced_traditional_experiments(X_train, y_train, X_val, y_val, label_n
             ])
             full_param_grid = {f'classifier__{key}': value for key, value in param_grid.items()}
             grid_search = GridSearchCV(pipeline, full_param_grid, cv=3, scoring='f1_weighted', n_jobs=-1, verbose=0)
-            grid_search.fit(X_train, y_train)
-            y_pred = grid_search.predict(X_val)
-            report = classification_report(y_val, y_pred, labels=np.unique(y_pred), target_names=label_names, output_dict=True)
-            cm = confusion_matrix(y_val, y_pred)
-            results[model_name] = {
-                'f1_weighted': f1_score(y_val, y_pred, average='weighted'),
-                'accuracy': accuracy_score(y_val, y_pred),
-                'classification_report': report,
-                'confusion_matrix': cm.tolist(),
-                'best_params': grid_search.best_params_
-            }
+            try:
+                grid_search.fit(X_train, y_train)
+                y_pred = grid_search.predict(X_val)
+                report = classification_report(y_val, y_pred, labels=np.unique(y_pred), target_names=label_names, output_dict=True)
+                cm = confusion_matrix(y_val, y_pred)
+                results[model_name] = {
+                    'f1_weighted': f1_score(y_val, y_pred, average='weighted'),
+                    'accuracy': accuracy_score(y_val, y_pred),
+                    'classification_report': report,
+                    'confusion_matrix': cm.tolist(),
+                    'best_params': grid_search.best_params_
+                }
+            except Exception as e:
+                 print(f"Error with model {model_name}: {e}")
     return results
 
 # New enhanced embedding experiment function, fixing data leakage issues
@@ -146,20 +152,21 @@ def run_enhanced_embedding_experiments(X_train_df, y_train, X_val_df, y_val, lab
 
         for clf_name, (clf_model, param_grid) in CLASSIFIERS.items():
             model_name = f"{fe_name}_{clf_name}_Enhanced"
-            if clf_name == 'MultinomialNB':
-                continue
             grid_search = GridSearchCV(clf_model, param_grid, cv=3, scoring='f1_weighted', n_jobs=-1, verbose=0)
-            grid_search.fit(X_train_combined, y_train)
-            y_pred = grid_search.predict(X_val_combined)
-            report = classification_report(y_val, y_pred, labels=np.unique(y_pred), target_names=label_names, output_dict=True)
-            cm = confusion_matrix(y_val, y_pred)
-            results[model_name] = {
-                'f1_weighted': f1_score(y_val, y_pred, average='weighted'),
-                'accuracy': accuracy_score(y_val, y_pred),
-                'classification_report': report,
-                'confusion_matrix': cm.tolist(),
-                'best_params': grid_search.best_params_
-            }
+            try:
+                grid_search.fit(X_train_combined, y_train)
+                y_pred = grid_search.predict(X_val_combined)
+                report = classification_report(y_val, y_pred, labels=np.unique(y_pred), target_names=label_names, output_dict=True)
+                cm = confusion_matrix(y_val, y_pred)
+                results[model_name] = {
+                    'f1_weighted': f1_score(y_val, y_pred, average='weighted'),
+                    'accuracy': accuracy_score(y_val, y_pred),
+                    'classification_report': report,
+                    'confusion_matrix': cm.tolist(),
+                    'best_params': grid_search.best_params_
+                }
+            except Exception as e:
+                 print(f"Error with model {model_name}: {e}")
     return results
 
 def sort_results_by_f1(results):
@@ -191,12 +198,11 @@ def main(vectorization_method=None):
 
         vectorizers_all = {
             'traditional': {'BoW': CountVectorizer(), 'TF-IDF': TfidfVectorizer(), 'TF-IDF_ngram': TfidfVectorizer(ngram_range=(1, 2))},
-            'embedding': {'Word2Vec': Word2VecVectorizer(), 'FastText': FastTextVectorizer()},
-            'bert': {'Bert': BertVectorizer()}
+            'embedding': {'Word2Vec': Word2VecVectorizer(), 'FastText': FastTextVectorizer(), 'GloVe': GloveVectorizer()},
         }
 
-        if vectorization_method in ['traditional', 'embedding', 'bert', None]:
-            results = run_experiment(X_train, y_train, X_val, y_val, label_names_list, vectorizers_all, vectorization_method)
+        if vectorization_method in ['traditional', 'embedding', None]:
+            results = run_baseline_experiments(X_train, y_train, X_val, y_val, label_names_list, vectorizers_all, vectorization_method)
             if results:
                 sorted_results = sort_results_by_f1(results)
                 save_experiment_results(sorted_results, label_names_list, f'results_baseline/{label_name}/')
@@ -228,7 +234,7 @@ def main(vectorization_method=None):
         if vectorization_method in ['embedding', None]:
             y_train = temp_train_df[label_col]
             y_val = temp_val_df[label_col]
-            vectorizers_emb = {'embedding': {'Word2Vec': Word2VecVectorizer(), 'FastText': FastTextVectorizer()}}
+            vectorizers_emb = {'embedding': {'Word2Vec': Word2VecVectorizer(), 'FastText': FastTextVectorizer(), 'GloVe': GloveVectorizer()}}
             results_emb = run_enhanced_embedding_experiments(temp_train_df, y_train, temp_val_df, y_val, label_names_list, vectorizers_emb)
             if results_emb:
                 sorted_results_emb = sort_results_by_f1(results_emb)
@@ -240,6 +246,6 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Run experiments with different vectorization methods.")
     parser.add_argument('--vectorization_method', type=str, default=None,
-                        choices=['traditional', 'embedding', 'bert'])
+                        choices=['traditional', 'embedding'])
     args = parser.parse_args()
     main(vectorization_method=args.vectorization_method)

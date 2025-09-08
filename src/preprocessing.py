@@ -33,7 +33,6 @@ extra_french_stopwords = {
     "chez", "dans", "du", "au", "aux"
 }
 french_stopwords.update(extra_french_stopwords)
-lemmatizer = WordNetLemmatizer()
 
 # 🔹 Emoticon/emoji mapping table
 emoticon_dict = {

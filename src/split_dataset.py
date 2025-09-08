@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import numpy as np
+import os # Import the 'os' module for directory creation
 
 # --- Configuration ---
 FULL_DATA_PATH = 'data/projet_annotation_sante_final_M1.csv'
@@ -114,20 +115,26 @@ if len(df_random_train) > random_train_size:
 # --- 7. Merge Training Sets ---
 df_train_final = pd.concat([df_train_fixed, df_random_train])
 
+# --- Create output directories if they don't exist ---
+output_dir = 'data/dataset'
+distribution_dir = 'data/dataset/distribution'
+os.makedirs(output_dir, exist_ok=True)
+os.makedirs(distribution_dir, exist_ok=True)
+
 # --- 8. Save CSV ---
-df_train_final.to_csv('data/dataset/train_dataset.csv', index=False, encoding='utf-8')
-df_val.to_csv('data/dataset/validation_dataset.csv', index=False, encoding='utf-8')
-df_test.to_csv('data/dataset/test_dataset.csv', index=False, encoding='utf-8')
+df_train_final.to_csv(os.path.join(output_dir, 'train_dataset.csv'), index=False, encoding='utf-8')
+df_val.to_csv(os.path.join(output_dir, 'validation_dataset.csv'), index=False, encoding='utf-8')
+df_test.to_csv(os.path.join(output_dir, 'test_dataset.csv'), index=False, encoding='utf-8')
 
 # --- 9. Print & Save Distribution ---
 def print_distribution(df, name):
-    print(f"\n{name} ({len(df)} rows) Distribution Statistics:")
+    print(f"\n{name} ({len(df)} lignes) Statistiques de distribution:")
     print("-" * 40)
-    print("Combined Label Distribution:")
+    print("Distribution des libellés combinés:")
     print(df['combined_labels'].value_counts().sort_index())
-    print("\nSub-label Distribution:")
+    print("\nDistribution des sous-libellés:")
     for col in LABEL_COLS:
-        print(f"{col} Distribution:")
+        print(f"Distribution {col}:")
         print(df[col].value_counts().sort_index())
         print("-" * 20)
 
@@ -144,32 +151,59 @@ def save_distribution(df, name):
                 'count': count,
                 'percentage': count / total
             })
-    pd.DataFrame(rows).to_csv(f'data/dataset/distribution/{name}_distribution.csv', index=False, encoding='utf-8')
+    pd.DataFrame(rows).to_csv(os.path.join(distribution_dir, f'{name}_distribution.csv'), index=False, encoding='utf-8')
 
-print_distribution(df_train_final, "训练集")
-print_distribution(df_val, "验证集")
-print_distribution(df_test, "测试集")
+print_distribution(df_train_final, "jeu d'entraînement")
+print_distribution(df_val, "jeu de validation")
+print_distribution(df_test, "jeu de test")
 
 save_distribution(df_train_final, "train")
 save_distribution(df_val, "validation")
 save_distribution(df_test, "test")
 
 # --- 10. Plot Distribution Bar Chart ---
+
+# Mapping for plot titles
+plot_titles_map = {
+    'niveau1': 'Niveau de l\'intention générale',
+    'niveau2': 'Niveau de l\'objet médical',
+    'niveau3': 'Niveau d\'analyse de sentiment',
+    'combined_labels': 'Distribution des catégories combinés'
+}
+
 def plot_distribution_grouped(dfs, labels, cols, save_path_prefix="data/dataset/distribution/dist_plot"):
     for col in cols:
         all_labels = sorted(set().union(*[df[col].unique() for df in dfs.values()]))
         x = np.arange(len(all_labels))
         width = 0.25
 
-        plt.figure(figsize=(12,6))
+        plt.figure(figsize=(12, 6))
+        
+        # We need to save the bar containers to later add the labels
+        bars = []
         for i, (name, df) in enumerate(dfs.items()):
             counts = df[col].value_counts()
             values = [counts.get(label, 0) for label in all_labels]
-            plt.bar(x + i*width, values, width=width, alpha=0.8, label=labels[name])
+            bars.append(plt.bar(x + i*width, values, width=width, alpha=0.8, label=labels[name]))
 
-        plt.title(f"Label Distribution ({col})", fontsize=14)
-        plt.xlabel("Labels", fontsize=12)
-        plt.ylabel("Number of Samples", fontsize=12)
+        # Add numerical labels on top of each bar
+        for bar_container in bars:
+            for bar in bar_container:
+                height = bar.get_height()
+                if height > 0:
+                    plt.text(
+                        bar.get_x() + bar.get_width() / 2.0, 
+                        height, 
+                        int(height), 
+                        ha='center', 
+                        va='bottom'
+                    )
+
+        # Use the mapping for the title
+        title = plot_titles_map.get(col, f"Distribution des catégories ({col})")
+        plt.title(title, fontsize=14)
+        plt.xlabel("Catégories", fontsize=12)
+        plt.ylabel("Nombre de phrases", fontsize=12)
         plt.xticks(x + width, all_labels, rotation=45, ha="right")
         plt.legend()
         plt.tight_layout()
